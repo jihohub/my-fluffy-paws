@@ -12,4 +12,4 @@
 해시태그  
   
 # 스택
-JavaScript, TypeScript, React, redux-toolkit, StyledComponents, express
+JavaScript, TypeScript, React, redux-toolkit, StyledComponents, Express
