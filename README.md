@@ -19,10 +19,11 @@
 - ~~백엔드 기본 구조 구축~~
   - ~~라이브러리 선정 및 npm 패키지 설치~~
   - ~~디렉토리 구조 및 기본 파일 생성~~
+  - ~~.env 파일에 환경변수 저장~~
 - DB 생성
   - ~~Amazon RDS, Clever Cloud, Google Cloud SQL 中 택 1~~
   - ~~Google Cloud SQL 선정 및 인스턴스 생성~~
-  - Express dbconfig 파일에 DB 관련 설정
+  - ~~db.config.js 파일에 DB 관련 설정~~
   - DB 스키마 작성
 - 이미지 업로드 기능 구현
   - AWS S3 연결하기
