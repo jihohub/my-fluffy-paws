@@ -22,6 +22,7 @@
 - DB 생성
   - Amazon RDS, Clever Cloud, Google Cloud SQL 中 택 1
   - DB 스키마 작성
+  - Express dbconfig 파일에 DB 관련 설정
 - 이미지 업로드 기능 구현
   - AWS S3 연결하기
 - 회원가입/로그인 API 만들기
