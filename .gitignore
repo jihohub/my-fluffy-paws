@@ -17,5 +17,8 @@ dist/
 /.idea
 /.DS_Store
 
+# Testing files
+.http
+
 # Log files
 /*.log
