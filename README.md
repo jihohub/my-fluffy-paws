@@ -21,9 +21,12 @@
   - ~~디렉토리 구조 및 기본 파일 생성~~
   - ~~.env 파일에 환경변수 저장~~
 - DB 생성
-  - ~~Amazon RDS, Clever Cloud, Google Cloud SQL 中 택 1~~
-  - ~~Google Cloud SQL 선정 및 인스턴스 생성~~
-  - ~~db.config.js 파일에 DB 관련 설정~~
+  - MySQL 로컬 DB 생성
+  - Users, Posts, Comments 테이블 생성
+  - db.config.js 파일에 DB 관련 설정
+  - ~~User Model, Controller, API 생성~~
+  - ~~Post Model, Controller, API 생성~~
+  - ~~Comment Model, Controller, API 생성~~=
   - DB 스키마 작성
 - 이미지 업로드 기능 구현
   - AWS S3 연결하기
