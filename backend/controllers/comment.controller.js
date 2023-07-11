@@ -1,17 +1,17 @@
 const Comment = require("../models/comment.model");
 
-// Create a new comment
+// 댓글 작성
 const createComment = async (req, res) => {
   try {
-    const { userName, userProfile, content, createdAt, postId } = req.body;
+    const { userName, userProfile, content, postId, userId } =
+      req.body;
 
-    // Create the comment
     const comment = await Comment.create({
       userName,
       userProfile,
       content,
-      createdAt,
       postId,
+      userId,
     });
 
     res.status(201).json(comment);
@@ -21,22 +21,19 @@ const createComment = async (req, res) => {
   }
 };
 
-// Update an existing comment
+// 댓글 수정
 const updateComment = async (req, res) => {
   try {
     const { commentId } = req.params;
     const { content } = req.body;
 
-    // Find the comment by ID
     const comment = await Comment.findByPk(commentId);
 
     if (!comment) {
-      return res.status(404).json({ error: "Comment not found" });
+      return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
     }
 
-    // Update the comment
-    comment.content = content;
-    await comment.save();
+    comment.update({ content });
 
     res.status(200).json(comment);
   } catch (error) {
@@ -45,37 +42,20 @@ const updateComment = async (req, res) => {
   }
 };
 
-// Delete a comment
+// 댓글 삭제
 const deleteComment = async (req, res) => {
   try {
     const { commentId } = req.params;
 
-    // Find the comment by ID
     const comment = await Comment.findByPk(commentId);
 
     if (!comment) {
-      return res.status(404).json({ error: "Comment not found" });
+      return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
     }
 
-    // Delete the comment
     await comment.destroy();
 
-    res.status(200).json({ message: "Comment deleted successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// Get all comments for a post
-const getAllComments = async (req, res) => {
-  try {
-    const { postId } = req.params;
-
-    // Find all comments for the specified post ID
-    const comments = await Comment.findAll({ where: { postId } });
-
-    res.status(200).json(comments);
+    res.status(200).json({ message: "댓글 삭제가 완료되었습니다." });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -86,5 +66,4 @@ module.exports = {
   createComment,
   updateComment,
   deleteComment,
-  getAllComments,
 };

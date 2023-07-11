@@ -2,19 +2,19 @@ const express = require("express");
 const router = express.Router();
 const postController = require("../../controllers/post.controller");
 
-// Create a new post
+// 게시물 작성
 router.post("/", postController.createPost);
 
-// Update an existing post
+// 게시물 수정
 router.put("/:postId", postController.updatePost);
 
-// Delete a post
+// 게시물 삭제
 router.delete("/:postId", postController.deletePost);
 
-// Get all posts
+// 모든 게시물 가져오기
 router.get("/", postController.getAllPosts);
 
-// Get a single post by ID
+// 하나의 게시물 가져오기
 router.get("/:postId", postController.getPostById);
 
 module.exports = router;

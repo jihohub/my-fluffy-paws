@@ -1,5 +1,6 @@
+const path = require("path");
 const { Sequelize } = require("sequelize");
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
 const sequelize = new Sequelize({
   dialect: "mysql",
@@ -8,5 +9,13 @@ const sequelize = new Sequelize({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
 });
+
+// const sequelize = new Sequelize({
+//   dialect: "mysql",
+//   host: "localhost",
+//   database: "fluffydb",
+//   username: "fluffycat",
+//   password: "jettyricko",
+// });
 
 module.exports = sequelize;

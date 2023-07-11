@@ -2,16 +2,13 @@ const express = require("express");
 const router = express.Router();
 const commentController = require("../../controllers/comment.controller");
 
-// Create a new comment
+// 댓글 작성
 router.post("/", commentController.createComment);
 
-// Update an existing comment
+// 댓글 수정
 router.put("/:commentId", commentController.updateComment);
 
-// Delete a comment
+// 댓글 삭제
 router.delete("/:commentId", commentController.deleteComment);
-
-// Get all comments for a post
-router.get("/post/:postId", commentController.getAllComments);
 
 module.exports = router;
