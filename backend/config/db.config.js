@@ -10,12 +10,4 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD,
 });
 
-// const sequelize = new Sequelize({
-//   dialect: "mysql",
-//   host: "localhost",
-//   database: "fluffydb",
-//   username: "fluffycat",
-//   password: "jettyricko",
-// });
-
 module.exports = sequelize;
