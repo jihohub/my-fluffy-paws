@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import Styled from "./index.styles";
+import { fetchPosts, selectPosts } from "../../store/reducers/postSlice";
 
-function Home() {
+const Home = () => {
+  const posts = useSelector(selectPosts);
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
+  useEffect(() => {
+    dispatch(fetchPosts()); // 액션 객체를 디스패치합니다..
+  }, []);
+
   return (
-    <div>
-      <h1>Welcome to Home Page</h1>
-      <p>This is the home page of your application.</p>
-    </div>
+    <Styled.MainContainer>
+      {posts?.map((post) => (
+        <Link to={`/post/${post.postId}`} key={post.postId}>
+          <Styled.PostContainer>
+            <Styled.UserContainer>
+              <Styled.ProfileImage src={post.userProfile} alt="Profile" />
+              <Styled.Username>{post.userName}</Styled.Username>
+            </Styled.UserContainer>
+            <Styled.PostImage src={post.picture} alt="Post" />
+            <Styled.PostContent>{post.content}</Styled.PostContent>
+            <Styled.CommentsContainer>{post.commentCount}</Styled.CommentsContainer>
+          </Styled.PostContainer>
+        </Link>
+      ))}
+    </Styled.MainContainer>
   );
-}
+};
 
 export default Home;
