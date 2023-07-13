@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { fetchPosts, selectPosts } from "../../store/reducers/postSlice";
+import { RootState } from "../../store/store";
 
 const Home = () => {
-  const posts = useSelector(selectPosts);
+  // const posts = useSelector(selectPosts);
+  const posts = useSelector((state: RootState) => state.post.posts);
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {

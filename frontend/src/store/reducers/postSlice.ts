@@ -27,7 +27,6 @@ const initialState: PostState = {
 export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
   try {
     const response = await axios.get("/api/post");
-    console.log(response);
     return response.data as Post[];
   } catch (error) {
     throw Error("Failed to fetch posts");
