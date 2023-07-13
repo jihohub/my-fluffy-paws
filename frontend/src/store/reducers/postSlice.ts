@@ -1,15 +1,30 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+  createEntityAdapter,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 
 export interface Post {
   postId: number;
   userName: string;
-  userProfile: string;
-  picture: string;
+  userImage: string;
+  image: string;
   content: string;
   userId: number;
   commentCount: number;
+  Comments: Comment[];
+}
+
+export interface Comment {
+  commentId: number;
+  userName: string;
+  userImage: string;
+  content: string;
+  userId: number;
+  postId: number;
 }
 
 export interface PostState {
@@ -17,6 +32,10 @@ export interface PostState {
   loading: boolean;
   error: string | null;
 }
+
+const postAdapter = createEntityAdapter<Post>({
+  selectId: (post) => post.postId,
+});
 
 const initialState: PostState = {
   posts: [],
@@ -32,6 +51,19 @@ export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
     throw Error("Failed to fetch posts");
   }
 });
+
+export const fetchPostById = createAsyncThunk(
+  "post/fetchPostById",
+  async (postId: number) => {
+    try {
+      const response = await axios.get(`/api/post/${postId}`);
+      console.log(response.data);
+      return response.data as Post;
+    } catch (error) {
+      throw Error("Failed to fetch post");
+    }
+  }
+);
 
 export const createNewPost = createAsyncThunk(
   "post/createNewPost",
@@ -71,7 +103,7 @@ export const deletePost = createAsyncThunk(
 
 const postSlice = createSlice({
   name: "post",
-  initialState,
+  initialState: postAdapter.getInitialState(initialState),
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -81,29 +113,32 @@ const postSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.loading = false;
-        state.posts = action.payload;
+        postAdapter.setAll(state, action.payload);
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })
+      .addCase(fetchPostById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPostById.fulfilled, (state, action) => {
+        state.loading = false;
+        postAdapter.upsertOne(state, action.payload);
+      })
+      .addCase(fetchPostById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
       .addCase(createNewPost.fulfilled, (state, action) => {
-        state.posts.push(action.payload);
+        postAdapter.addOne(state, action.payload);
       })
       .addCase(updatePost.fulfilled, (state, action) => {
-        const updatedPost = action.payload;
-        const existingPostIndex = state.posts.findIndex(
-          (post) => post.postId === updatedPost.postId
-        );
-        if (existingPostIndex !== -1) {
-          state.posts[existingPostIndex] = updatedPost;
-        }
+        postAdapter.upsertOne(state, action.payload);
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        const deletedPostId = action.payload;
-        state.posts = state.posts.filter(
-          (post) => post.postId !== deletedPostId
-        );
+        postAdapter.removeOne(state, action.payload);
       });
   },
 });
@@ -114,6 +149,51 @@ export const selectPostState = (state: RootState) => state.post;
 export const { actions: postActions, reducer: postReducer } = postSlice;
 export default postSlice.reducer;
 
-export const selectPosts = (state: RootState) => state.post.posts;
+export const selectPosts = createSelector(
+  selectPostState,
+  postAdapter.getSelectors().selectAll
+);
+
+// export const selectCommentById = createSelector(
+//   [selectPosts, (_, commentId: number) => commentId],
+//   (posts, commentId) => {
+//     // posts 배열에서 필요한 댓글 정보를 가져와 반환합니다.
+//     // 예시로는 모든 게시물의 comments 배열에서 commentId에 해당하는 댓글을 찾는 로직을 작성합니다.
+//     const comment = posts
+//       .flatMap((post) => post.comments)
+//       .find((comment) => comment.commentId === commentId);
+//     return comment;
+//   }
+// );
+
+// export const selectPostById = createSelector(
+//   [selectPosts, selectPostState, (_, postId: number) => postId],
+//   (posts, postState, postId) => {
+//     const post = posts.find((post) => post.postId === postId);
+//     console.log(post);
+//     if (post && post.comments) {
+//       return {
+//         ...post,
+//         comments: post.comments.map((comment) =>
+//           selectCommentById(postState, comment.commentId)
+//         ),
+//       };
+//     }
+//     return undefined;
+//   }
+// );
+
+// export const selectPostById = createSelector(
+//   [selectPosts, (_, postId: number) => postId],
+//   (posts, postId) => {
+//     return posts.find((post) => post.postId === postId);
+//   }
+// );
+
+export const selectPostById = (postId: number) =>
+  createSelector([selectPosts], (posts) =>
+    posts.find((post) => post.postId === postId)
+  ) as (state: RootState) => Post | undefined;
+
 export const selectIsLoading = (state: RootState) => state.post.loading;
 export const selectError = (state: RootState) => state.post.error;

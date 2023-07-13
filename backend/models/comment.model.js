@@ -13,7 +13,7 @@ Comment.init(
     userName: {
       type: DataTypes.STRING,
     },
-    userProfile: {
+    userImage: {
       type: DataTypes.STRING,
     },
     content: {

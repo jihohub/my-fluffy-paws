@@ -7,8 +7,8 @@ import { fetchPosts, selectPosts } from "../../store/reducers/postSlice";
 import { RootState } from "../../store/store";
 
 const Home = () => {
-  // const posts = useSelector(selectPosts);
-  const posts = useSelector((state: RootState) => state.post.posts);
+  const posts = useSelector(selectPosts);
+  // const posts = useSelector((state: RootState) => state.post.posts);
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
@@ -21,12 +21,14 @@ const Home = () => {
         <Link to={`/post/${post.postId}`} key={post.postId}>
           <Styled.PostContainer>
             <Styled.UserContainer>
-              <Styled.ProfileImage src={post.userProfile} alt="Profile" />
-              <Styled.Username>{post.userName}</Styled.Username>
+              <Styled.UserImage src={post.userImage} alt="Profile" />
+              <Styled.UserName>{post.userName}</Styled.UserName>
             </Styled.UserContainer>
-            <Styled.PostImage src={post.picture} alt="Post" />
+            <Styled.PostImage src={post.image} alt="Post" />
             <Styled.PostContent>{post.content}</Styled.PostContent>
-            <Styled.CommentsContainer>{post.commentCount}</Styled.CommentsContainer>
+            <Styled.CommentsContainer>
+              {post.commentCount}
+            </Styled.CommentsContainer>
           </Styled.PostContainer>
         </Link>
       ))}

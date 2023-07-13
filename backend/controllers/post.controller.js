@@ -6,12 +6,12 @@ const Comment = require("../models/comment.model");
 // 게시물 작성
 const createPost = async (req, res) => {
   try {
-    const { userName, userProfile, picture, content, userId } = req.body;
+    const { userName, userImage, image, content, userId } = req.body;
 
     const newPost = await Post.create({
       userName,
-      userProfile,
-      picture,
+      userImage,
+      image,
       content,
       userId,
     });
@@ -72,19 +72,18 @@ const getAllPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: {
         model: Comment,
-        attributes: [
-          [
-            Sequelize.fn("COUNT", Sequelize.col("comments.commentId")),
-            "commentCount",
-          ],
-        ],
       },
-      group: ["Post.postId"],
     });
 
-    res.status(200).json(posts);
+    const postsWithCommentCount = posts.map((post) => {
+      return {
+        ...post.toJSON(),
+        commentCount: post.Comments.length,
+      };
+    });
+
+    res.status(200).json(postsWithCommentCount);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };

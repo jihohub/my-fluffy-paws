@@ -14,10 +14,10 @@ Post.init(
     userName: {
       type: DataTypes.STRING,
     },
-    userProfile: {
+    userImage: {
       type: DataTypes.STRING,
     },
-    picture: {
+    image: {
       type: DataTypes.STRING,
     },
     content: {
@@ -30,12 +30,37 @@ Post.init(
         key: "userId",
       },
     },
+    commentCount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      get() {
+        return this.getDataValue("commentCount");
+      },
+    },
   },
   {
     sequelize: db,
     modelName: "Post",
   }
 );
+
+Post.addHook("afterFind", (result) => {
+  if (Array.isArray(result)) {
+    result.forEach((post) => {
+      post.commentCount = parseInt(post.commentCount, 10);
+    });
+  } else {
+    result.commentCount = parseInt(result.commentCount, 10);
+  }
+});
+
+Post.addHook("afterCreate", async (post) => {
+  const count = await Comment.count({
+    where: { postId: post.postId },
+  });
+  await post.update({ commentCount: count });
+});
 
 Post.hasMany(Comment, { foreignKey: "postId" });
 

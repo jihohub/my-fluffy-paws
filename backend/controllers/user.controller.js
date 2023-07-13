@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // 회원가입
 const signup = async (req, res) => {
   try {
-    const { email, password, userName, userProfile } = req.body;
+    const { email, password, userName, userImage } = req.body;
 
     // 입력한 이메일로 이미 가입했는지 중복 검사
     const existingUser = await User.findOne({ where: { email } });
@@ -20,7 +20,7 @@ const signup = async (req, res) => {
     }
 
     // 프로필 사진을 입력하지 않았으면 기본 사진으로 지정
-    const defaultUserProfile = userProfile || "abc";
+    const defaultUserImage = userImage || "abc";
 
     // 비밀번호를 해시화
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -30,7 +30,7 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       userName,
-      userProfile: defaultUserProfile,
+      userImage: defaultUserImage,
     });
 
     res.status(201).json({ message: "가입이 완료되었습니다." });

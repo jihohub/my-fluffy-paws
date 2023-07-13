@@ -1,18 +1,26 @@
 const Comment = require("../models/comment.model");
+const Post = require("../models/post.model");
 
 // 댓글 작성
 const createComment = async (req, res) => {
   try {
-    const { userName, userProfile, content, postId, userId } =
-      req.body;
+    const { userName, userImage, content, postId, userId } = req.body;
 
     const comment = await Comment.create({
       userName,
-      userProfile,
+      userImage,
       content,
       postId,
       userId,
     });
+
+    const post = await Post.findByPk(postId);
+    if (post) {
+      const commentCount = await Comment.count({
+        where: { postId: post.postId },
+      });
+      await post.update({ commentCount });
+    }
 
     res.status(201).json(comment);
   } catch (error) {

@@ -23,7 +23,7 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
     },
-    userProfile: {
+    userImage: {
       type: DataTypes.STRING,
     },
   },

@@ -17,14 +17,14 @@ const UserContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const ProfileImage = styled.img`
+const UserImage = styled.img`
   width: 30px;
   height: 30px;
   border-radius: 50%;
   margin-right: 10px;
 `;
 
-const Username = styled.span`
+const UserName = styled.span`
   font-weight: bold;
 `;
 
@@ -59,8 +59,8 @@ export default {
   MainContainer,
   PostContainer,
   UserContainer,
-  ProfileImage,
-  Username,
+  UserImage,
+  UserName,
   PostImage,
   PostContent,
   CommentsContainer,
