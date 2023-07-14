@@ -1,21 +1,22 @@
 import React from "react";
 import Styled from "./index.styles";
+import { useNavigate } from "react-router-dom";
+import Button from "../Button";
+// import logo from "./logo.png";
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <Styled.HeaderContainer>
-      <Styled.Logo>MyApp</Styled.Logo>
-      <Styled.Nav>
-        <Styled.NavItem>
-          <Styled.NavLink to="/">Home</Styled.NavLink>
-        </Styled.NavItem>
-        <Styled.NavItem>
-          <Styled.NavLink to="/profile">Profile</Styled.NavLink>
-        </Styled.NavItem>
-        <Styled.NavItem>
-          <Styled.NavLink to="/settings">Settings</Styled.NavLink>
-        </Styled.NavItem>
-      </Styled.Nav>
+      <Styled.LogoImage src="./logo.png" onClick={handleLogoClick} />
+      <Styled.ButtonContainer>
+        <Button color={"#8D7B68"} text="Login" />
+        <Button color={"#8D7B68"} text="Sign Up" />
+      </Styled.ButtonContainer>
     </Styled.HeaderContainer>
   );
 };
