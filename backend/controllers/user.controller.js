@@ -1,11 +1,37 @@
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const s3Client = new S3Client({
+  region: "ap-northeast-2",
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  },
+});
+
+const uploadFile = async (file) => {
+  console.log(file)
+  const uploadParams = {
+    Bucket: "jiho-image-storage",
+    Key: file.filename, // 업로드될 파일 이름
+    Body: file.data, // 업로드할 파일 데이터
+  };
+
+  const command = new PutObjectCommand(uploadParams);
+  const response = await s3Client.send(command);
+  return response;
+};
+
 // 회원가입
 const signup = async (req, res) => {
   try {
-    const { email, password, userName, userImage } = req.body;
+    const { email, password, userName } = req.body;
+    const userImage = req.file;
+    console.log(userImage);
 
     // 입력한 이메일로 이미 가입했는지 중복 검사
     const existingUser = await User.findOne({ where: { email } });
@@ -27,7 +53,17 @@ const signup = async (req, res) => {
     }
 
     // 프로필 사진을 입력하지 않았으면 기본 사진으로 지정
-    const defaultUserImage = userImage || "./images/avatar.png";
+    let uploadedImage = "https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/avatar.png";
+
+    // 파일이 업로드된 경우에만 S3에 업로드하고 파일 경로 저장
+    if (userImage) {
+      // 파일을 AWS S3에 업로드
+      const uploadedFile = await uploadFile(userImage); // 파일을 AWS S3에 업로드
+      const uploadedFilePath = uploadedFile.Location; // 업로드된 파일의 경로
+      console.log(uploadedFile);
+      // 업로드된 파일 경로를 userImage 변수에 할당
+      uploadedImage = uploadedFilePath;
+    }
 
     // 비밀번호를 해시화
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,7 +73,7 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       userName,
-      userImage: defaultUserImage,
+      userImage: uploadedImage,
     });
 
     res.status(201).json({ message: "가입이 완료되었습니다." });

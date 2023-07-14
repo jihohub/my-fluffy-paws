@@ -14,9 +14,11 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
 
+  const formData = new FormData();
+
   const handleImageChange = (file: File | null) => {
     setSelectedImage(file);
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,14 +28,12 @@ const Signup = () => {
       return;
     }
 
-    const userData = {
-      email,
-      password,
-      userName,
-      userImage: selectedImage,
-    };
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("userName", userName);
+    formData.append("userImage", selectedImage as Blob);
 
-    dispatch(signup(userData));
+    dispatch(signup(formData));
   };
 
   return (
