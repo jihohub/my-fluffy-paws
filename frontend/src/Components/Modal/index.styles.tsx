@@ -25,6 +25,10 @@ const ModalContent = styled.div`
   width: 600px;
   padding: 20px;
   border-radius: 4px;
+
+  @media (max-width: 768px) {
+    width: 80vw;
+  }
 `;
 
 const CloseButton = styled.span`
