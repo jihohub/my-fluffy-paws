@@ -1,18 +1,46 @@
 const Comment = require("../models/comment.model");
+const User = require("../models/user.model")
+const Post = require("../models/post.model");
+
+// 전체 댓글 조회
+const getAllComments = async (req, res) => {
+  try {
+    const comments = await Comment.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ["userName", "userImage"],
+        },
+      ],
+    });
+
+    // comments 데이터와 함께 userName과 userImage가 포함된 결과를 반환
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 
 // 댓글 작성
 const createComment = async (req, res) => {
   try {
-    const { userName, userProfile, content, postId, userId } =
-      req.body;
+    const { postId, userId, content } = req.body;
 
     const comment = await Comment.create({
-      userName,
-      userProfile,
-      content,
       postId,
       userId,
+      content,
     });
+
+    const post = await Post.findByPk(postId);
+    if (post) {
+      const commentCount = await Comment.count({
+        where: { postId: post.postId },
+      });
+      await post.update({ commentCount });
+    }
 
     res.status(201).json(comment);
   } catch (error) {
@@ -63,6 +91,7 @@ const deleteComment = async (req, res) => {
 };
 
 module.exports = {
+  getAllComments,
   createComment,
   updateComment,
   deleteComment,

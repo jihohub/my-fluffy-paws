@@ -3,17 +3,95 @@ const Post = require("../models/post.model");
 const User = require("../models/user.model");
 const Comment = require("../models/comment.model");
 
+// 모든 게시물 가져오기
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      include: [
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["userName", "userImage"],
+        },
+      ],
+    });
+
+    const postsWithUser = posts.map((post) => {
+      const {
+        User: { userName, userImage },
+        ...postAttributes
+      } = post.toJSON();
+      return {
+        ...postAttributes,
+        userName,
+        userImage,
+      };
+    });
+
+
+    res.status(200).json(postsWithUser);
+  } catch (error) {
+    res.status(500).json({ error: error });
+  }
+};
+
+// 하나의 게시물 가져오기
+const getPostById = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await Post.findByPk(postId, {
+      include: [
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["userName", "userImage"],
+        },
+      ],
+    });
+
+    if (!post) {
+      return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
+    }
+
+    // post.Comments = post.Comments.map((comment) => ({
+    //   ...comment.toJSON(),
+    //   userName: comment.User.userName,
+    //   userImage: comment.User.userImage,
+    // }));
+
+    res.status(200).json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 // 게시물 작성
 const createPost = async (req, res) => {
   try {
-    const { userName, userProfile, picture, content, userId } = req.body;
+    const { userId, image, content } = req.body;
 
     const newPost = await Post.create({
-      userName,
-      userProfile,
-      picture,
-      content,
       userId,
+      image,
+      content,
     });
 
     res
@@ -66,55 +144,10 @@ const deletePost = async (req, res) => {
   }
 };
 
-// 모든 게시물 가져오기
-const getAllPosts = async (req, res) => {
-  try {
-    const posts = await Post.findAll({
-      include: {
-        model: Comment,
-        attributes: [
-          [
-            Sequelize.fn("COUNT", Sequelize.col("comments.commentId")),
-            "commentCount",
-          ],
-        ],
-      },
-      group: ["Post.postId"],
-    });
-
-    res.status(200).json(posts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// 하나의 게시물 가져오기
-const getPostById = async (req, res) => {
-  try {
-    const { postId } = req.params;
-
-    const post = await Post.findByPk(postId, {
-      include: {
-        model: Comment,
-      },
-    });
-
-    if (!post) {
-      return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
-    }
-
-    res.status(200).json(post);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
 module.exports = {
+  getAllPosts,
+  getPostById,
   createPost,
   updatePost,
   deletePost,
-  getAllPosts,
-  getPostById,
 };

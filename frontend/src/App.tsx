@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
 import Header from "./Components/Header";
 import Home from "./pages/Home";
-import Post from "./pages/Post/indes";
+import Post from "./pages/Post";
 
 const App: React.FC = () => {
   return (
