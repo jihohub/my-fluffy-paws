@@ -44,6 +44,7 @@ const Home = () => {
               {`댓글 ${post.commentCount}개 보기`}
             </Styled.ViewCommentsLink>
           )}
+          <CommentsContainer comments={post.Comments.slice(0, 3)} />
         </>
       ))}
       {selectedPost && (
