@@ -10,15 +10,6 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    userName: {
-      type: DataTypes.STRING,
-    },
-    userImage: {
-      type: DataTypes.STRING,
-    },
-    content: {
-      type: DataTypes.STRING,
-    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
@@ -32,6 +23,9 @@ Comment.init(
         model: "Post",
         key: "postId",
       },
+    },
+    content: {
+      type: DataTypes.STRING,
     },
   },
   {

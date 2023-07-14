@@ -4,14 +4,12 @@ const Post = require("../models/post.model");
 // 댓글 작성
 const createComment = async (req, res) => {
   try {
-    const { userName, userImage, content, postId, userId } = req.body;
+    const { postId, userId, content } = req.body;
 
     const comment = await Comment.create({
-      userName,
-      userImage,
-      content,
       postId,
       userId,
+      content,
     });
 
     const post = await Post.findByPk(postId);

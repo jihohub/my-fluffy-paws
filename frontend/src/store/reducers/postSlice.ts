@@ -20,11 +20,9 @@ export interface Post {
 
 export interface Comment {
   commentId: number;
-  userName: string;
-  userImage: string;
-  content: string;
   userId: number;
   postId: number;
+  content: string;
 }
 
 export interface PostState {

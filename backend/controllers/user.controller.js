@@ -75,7 +75,7 @@ const getUser = async (req, res) => {
     const { userId } = req.user;
 
     const user = await User.findByPk(userId, {
-      attributes: ["userName", "userProfile"],
+      attributes: ["userName", "userImage"],
     });
 
     if (!user) {
@@ -94,9 +94,15 @@ const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const userPosts = await Post.findAll({ where: { userId } });
+    const userPosts = await User.findByPk(userId, {
+      include: [
+        {
+          model: Post,
+        },
+      ],
+    });
 
-    res.status(200).json(userPosts);
+    res.status(200).json(userPosts.Posts);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -108,9 +114,15 @@ const getUserComments = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const userComments = await Comment.findAll({ where: { userId } });
+    const userComments = await User.findByPk(userId, {
+      include: [
+        {
+          model: Comment,
+        },
+      ],
+    });
 
-    res.status(200).json(userComments);
+    res.status(200).json(userComments.Comments);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

@@ -43,10 +43,17 @@ const Post = () => {
       <Styled.PostImage src={post.image} alt="Post" />
       <h3>Comments:</h3>
       <Styled.CommentList>
-        {post.Comments.length > 0 ? (
-          post.Comments.map((comment) => (
+        {post.Comments?.length > 0 ? (
+          post.Comments?.map((comment) => (
             <Styled.CommentItem key={comment.commentId}>
-              {comment.content}
+              <Styled.CommentUserImage
+                src={comment.userImage}
+                alt="User Image"
+              />
+              <Styled.CommentUserName>
+                {comment.userName}
+              </Styled.CommentUserName>
+              <Styled.CommentContent>{comment.content}</Styled.CommentContent>
             </Styled.CommentItem>
           ))
         ) : (

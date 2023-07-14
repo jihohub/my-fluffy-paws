@@ -6,14 +6,12 @@ const Comment = require("../models/comment.model");
 // 게시물 작성
 const createPost = async (req, res) => {
   try {
-    const { userName, userImage, image, content, userId } = req.body;
+    const { userId, image, content } = req.body;
 
     const newPost = await Post.create({
-      userName,
-      userImage,
+      userId,
       image,
       content,
-      userId,
     });
 
     res
@@ -70,21 +68,32 @@ const deletePost = async (req, res) => {
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
-      include: {
-        model: Comment,
-      },
+      include: [
+        {
+          model: User,
+          attributes: ["userName", "userImage"],
+        },
+      ],
     });
 
-    const postsWithCommentCount = posts.map((post) => {
+    const postsWithUser = posts.map((post) => {
+      const {
+        User: { userName, userImage },
+        ...postAttributes
+      } = post.toJSON();
       return {
-        ...post.toJSON(),
-        commentCount: post.Comments.length,
+        ...postAttributes,
+        userName,
+        userImage,
       };
     });
 
-    res.status(200).json(postsWithCommentCount);
+
+    res.status(200).json(postsWithUser);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    console.error(error.stack); // 오류 스택 출력
+    console.error(error); // 오류 스택 출력
+    res.status(500).json({ error: error });
   }
 };
 
@@ -94,16 +103,28 @@ const getPostById = async (req, res) => {
     const { postId } = req.params;
 
     const post = await Post.findByPk(postId, {
-      include: {
-        model: Comment,
-      },
+      include: [
+        {
+          model: Comment,
+        },
+        {
+          model: User,
+          attributes: ["userName", "userImage"],
+        },
+      ],
     });
 
     if (!post) {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    res.status(200).json(post);
+    const updatedPost = {
+      ...post.toJSON(),
+      userName: post.User.userName,
+      userImage: post.User.userImage,
+    };
+
+    res.status(200).json(updatedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../config/db.config");
 const Comment = require("./comment.model");
+const User = require("./user.model")
 
 class Post extends Model {}
 
@@ -11,24 +12,18 @@ Post.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    userName: {
-      type: DataTypes.STRING,
-    },
-    userImage: {
-      type: DataTypes.STRING,
-    },
-    image: {
-      type: DataTypes.STRING,
-    },
-    content: {
-      type: DataTypes.STRING,
-    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
         model: "User",
         key: "userId",
       },
+    },
+    image: {
+      type: DataTypes.STRING,
+    },
+    content: {
+      type: DataTypes.STRING,
     },
     commentCount: {
       type: DataTypes.INTEGER,
@@ -63,5 +58,6 @@ Post.addHook("afterCreate", async (post) => {
 });
 
 Post.hasMany(Comment, { foreignKey: "postId" });
+Post.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Post;
