@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Styled from "./index.styles";
-// import PreviewImage from "../PreviewImage";
+import SignupImage from "../../Components/SignupImage";
 
 const Signup = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -31,15 +31,15 @@ const Signup = () => {
         <Styled.Input type="text" />
       </Styled.InputContainer>
 
-      {/* <Styled.InputContainer>
+      <Styled.InputContainer>
         <Styled.Label>프로필 이미지</Styled.Label>
-        <PreviewImage
+        <SignupImage
           imageUrl={
-            selectedImage ? URL.createObjectURL(selectedImage) : undefined
+            selectedImage ? URL.createObjectURL(selectedImage) : "./avatar.png"
           }
           onChange={handleImageChange}
         />
-      </Styled.InputContainer> */}
+      </Styled.InputContainer>
 
       <Styled.ButtonContainer>
         <Styled.Button color="#8D7B68">가입하기</Styled.Button>
