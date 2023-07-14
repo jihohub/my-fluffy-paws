@@ -11,7 +11,13 @@ const PostContainer = styled.div`
   padding: 10px;
 `;
 
+const ViewCommentsLink = styled.p`
+  color: #8d7b68;
+  font-size: 24px;
+`;
+
 export default {
   MainContainer,
   PostContainer,
+  ViewCommentsLink,
 };

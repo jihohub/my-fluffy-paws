@@ -1,12 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
-import { fetchPosts, selectPosts } from "../../store/reducers/postSlice";
+import {
+  Post as PostData, fetchPosts,
+  selectPosts,
+} from "../../store/reducers/postSlice";
 import { RootState } from "../../store/store";
 import PostContainer from "../../Components/PostContainer";
 import CommentsContainer from "../../Components/CommentsContainer";
+import Modal from "../../Components/Modal";
 
 const Home = () => {
   const posts = useSelector(selectPosts);
@@ -18,16 +22,35 @@ const Home = () => {
     console.log(posts);
   }, []);
 
+  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
+
+  const handleOpenModal = (post: PostData) => {
+    setSelectedPost(post);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPost(null);
+  };
+
   return (
     <Styled.MainContainer>
       {posts?.map((post) => (
-        <Link to={`/post/${post.postId}`} key={post.postId}>
-          <Styled.PostContainer>
+        <>
+          <Link to={`/post/${post.postId}`} key={post.postId}>
             <PostContainer post={post} />
-            <CommentsContainer comments={post.Comments} />
-          </Styled.PostContainer>
-        </Link>
+          </Link>
+          {post.commentCount > 0 && (
+            <Styled.ViewCommentsLink onClick={() => handleOpenModal(post)}>
+              {`댓글 ${post.commentCount}개 보기`}
+            </Styled.ViewCommentsLink>
+          )}
+        </>
       ))}
+      {selectedPost && (
+        <Modal onClose={handleCloseModal}>
+          <CommentsContainer comments={selectedPost.Comments} />
+        </Modal>
+      )}
     </Styled.MainContainer>
   );
 };
