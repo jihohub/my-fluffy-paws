@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../config/db.config");
+const User = require("./user.model");
 
 class Comment extends Model {}
 
@@ -9,15 +10,6 @@ Comment.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    userName: {
-      type: DataTypes.STRING,
-    },
-    userProfile: {
-      type: DataTypes.STRING,
-    },
-    content: {
-      type: DataTypes.STRING,
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -33,11 +25,16 @@ Comment.init(
         key: "postId",
       },
     },
+    content: {
+      type: DataTypes.STRING,
+    },
   },
   {
     sequelize: db,
     modelName: "Comment",
   }
 );
+
+Comment.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Comment;

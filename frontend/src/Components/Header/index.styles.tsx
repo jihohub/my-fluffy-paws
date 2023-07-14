@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   background-color: #fff;
   padding: 20px;
-  width: 100%;
 `;
 
-const Logo = styled.h1`
-  font-size: 24px;
-  margin: 0;
+const LogoImage = styled.img`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Nav = styled.nav`
@@ -27,16 +27,32 @@ const NavItem = styled.div`
 const NavLink = styled(Link)`
   color: #333;
   text-decoration: none;
+  cursor: pointer;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 10px;
+`;
+
+const Button = styled.button`
+  margin-right: 10px;
+  padding: 8px 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 
   &:hover {
-    text-decoration: underline;
+    background-color: #555;
   }
 `;
 
 export default {
   HeaderContainer,
-  Logo,
+  LogoImage,
   Nav,
   NavItem,
   NavLink,
+  ButtonContainer,
+  Button,
 };
