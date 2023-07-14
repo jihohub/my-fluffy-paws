@@ -9,8 +9,6 @@ import {
   selectError,
 } from "../../store/reducers/postSlice";
 import Styled from "./index.styles";
-import { Post as PostData } from "../../store/reducers/postSlice";
-import { RootState } from "../../store/store";
 import PostContainer from "../../Components/PostContainer";
 import CommentsContainer from "../../Components/CommentsContainer";
 

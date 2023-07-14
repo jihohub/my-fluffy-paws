@@ -22,6 +22,7 @@ const AuthorImage = styled.img`
 const AuthorName = styled.p`
   font-weight: bold;
   margin-right: 5px;
+  text-decoration: none;
 `;
 
 const PostImage = styled.img`
@@ -34,6 +35,7 @@ const PostImage = styled.img`
 const PostContent = styled.p`
   font-size: 24px;
   margin-bottom: 10px;
+  text-decoration: none;
 `;
 
 export default {

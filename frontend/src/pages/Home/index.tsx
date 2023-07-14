@@ -56,9 +56,12 @@ const Home = () => {
 
         return (
           <>
-            <Link to={`/post/${post.postId}`} key={post.postId}>
+            <Styled.NoUnderlineLink
+              to={`/post/${post.postId}`}
+              key={post.postId}
+            >
               <PostContainer post={post} />
-            </Link>
+            </Styled.NoUnderlineLink>
             {post.commentCount > 0 && (
               <Styled.ViewCommentsLink onClick={() => handleOpenModal(post)}>
                 {commentLinkText}
