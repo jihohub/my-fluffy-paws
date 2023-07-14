@@ -11,7 +11,7 @@ const Button = styled.button<ButtonProps>`
   color: white;
   width: 70px;
   height: 35px;
-  // padding: 10px 20px;
+  margin: 5px;
   border: none;
   border-radius: 4px;
   cursor: pointer;

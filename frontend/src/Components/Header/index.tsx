@@ -14,8 +14,8 @@ const Header: React.FC = () => {
     <Styled.HeaderContainer>
       <Styled.LogoImage src="./logo.png" onClick={handleLogoClick} />
       <Styled.ButtonContainer>
-        <Button color={"#8D7B68"} text="Login" />
-        <Button color={"#8D7B68"} text="Sign Up" />
+        <Button color={"#8D7B68"} text="로그인" />
+        <Button color={"#8D7B68"} text="회원가입" />
       </Styled.ButtonContainer>
     </Styled.HeaderContainer>
   );
