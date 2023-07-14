@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { Comment } from "./commentSlice";
 
 export interface Post {
   postId: number;
@@ -16,13 +17,6 @@ export interface Post {
   userId: number;
   commentCount: number;
   Comments: Comment[];
-}
-
-export interface Comment {
-  commentId: number;
-  userId: number;
-  postId: number;
-  content: string;
 }
 
 export interface PostState {
@@ -55,7 +49,6 @@ export const fetchPostById = createAsyncThunk(
   async (postId: number) => {
     try {
       const response = await axios.get(`/api/post/${postId}`);
-      console.log(response.data);
       return response.data as Post;
     } catch (error) {
       throw Error("Failed to fetch post");

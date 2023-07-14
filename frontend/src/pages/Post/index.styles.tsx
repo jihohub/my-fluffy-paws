@@ -6,21 +6,33 @@ const PostContainer = styled.div`
   padding: 20px;
 `;
 
-const PostTitle = styled.h2`
-  font-size: 24px;
-  margin-bottom: 10px;
+const AuthorContainer = styled.div`
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
 `;
 
-const PostAuthor = styled.p`
-  font-size: 14px;
-  color: #888;
-  margin-bottom: 10px;
+const AuthorImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
+
+const AuthorName = styled.span`
+  font-weight: bold;
+  margin-right: 5px;
 `;
 
 const PostImage = styled.img`
   width: 100%;
   max-height: 400px;
   object-fit: cover;
+  margin-bottom: 10px;
+`;
+
+const PostContent = styled.h2`
+  font-size: 24px;
   margin-bottom: 10px;
 `;
 
@@ -51,9 +63,11 @@ const CommentContent = styled.span``;
 
 export default {
   PostContainer,
-  PostTitle,
-  PostAuthor,
+  AuthorContainer,
+  AuthorImage,
+  AuthorName,
   PostImage,
+  PostContent,
   CommentList,
   CommentItem,
   CommentUserImage,

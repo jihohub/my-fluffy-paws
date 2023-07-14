@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../config/db.config");
 // const Post = require("./post.model");
-const Comment = require("./comment.model");
+// const Comment = require("./comment.model");
 
 class User extends Model {}
 
@@ -35,6 +35,6 @@ User.init(
 );
 
 // User.hasMany(Post, { foreignKey: "userId" });
-User.hasMany(Comment, { foreignKey: "userId" });
+// User.hasMany(Comment, { foreignKey: "userId" });
 
 module.exports = User;

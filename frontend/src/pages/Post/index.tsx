@@ -22,7 +22,8 @@ const Post = () => {
 
   useEffect(() => {
     dispatch(fetchPostById(parseInt(postId)));
-  }, [dispatch, postId]);
+    console.log(post?.Comments);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -38,20 +39,23 @@ const Post = () => {
 
   return (
     <Styled.PostContainer>
-      <Styled.PostTitle>{post.content}</Styled.PostTitle>
-      <Styled.PostAuthor>Posted by: {post.userName}</Styled.PostAuthor>
+      <Styled.AuthorContainer>
+        <Styled.AuthorImage src={post.userImage} alt="User Image" />
+        <Styled.AuthorName>{post.userName}</Styled.AuthorName>
+      </Styled.AuthorContainer>
       <Styled.PostImage src={post.image} alt="Post" />
+      <Styled.PostContent>{post.content}</Styled.PostContent>
       <h3>Comments:</h3>
       <Styled.CommentList>
         {post.Comments?.length > 0 ? (
-          post.Comments?.map((comment) => (
+          post.Comments.map((comment) => (
             <Styled.CommentItem key={comment.commentId}>
               <Styled.CommentUserImage
-                src={comment.userImage}
+                src={comment.User.userImage}
                 alt="User Image"
               />
               <Styled.CommentUserName>
-                {comment.userName}
+                {comment.User.userName}
               </Styled.CommentUserName>
               <Styled.CommentContent>{comment.content}</Styled.CommentContent>
             </Styled.CommentItem>
