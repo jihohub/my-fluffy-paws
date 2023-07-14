@@ -12,8 +12,8 @@ const CommentItem = styled.li`
 `;
 
 const CommentUserImage = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   margin-right: 10px;
 `;

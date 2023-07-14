@@ -5,6 +5,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { fetchPosts, selectPosts } from "../../store/reducers/postSlice";
 import { RootState } from "../../store/store";
+import PostContainer from "../../Components/PostContainer";
 import CommentsContainer from "../../Components/CommentsContainer";
 
 const Home = () => {
@@ -22,12 +23,7 @@ const Home = () => {
       {posts?.map((post) => (
         <Link to={`/post/${post.postId}`} key={post.postId}>
           <Styled.PostContainer>
-            <Styled.UserContainer>
-              <Styled.UserImage src={post.userImage} alt="Profile" />
-              <Styled.UserName>{post.userName}</Styled.UserName>
-            </Styled.UserContainer>
-            <Styled.PostImage src={post.image} alt="Post" />
-            <Styled.PostContent>{post.content}</Styled.PostContent>
+            <PostContainer post={post} />
             <CommentsContainer comments={post.Comments} />
           </Styled.PostContainer>
         </Link>

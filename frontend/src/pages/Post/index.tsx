@@ -11,6 +11,7 @@ import {
 import Styled from "./index.styles";
 import { Post as PostData } from "../../store/reducers/postSlice";
 import { RootState } from "../../store/store";
+import PostContainer from "../../Components/PostContainer";
 import CommentsContainer from "../../Components/CommentsContainer";
 
 const Post = () => {
@@ -39,16 +40,12 @@ const Post = () => {
   }
 
   return (
-    <Styled.PostContainer>
-      <Styled.AuthorContainer>
-        <Styled.AuthorImage src={post.userImage} alt="User Image" />
-        <Styled.AuthorName>{post.userName}</Styled.AuthorName>
-      </Styled.AuthorContainer>
-      <Styled.PostImage src={post.image} alt="Post" />
-      <Styled.PostContent>{post.content}</Styled.PostContent>
-      <h3>Comments:</h3>
-      <CommentsContainer comments={post.Comments} />
-    </Styled.PostContainer>
+    <Styled.MainContainer>
+      <Styled.PostContainer>
+        <PostContainer post={post}></PostContainer>
+        <CommentsContainer comments={post.Comments} />
+      </Styled.PostContainer>
+    </Styled.MainContainer>
   );
 };
 
