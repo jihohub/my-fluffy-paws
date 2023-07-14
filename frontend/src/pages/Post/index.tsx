@@ -11,6 +11,7 @@ import {
 import Styled from "./index.styles";
 import { Post as PostData } from "../../store/reducers/postSlice";
 import { RootState } from "../../store/store";
+import CommentsContainer from "../../Components/CommentsContainer";
 
 const Post = () => {
   const { postId } = useParams() as { postId: string };
@@ -46,24 +47,7 @@ const Post = () => {
       <Styled.PostImage src={post.image} alt="Post" />
       <Styled.PostContent>{post.content}</Styled.PostContent>
       <h3>Comments:</h3>
-      <Styled.CommentList>
-        {post.Comments?.length > 0 ? (
-          post.Comments.map((comment) => (
-            <Styled.CommentItem key={comment.commentId}>
-              <Styled.CommentUserImage
-                src={comment.User.userImage}
-                alt="User Image"
-              />
-              <Styled.CommentUserName>
-                {comment.User.userName}
-              </Styled.CommentUserName>
-              <Styled.CommentContent>{comment.content}</Styled.CommentContent>
-            </Styled.CommentItem>
-          ))
-        ) : (
-          <p>No comments</p>
-        )}
-      </Styled.CommentList>
+      <CommentsContainer comments={post.Comments} />
     </Styled.PostContainer>
   );
 };

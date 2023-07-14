@@ -5,6 +5,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { fetchPosts, selectPosts } from "../../store/reducers/postSlice";
 import { RootState } from "../../store/store";
+import CommentsContainer from "../../Components/CommentsContainer";
 
 const Home = () => {
   const posts = useSelector(selectPosts);
@@ -13,6 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchPosts()); // 액션 객체를 디스패치합니다..
+    console.log(posts);
   }, []);
 
   return (
@@ -26,9 +28,7 @@ const Home = () => {
             </Styled.UserContainer>
             <Styled.PostImage src={post.image} alt="Post" />
             <Styled.PostContent>{post.content}</Styled.PostContent>
-            <Styled.CommentsContainer>
-              {post.commentCount}
-            </Styled.CommentsContainer>
+            <CommentsContainer comments={post.Comments} />
           </Styled.PostContainer>
         </Link>
       ))}

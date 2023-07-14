@@ -9,6 +9,15 @@ const getAllPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: [
         {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["userName", "userImage"],
+            },
+          ],
+        },
+        {
           model: User,
           attributes: ["userName", "userImage"],
         },
@@ -30,8 +39,6 @@ const getAllPosts = async (req, res) => {
 
     res.status(200).json(postsWithUser);
   } catch (error) {
-    console.error(error.stack); // 오류 스택 출력
-    console.error(error); // 오류 스택 출력
     res.status(500).json({ error: error });
   }
 };
@@ -44,7 +51,7 @@ const getPostById = async (req, res) => {
     const post = await Post.findByPk(postId, {
       include: [
         {
-          model: Comment, // 수정된 부분: Comments -> Comment
+          model: Comment,
           include: [
             {
               model: User,
