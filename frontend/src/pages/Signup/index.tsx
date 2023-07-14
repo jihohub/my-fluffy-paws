@@ -3,16 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import SignupImage from "../../Components/SignupImage";
-import {
-  signup,
-  selectIsLoading,
-  selectError,
-} from "../../store/reducers/userSlice";
+import { signup } from "../../store/reducers/userSlice";
 
 const Signup = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [email, setEmail] = useState<string>("");
