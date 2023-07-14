@@ -6,12 +6,6 @@ const MainContainer = styled.div`
   margin: 0 auto;
 `;
 
-const PostContainer = styled.div`
-  margin-bottom: 20px;
-  border: 1px solid #8d7b68;
-  padding: 10px;
-`;
-
 const NoUnderlineLink = styled(Link)`
   text-decoration: none;
 
@@ -34,7 +28,6 @@ const ViewCommentsLink = styled.p`
 
 export default {
   MainContainer,
-  PostContainer,
   NoUnderlineLink,
   ViewCommentsLink,
 };

@@ -4,6 +4,7 @@ import GlobalStyle from "./styles/GlobalStyle";
 import Header from "./Components/Header";
 import Home from "./pages/Home";
 import Post from "./pages/Post";
+import Signup from "./pages/Signup";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="post/:postId" element={<Post />} />
+        <Route path="signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );
