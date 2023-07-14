@@ -14,6 +14,9 @@ const PostContainer = styled.div`
 const ViewCommentsLink = styled.p`
   color: #8d7b68;
   font-size: 24px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default {

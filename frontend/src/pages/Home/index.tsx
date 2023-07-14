@@ -34,19 +34,28 @@ const Home = () => {
 
   return (
     <Styled.MainContainer>
-      {posts?.map((post) => (
-        <>
-          <Link to={`/post/${post.postId}`} key={post.postId}>
-            <PostContainer post={post} />
-          </Link>
-          {post.commentCount > 0 && (
-            <Styled.ViewCommentsLink onClick={() => handleOpenModal(post)}>
-              {`댓글 ${post.commentCount}개 보기`}
-            </Styled.ViewCommentsLink>
-          )}
-          <CommentsContainer comments={post.Comments.slice(0, 3)} />
-        </>
-      ))}
+      {posts?.map((post) => {
+        const commentLinkText =
+          post.commentCount > 3
+            ? `댓글 ${post.commentCount}개 모두 보기`
+            : `댓글 ${post.commentCount}개 보기`;
+
+        return (
+          <>
+            <Link to={`/post/${post.postId}`} key={post.postId}>
+              <PostContainer post={post} />
+            </Link>
+            {post.commentCount > 0 && (
+              <Styled.ViewCommentsLink onClick={() => handleOpenModal(post)}>
+                {commentLinkText}
+              </Styled.ViewCommentsLink>
+            )}
+            <CommentsContainer
+              comments={post.Comments.slice(0, 3)}
+            />
+          </>
+        );
+      })}
       {selectedPost && (
         <Modal onClose={handleCloseModal}>
           <CommentsContainer comments={selectedPost.Comments} />
