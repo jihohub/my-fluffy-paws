@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Styled from "./index.styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../store/reducers/userSlice";
 
 const FloatingButtonComponent: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const token = useSelector(selectToken);
   const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
+  const [isOnPostForm, setIsOnPostForm] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoggedin(token !== null);
   }, [token]);
+
+  useEffect(() => {
+    setIsOnPostForm(location.pathname === "/post/new");
+  }, [location]);
 
   const handleFloatingButtonClick = () => {
     navigate("/post/new");
@@ -19,7 +25,7 @@ const FloatingButtonComponent: React.FC = () => {
 
   return (
     <>
-      {isLoggedin ? (
+      {isLoggedin && !isOnPostForm  ? (
         <Styled.FloatingButtonContainer>
           <Styled.FloatingButton onClick={handleFloatingButtonClick}>
             +
