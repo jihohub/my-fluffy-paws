@@ -31,3 +31,5 @@ export const selectComment = (state: RootState) => selectCommentState(state).com
 
 export const persistor = persistStore(store);
 export default store;
+
+// persistor.purge();

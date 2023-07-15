@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Styled from "./index.styles";
 import PostImage from "../../Components/PostImage";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { createNewPost } from "../../store/reducers/postSlice";
-import { selectUser } from "../../store/reducers/userSlice";
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const userInfo = useSelector(selectUser);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [content, setContent] = useState<string>("");
@@ -25,13 +23,10 @@ const PostForm: React.FC = () => {
     setIsActiveContent(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
-
-    const userId = userInfo?.userId;
-    formData.append("userId", String(userId));
     formData.append("image", selectedImage as Blob);
     formData.append("content", content);
 
@@ -52,7 +47,13 @@ const PostForm: React.FC = () => {
       ) : (
         <Styled.InputContainer>
           <Styled.Label>문구 추가 (선택 사항)</Styled.Label>
-          <Styled.Input />
+          <Styled.Input
+            type="text"
+            value={content}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setContent(e.target.value)
+            }
+          />
         </Styled.InputContainer>
       )}
       {!isActiveContent ? (

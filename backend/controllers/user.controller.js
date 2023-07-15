@@ -1,5 +1,6 @@
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const User = require("../models/user.model");
@@ -25,6 +26,14 @@ const uploadFile = async (file) => {
   const command = new PutObjectCommand(uploadParams);
   const response = await s3Client.send(command);
   return response;
+};
+
+const deleteTempFile = (file) => {
+  fs.unlink(file.path, (err) => {
+    if (err) {
+      console.error("Error deleting temp file:", err);
+    }
+  });
 };
 
 // 회원가입
@@ -59,11 +68,10 @@ const signup = async (req, res) => {
     if (userImage) {
       // 파일을 AWS S3에 업로드
       const uploadedFile = await uploadFile(userImage); // 파일을 AWS S3에 업로드
-      // const uploadedFilePath = uploadedFile.Location; // 업로드된 파일의 경로
-      // console.log(uploadedFile);
+
       // 업로드된 파일 경로를 userImage 변수에 할당
       uploadedImage = `https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/${userImage.originalname}`;
-      // uploadedImage = uploadedFilePath;
+      deleteTempFile(userImage);
     }
 
     // 비밀번호를 해시화
@@ -108,6 +116,8 @@ const login = async (req, res) => {
       expiresIn: "1h",
     });
 
+    req.session.userId = user.userId;
+
     res.status(200).json({ token });
   } catch (error) {
     console.error(error);
@@ -128,17 +138,17 @@ const logout = async (req, res) => {
 // 사용자 프로필 정보 가져오기
 const getUser = async (req, res) => {
   try {
-    const { userId } = req.user;
+    const { userId } = req.params;
 
-    const user = await User.findByPk(userId, {
-      attributes: ["userName", "userImage"],
-    });
+      const user = await User.findByPk(userId, {
+        attributes: ["userId", "userName", "userImage"],
+      });
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
 
-    res.status(200).json(user);
+      res.status(200).json(user);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

@@ -1,7 +1,40 @@
-const { Sequelize } = require("sequelize");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
+const session = require("express-session");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const fs = require("fs");
 const Post = require("../models/post.model");
 const User = require("../models/user.model");
 const Comment = require("../models/comment.model");
+
+const s3Client = new S3Client({
+  region: "ap-northeast-2",
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  },
+});
+
+const uploadFile = async (file) => {
+  console.log(file);
+  const uploadParams = {
+    Bucket: "jiho-image-storage",
+    Key: file.originalname, // 업로드될 파일 이름
+    Body: fs.createReadStream(file.path), // 업로드할 파일 데이터
+  };
+
+  const command = new PutObjectCommand(uploadParams);
+  const response = await s3Client.send(command);
+  return response;
+};
+
+const deleteTempFile = (file) => {
+  fs.unlink(file.path, (err) => {
+    if (err) {
+      console.error("Error deleting temp file:", err);
+    }
+  });
+};
 
 // 모든 게시물 가져오기
 const getAllPosts = async (req, res) => {
@@ -35,7 +68,6 @@ const getAllPosts = async (req, res) => {
         userImage,
       };
     });
-
 
     res.status(200).json(postsWithUser);
   } catch (error) {
@@ -86,11 +118,23 @@ const getPostById = async (req, res) => {
 // 게시물 작성
 const createPost = async (req, res) => {
   try {
-    const { userId, image, content } = req.body;
+    const { content } = req.body;
+    const image = req.file;
+
+    let uploadedImage = "";
+
+    if (image) {
+      // 파일을 AWS S3에 업로드
+      const uploadedFile = await uploadFile(image); // 파일을 AWS S3에 업로드
+      console.log(uploadFile);
+      // 업로드된 파일 경로를 image 변수에 할당
+      uploadedImage = `https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/${image.originalname}`;
+      deleteTempFile(image);
+    }
 
     const newPost = await Post.create({
-      userId,
-      image,
+      userId: req.session.userId,
+      image: uploadedImage,
       content,
     });
 
