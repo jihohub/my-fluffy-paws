@@ -58,9 +58,14 @@ export const fetchPostById = createAsyncThunk(
 
 export const createNewPost = createAsyncThunk(
   "post/createNewPost",
-  async (postData: Partial<Post>) => {
+  async (formData: FormData) => {
     try {
-      const response = await axios.post("/api/post", postData);
+      const response = await axios.post("/api/post", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(formData)
       return response.data as Post;
     } catch (error) {
       throw Error("Failed to create new post");

@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import Styled from "./index.styles";
 import PostImage from "../../Components/PostImage";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import { createNewPost } from "../../store/reducers/postSlice";
+import { selectUser } from "../../store/reducers/userSlice";
 
 const PostForm: React.FC = () => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const userInfo = useSelector(selectUser);
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [content, setContent] = useState<string>("");
   const [isUploadImage, setIsUploadImage] = useState<boolean>(false);
@@ -18,9 +25,17 @@ const PostForm: React.FC = () => {
     setIsActiveContent(true);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Call API for submitting the post
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    const userId = userInfo?.userId;
+    formData.append("userId", String(userId));
+    formData.append("image", selectedImage as Blob);
+    formData.append("content", content);
+
+    dispatch(createNewPost(formData));
   };
 
   return (
@@ -40,17 +55,6 @@ const PostForm: React.FC = () => {
           <Styled.Input />
         </Styled.InputContainer>
       )}
-
-      {/* <Styled.InputContainer>
-        {selectedImage ? (
-          <PostImage
-            imageUrl={URL.createObjectURL(selectedImage)}
-            onChange={handleImageChange}
-          />
-        ) : (
-          <Styled.UploadImageArea />
-        )}
-      </Styled.InputContainer> */}
       {!isActiveContent ? (
         <Styled.ButtonContainer>
           <Styled.Button
@@ -63,12 +67,11 @@ const PostForm: React.FC = () => {
         </Styled.ButtonContainer>
       ) : (
         <Styled.ButtonContainer>
-          <Styled.Button color="#8D7B68">작성 완료</Styled.Button>
+          <Styled.Button color="#8D7B68" onClick={handleSubmit}>
+            작성 완료
+          </Styled.Button>
         </Styled.ButtonContainer>
       )}
-      {/* <Styled.ButtonContainer>
-        <Styled.Button color="#8D7B68">작성 완료</Styled.Button>
-      </Styled.ButtonContainer> */}
     </Styled.PostFormContainer>
   );
 };
