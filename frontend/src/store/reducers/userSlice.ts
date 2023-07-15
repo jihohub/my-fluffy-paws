@@ -7,7 +7,7 @@ export interface User {
   email: string;
   password: string;
   userName: string;
-  userProfile: string;
+  userImage: string;
 }
 
 export interface UserState {
@@ -24,9 +24,13 @@ const initialState: UserState = {
 
 export const signup = createAsyncThunk(
   "user/signup",
-  async (userData: Partial<User>) => {
+  async (formData: FormData) => {
     try {
-      const response = await axios.post("/api/user/signup", userData);
+      const response = await axios.post("/api/user/signup", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response.data;
     } catch (error) {
       throw Error("Failed to sign up");
