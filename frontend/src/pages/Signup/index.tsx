@@ -14,8 +14,6 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
 
-  const formData = new FormData();
-
   const handleImageChange = (file: File | null) => {
     setSelectedImage(file);
   }
@@ -27,6 +25,8 @@ const Signup = () => {
       // 비밀번호 확인이 일치하지 않을 경우 에러 처리
       return;
     }
+
+    const formData = new FormData();
 
     formData.append("email", email);
     formData.append("password", password);

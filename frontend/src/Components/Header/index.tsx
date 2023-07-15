@@ -10,10 +10,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const token = useSelector(selectToken);
-  const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLoggedin(token !== null);
+    setIsLoggedIn(token !== null);
   }, [token]);
 
   const handleLogoClick = () => {
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
     <Styled.HeaderContainer>
       <Styled.LogoImage src="./logo.png" onClick={handleLogoClick} />
       <Styled.ButtonContainer>
-        {!isLoggedin ? (
+        {!isLoggedIn ? (
           <>
             <Button
               color={"#8D7B68"}
