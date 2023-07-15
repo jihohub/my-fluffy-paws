@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../../controllers/user.controller");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 // 회원가입
-router.post("/signup", userController.signup);
+router.post("/signup", upload.single("userImage"), userController.signup);
 
 // 로그인
 router.post("/login", userController.login);
