@@ -115,6 +115,16 @@ const login = async (req, res) => {
   }
 };
 
+// 로그아웃
+const logout = async (req, res) => {
+  try {
+    res.status(200).json({ message: "로그아웃이 완료되었습니다." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 // 사용자 프로필 정보 가져오기
 const getUser = async (req, res) => {
   try {
@@ -178,6 +188,7 @@ const getUserComments = async (req, res) => {
 module.exports = {
   signup,
   login,
+  logout,
   getUser,
   getUserPosts,
   getUserComments,

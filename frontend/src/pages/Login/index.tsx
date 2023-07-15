@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 import Styled from "./index.styles";
 import { login } from "../../store/reducers/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // 이메일과 비밀번호를 이용하여 로그인 요청을 보냄
-    dispatch(login({ email, password }));
+    await dispatch(login({ email, password }));
+    navigate("/");
   };
 
   return (

@@ -10,6 +10,9 @@ router.post("/signup", upload.single("userImage"), userController.signup);
 // 로그인
 router.post("/login", userController.login);
 
+// 로그아웃
+router.post("/logout", userController.logout);
+
 // 사용자 프로필 정보 가져오기
 router.get("/getinfo", userController.getUser);
 
