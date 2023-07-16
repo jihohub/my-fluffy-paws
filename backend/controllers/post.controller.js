@@ -118,7 +118,7 @@ const getPostById = async (req, res) => {
 // 게시물 작성
 const createPost = async (req, res) => {
   try {
-    const { content } = req.body;
+    const { text } = req.body;
     const image = req.file;
 
     let uploadedImage = "";
@@ -135,7 +135,7 @@ const createPost = async (req, res) => {
     const newPost = await Post.create({
       userId: req.session.userId,
       image: uploadedImage,
-      content,
+      text,
     });
 
     res
@@ -151,7 +151,7 @@ const createPost = async (req, res) => {
 const updatePost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const { content } = req.body;
+    const { text } = req.body;
 
     const post = await Post.findByPk(postId);
 
@@ -159,7 +159,7 @@ const updatePost = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    post.update({ content });
+    post.update({ text });
 
     res.status(200).json({ message: "게시물 수정이 완료되었습니다.", post });
   } catch (error) {

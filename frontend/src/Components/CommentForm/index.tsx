@@ -9,35 +9,35 @@ import Styled from "./index.styles";
 const CommentForm: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { postId } = useParams() as { postId: string };
-  const [content, setContent] = useState("");
+  const [ text, setText] = useState("");
 
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setContent(event.target.value);
+    setText(event.target.value);
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     // 유효성 검사
-    if (content.trim() === "") {
+    if (text.trim() === "") {
       return; // 댓글 내용이 비어있으면 전송하지 않음
     }
 
     // 댓글 생성 액션 디스패치
-    await dispatch(createComment({ postId: parseInt(postId), content }));
+    await dispatch(createComment({ postId: parseInt(postId), text }));
     await dispatch(fetchPostById(parseInt(postId)));
 
     // 댓글 내용 초기화
-    setContent("");
+    setText("");
   };
 
   return (
     <Styled.CommentFormContainer onSubmit={handleSubmit}>
       <Styled.Textarea
         placeholder="댓글을 입력하세요..."
-        value={content}
+        value={text}
         onChange={handleContentChange}
       />
       <Styled.SubmitButton type="submit">댓글 작성</Styled.SubmitButton>

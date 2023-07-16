@@ -13,7 +13,7 @@ export interface Post {
   userName: string;
   userImage: string;
   image: string;
-  content: string;
+  text: string;
   userId: number;
   commentCount: number;
   Comments: Comment[];
@@ -75,9 +75,9 @@ export const createNewPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   "post/updatePost",
-  async ({ postId, content }: { postId: number; content: string }) => {
+  async ({ postId, text }: { postId: number; text: string }) => {
     try {
-      const response = await axios.put(`/api/post/${postId}`, { content });
+      const response = await axios.put(`/api/post/${postId}`, { text });
       return response.data as Post;
     } catch (error) {
       throw Error("Failed to update post");

@@ -36,7 +36,7 @@ const Signup = () => {
     formData.append("userImage", selectedImage as Blob);
 
     const result = await dispatch(signup(formData));
-    console.log(result);
+
     if (result.type === "user/signup/fulfilled") {
       setSignupComplete(true);
     }

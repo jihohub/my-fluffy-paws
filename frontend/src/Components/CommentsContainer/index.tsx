@@ -8,7 +8,7 @@ interface CommentsContainerProps {
       userName: string;
       userImage: string;
     };
-    content: string;
+    text: string;
   }[];
 }
 
@@ -24,7 +24,7 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
           <Styled.CommentUserName>
             {comment.User.userName}
           </Styled.CommentUserName>
-          <Styled.CommentContent>{comment.content}</Styled.CommentContent>
+          <Styled.CommentContent>{comment.text}</Styled.CommentContent>
         </Styled.CommentItem>
       ))}
     </Styled.CommentList>

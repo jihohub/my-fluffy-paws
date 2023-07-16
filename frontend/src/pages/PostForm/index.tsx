@@ -11,7 +11,7 @@ const PostForm: React.FC = () => {
   const navigate = useNavigate();
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [content, setContent] = useState<string>("");
+  const [text, setText] = useState<string>("");
   const [isUploadImage, setIsUploadImage] = useState<boolean>(false);
   const [isActiveContent, setIsActiveContent] = useState<boolean>(false);
 
@@ -30,7 +30,7 @@ const PostForm: React.FC = () => {
 
     const formData = new FormData();
     formData.append("image", selectedImage as Blob);
-    formData.append("content", content);
+    formData.append("text", text);
 
     await dispatch(createNewPost(formData));
     navigate("/");
@@ -52,9 +52,9 @@ const PostForm: React.FC = () => {
           <Styled.Label>문구 추가 (선택 사항)</Styled.Label>
           <Styled.Input
             type="text"
-            value={content}
+            value={text}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setContent(e.target.value)
+              setText(e.target.value)
             }
           />
         </Styled.InputContainer>
