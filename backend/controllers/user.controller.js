@@ -85,8 +85,6 @@ const signup = async (req, res) => {
       userImage: uploadedImage,
     });
 
-    console.log(newUser); 
-
     res.status(201).json({ message: "가입이 완료되었습니다." });
   } catch (error) {
     console.error(error);
