@@ -26,11 +26,11 @@ const getAllComments = async (req, res) => {
 // 댓글 작성
 const createComment = async (req, res) => {
   try {
-    const { postId, userId, content } = req.body;
+    const { postId, content } = req.body;
 
     const comment = await Comment.create({
       postId,
-      userId,
+      userId: req.session.userId,
       content,
     });
 

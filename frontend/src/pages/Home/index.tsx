@@ -7,10 +7,13 @@ import {
   Post as PostData,
   fetchPosts,
   selectPosts,
+  selectIsLoading,
+  selectError,
 } from "../../store/reducers/postSlice";
 import PostContainer from "../../Components/PostContainer";
 import CommentsContainer from "../../Components/CommentsContainer";
 import Modal from "../../Components/Modal";
+import Loading from "../../Components/Loading";
 
 const Home = () => {
   const posts = useSelector(selectPosts);
@@ -20,6 +23,9 @@ const Home = () => {
     dispatch(fetchPosts());
     console.log(posts);
   }, []);
+
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -38,13 +44,24 @@ const Home = () => {
     }
   };
 
-
   useEffect(() => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!posts) {
+    return <div>Posts not found</div>;
+  }
 
   return (
     <Styled.MainContainer>
