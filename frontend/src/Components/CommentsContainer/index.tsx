@@ -1,5 +1,7 @@
 import React from "react";
 import Styled from "./index.styles";
+import moment from "moment";
+import "moment/locale/ko";
 
 interface CommentsContainerProps {
   comments: {
@@ -9,10 +11,17 @@ interface CommentsContainerProps {
       userImage: string;
     };
     text: string;
+    createdAt: Date;
   }[];
 }
 
 const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
+  // const showTimeDiff: string = (createdAt: Date) => {
+  //   Const now = Moment();
+  //   return ""
+  // }
+
+
   return (
     <Styled.CommentList>
       {comments.map((comment) => (
@@ -25,6 +34,9 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
             {comment.User.userName}
           </Styled.CommentUserName>
           <Styled.CommentContent>{comment.text}</Styled.CommentContent>
+          <Styled.CommentDate>
+            {moment(comment.createdAt).fromNow()}
+          </Styled.CommentDate>
         </Styled.CommentItem>
       ))}
     </Styled.CommentList>
