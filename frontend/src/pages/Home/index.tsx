@@ -73,12 +73,7 @@ const Home = () => {
 
           return (
             <>
-              <Styled.NoUnderlineLink
-                to={`/post/${post.postId}`}
-                key={post.postId}
-              >
-                <PostContainer post={post} />
-              </Styled.NoUnderlineLink>
+              <PostContainer post={post} />
               {post?.commentCount > 0 && (
                 <>
                   <Styled.ViewCommentsLink

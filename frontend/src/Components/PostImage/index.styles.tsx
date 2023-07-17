@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 const PostImageContainer = styled.div`
   position: relative;
-  width: 600px;
-  max-width: 600px;
-  height: 600px;
+  width: 400px;
+  max-width: 400px;
+  height: 400px;
   margin: 0 auto;
   overflow: hidden;
   &:hover {
@@ -60,10 +60,15 @@ const HoverText = styled.p`
   }
 `;
 
+const AfterUpload = styled.div`
+
+`;
+
 export default {
   PostImageContainer,
   PreviewImage,
   EmptyImage,
   ImageInput,
   HoverText,
+  AfterUpload,
 };

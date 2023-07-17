@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { Post } from "./postSlice";
 
 export interface User {
   userId: number;
@@ -13,11 +14,13 @@ export interface User {
   password: string;
   userName: string;
   userImage: string;
+  posts: Post[];
 }
 
 export interface UserState {
   user: User | null;
   token: string | null;
+  otherUser: User | null;
   loading: boolean;
   error: string | null;
 }
@@ -25,6 +28,7 @@ export interface UserState {
 const initialState: UserState = {
   user: null,
   token: null,
+  otherUser: null,
   loading: false,
   error: "",
 };
@@ -64,32 +68,14 @@ export const logout = createAsyncThunk(
   }
 );
 
-export const getUserInfo = createAsyncThunk("user/getUserInfo", async () => {
-  try {
-    const response = await axios.get("/api/user/getinfo");
-    return response.data;
-  } catch (error) {
-    throw Error("Failed to get user info");
-  }
-});
-
-export const getUserPosts = createAsyncThunk("user/getUserPosts", async () => {
-  try {
-    const response = await axios.get("/api/user/posts");
-    return response.data;
-  } catch (error) {
-    throw Error("Failed to get user posts");
-  }
-});
-
-export const getUserComments = createAsyncThunk(
-  "user/getUserComments",
-  async () => {
+export const getUserInfo = createAsyncThunk(
+  "user/getUserInfo",
+  async (userId: number) => {
     try {
-      const response = await axios.get("/api/user/comments");
+      const response = await axios.get(`/api/user/${userId}`);
       return response.data;
     } catch (error) {
-      throw Error("Failed to get user comments");
+      throw Error("Failed to get user info");
     }
   }
 );
@@ -117,6 +103,7 @@ const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
+        state.user = action.payload.user;
         state.token = action.payload.token;
       })
       .addCase(login.rejected, (state, action) => {
@@ -141,35 +128,12 @@ const userSlice = createSlice({
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.otherUser = action.payload;
       })
       .addCase(getUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })
-      .addCase(getUserPosts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getUserPosts.fulfilled, (state, action) => {
-        state.loading = false;
-      })
-      .addCase(getUserPosts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error?.message || "";
-      })
-      .addCase(getUserComments.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getUserComments.fulfilled, (state, action) => {
-        state.loading = false;
-        // Update the user's comments in the state
-      })
-      .addCase(getUserComments.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error?.message || "";
-      });
   },
 });
 
