@@ -4,6 +4,8 @@ const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const User = require("../models/user.model");
+const Post = require("../models/post.model");
+const Comment = require("../models/comment.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -141,53 +143,19 @@ const getUser = async (req, res) => {
 
       const user = await User.findByPk(userId, {
         attributes: ["userId", "userName", "userImage"],
+        include: [
+          {
+            model: Post,
+            as: "posts",
+          },
+        ],
       });
 
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
 
-      res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// 사용자가 작성한 Post 목록 가져오기
-const getUserPosts = async (req, res) => {
-  try {
-    const { userId } = req.user;
-
-    const userPosts = await User.findByPk(userId, {
-      include: [
-        {
-          model: Post,
-        },
-      ],
-    });
-
-    res.status(200).json(userPosts.Posts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// 사용자가 작성한 Comment 목록 가져오기
-const getUserComments = async (req, res) => {
-  try {
-    const { userId } = req.user;
-
-    const userComments = await User.findByPk(userId, {
-      include: [
-        {
-          model: Comment,
-        },
-      ],
-    });
-
-    res.status(200).json(userComments.Comments);
+    res.status(200).json(user);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -199,6 +167,4 @@ module.exports = {
   login,
   logout,
   getUser,
-  getUserPosts,
-  getUserComments,
 };

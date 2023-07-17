@@ -14,12 +14,6 @@ router.post("/login", userController.login);
 router.post("/logout", userController.logout);
 
 // 사용자 프로필 정보 가져오기
-router.get("/getinfo/:userId", userController.getUser);
-
-// 사용자가 작성한 Post 목록 가져오기
-router.get("/posts", userController.getUserPosts);
-
-// 사용자가 작성한 Comment 목록 가져오기
-router.get("/comments", userController.getUserComments);
+router.get("/:userId", userController.getUser);
 
 module.exports = router;

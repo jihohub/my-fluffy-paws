@@ -20,22 +20,14 @@ const UserName = styled.h2`
 `;
 
 const PostsContainer = styled.div`
-  margin-top: 30px;
-
-  h2 {
-    font-size: 20px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-
-    li {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-  }
+  display: grid;
+  width: 600px;
+  max-width: 600px;
+  grid-template-columns: repeat(3, 1fr); // 3개의 열로 구성
+  gap: 10px; // 열과 행 사이의 간격
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
 `;
 
 export default {

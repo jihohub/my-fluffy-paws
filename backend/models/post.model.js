@@ -58,6 +58,7 @@ Post.addHook("afterCreate", async (post) => {
 });
 
 Post.hasMany(Comment, { foreignKey: "postId" });
+User.hasMany(Post, { as: "posts", foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Post;
