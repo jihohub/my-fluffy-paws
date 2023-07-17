@@ -22,7 +22,7 @@ Post.init(
     image: {
       type: DataTypes.STRING,
     },
-    content: {
+    text: {
       type: DataTypes.STRING,
     },
     commentCount: {

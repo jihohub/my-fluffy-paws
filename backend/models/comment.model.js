@@ -25,7 +25,7 @@ Comment.init(
         key: "postId",
       },
     },
-    content: {
+    text: {
       type: DataTypes.STRING,
     },
   },

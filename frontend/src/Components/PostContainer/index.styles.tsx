@@ -3,7 +3,6 @@ import styled from "styled-components";
 const PostContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
-  padding: 10px;
 `;
 
 const AuthorContainer = styled.div`
@@ -25,6 +24,12 @@ const AuthorName = styled.p`
   text-decoration: none;
 `;
 
+const ContentContainer = styled.div`
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+`;
+
 const PostImage = styled.img`
   width: 100%;
   max-height: 400px;
@@ -32,7 +37,7 @@ const PostImage = styled.img`
   margin-bottom: 10px;
 `;
 
-const PostContent = styled.p`
+const PostText = styled.p`
   font-size: 24px;
   margin-bottom: 10px;
   text-decoration: none;
@@ -43,6 +48,7 @@ export default {
   AuthorContainer,
   AuthorImage,
   AuthorName,
+  ContentContainer,
   PostImage,
-  PostContent,
+  PostText,
 };

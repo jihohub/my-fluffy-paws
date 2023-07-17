@@ -1,4 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createAction,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 
@@ -12,12 +17,14 @@ export interface User {
 
 export interface UserState {
   user: User | null;
+  token: string | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
   user: null,
+  token: null,
   loading: false,
   error: "",
 };
@@ -47,6 +54,13 @@ export const login = createAsyncThunk(
     } catch (error) {
       throw Error("Failed to log in");
     }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "user/logout",
+  async () => {
+    return
   }
 );
 
@@ -101,10 +115,23 @@ const userSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
+        state.token = action.payload.token;
       })
       .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loading = false;
+        state.token = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })
@@ -126,7 +153,6 @@ const userSlice = createSlice({
       })
       .addCase(getUserPosts.fulfilled, (state, action) => {
         state.loading = false;
-        // Update the user's posts in the state
       })
       .addCase(getUserPosts.rejected, (state, action) => {
         state.loading = false;
@@ -154,5 +180,6 @@ export const { actions: userActions, reducer: userReducer } = userSlice;
 export default userSlice.reducer;
 
 export const selectUser = (state: RootState) => state.user.user;
+export const selectToken = (state: RootState) => state.user.token;
 export const selectIsLoading = (state: RootState) => state.user.loading;
 export const selectError = (state: RootState) => state.user.error;

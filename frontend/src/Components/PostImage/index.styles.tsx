@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-const SignupImageContainer = styled.div`
+const PostImageContainer = styled.div`
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 600px;
+  max-width: 600px;
+  height: 600px;
   margin: 0 auto;
   overflow: hidden;
   &:hover {
@@ -14,8 +15,21 @@ const SignupImageContainer = styled.div`
 const PreviewImage = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  object-fit: cover;  
+  object-fit: cover;
+`;
+
+const EmptyImage = styled.div`
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: visible;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const ImageInput = styled.input`
@@ -40,10 +54,16 @@ const HoverText = styled.p`
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 
-  ${SignupImageContainer}:hover & {
+  ${PostImageContainer}:hover & {
     opacity: 1;
     pointer-events: none;
   }
 `;
 
-export default { SignupImageContainer, PreviewImage, ImageInput, HoverText };
+export default {
+  PostImageContainer,
+  PreviewImage,
+  EmptyImage,
+  ImageInput,
+  HoverText,
+};

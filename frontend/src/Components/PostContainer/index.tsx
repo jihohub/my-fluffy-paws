@@ -13,8 +13,10 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
         <Styled.AuthorImage src={post.userImage} alt="User Image" />
         <Styled.AuthorName>{post.userName}</Styled.AuthorName>
       </Styled.AuthorContainer>
-      <Styled.PostImage src={post.image} alt="Post" />
-      <Styled.PostContent>{post.content}</Styled.PostContent>
+      <Styled.ContentContainer>
+        <Styled.PostImage src={post.image} alt="Post" />
+        <Styled.PostText>{post.text}</Styled.PostText>
+      </Styled.ContentContainer>
     </Styled.PostContainer>
   );
 };

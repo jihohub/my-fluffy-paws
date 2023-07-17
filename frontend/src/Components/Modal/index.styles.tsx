@@ -23,7 +23,7 @@ const ModalContentContainer = styled.div`
 const ModalContent = styled.div`
   background-color: #fff;
   width: 600px;
-  padding: 20px;
+  padding: 60px 20px 20px 20px;
   border-radius: 4px;
 
   @media (max-width: 768px) {
@@ -33,7 +33,7 @@ const ModalContent = styled.div`
 
 const CloseButton = styled.span`
   position: absolute;
-  padding: 5px;
+  top: -40px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   border: none;
