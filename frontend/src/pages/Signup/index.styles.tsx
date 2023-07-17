@@ -4,6 +4,7 @@ const SignupContainer = styled.div`
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
+  margin-bottom: 80px;
 `;
 
 const InputContainer = styled.div`

@@ -21,35 +21,42 @@ const Login = () => {
   };
 
   return (
-    <Styled.LoginContainer>
-      <Styled.InputContainer>
-        <Styled.Label>Email 주소</Styled.Label>
-        <Styled.Input
-          type="email"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.target.value)
-          }
-        />
-      </Styled.InputContainer>
+    <>
+      <Styled.LoginContainer>
+        <Styled.InputContainer>
+          <Styled.Label>Email 주소</Styled.Label>
+          <Styled.Input
+            type="email"
+            value={email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
+          />
+        </Styled.InputContainer>
 
-      <Styled.InputContainer>
-        <Styled.Label>비밀번호</Styled.Label>
-        <Styled.Input
-          type="password"
-          value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-        />
-      </Styled.InputContainer>
+        <Styled.InputContainer>
+          <Styled.Label>비밀번호</Styled.Label>
+          <Styled.Input
+            type="password"
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+          />
+        </Styled.InputContainer>
 
-      <Styled.ButtonContainer>
-        <Styled.Button color="#8D7B68" onClick={handleSubmit}>
-          로그인
-        </Styled.Button>
-      </Styled.ButtonContainer>
-    </Styled.LoginContainer>
+        <Styled.ButtonContainer>
+          <Styled.Button color="#8D7B68" onClick={handleSubmit}>
+            로그인
+          </Styled.Button>
+        </Styled.ButtonContainer>
+      </Styled.LoginContainer>
+      <Styled.SignupButtonContainer>
+        <Styled.SignupLink to="/signup">
+          회원이 아니신가요? 회원가입 하기
+        </Styled.SignupLink>
+      </Styled.SignupButtonContainer>
+    </>
   );
 };
 

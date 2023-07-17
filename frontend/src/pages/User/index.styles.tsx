@@ -20,22 +20,7 @@ const UserName = styled.h2`
 `;
 
 const PostsContainer = styled.div`
-  margin-top: 30px;
-
-  h2 {
-    font-size: 20px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-
-    li {
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-  }
+  margin-top: 10px;
 `;
 
 export default {

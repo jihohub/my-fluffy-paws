@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const LoginContainer = styled.div`
   max-width: 400px;
@@ -37,6 +38,20 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const SignupButtonContainer = styled.div`
+  margin-top: 10px;
+  text-align: center;
+`;
+
+const SignupLink = styled(Link)`
+  color: #8d7b68;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export default {
   LoginContainer,
   InputContainer,
@@ -44,4 +59,6 @@ export default {
   Input,
   ButtonContainer,
   Button,
+  SignupButtonContainer,
+  SignupLink,
 };

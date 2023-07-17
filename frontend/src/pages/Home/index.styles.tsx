@@ -4,18 +4,7 @@ import { Link } from "react-router-dom";
 const MainContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
-`;
-
-const NoUnderlineLink = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
+  margin-bottom: 80px;
 `;
 
 const ViewCommentsLink = styled.p`
@@ -28,6 +17,5 @@ const ViewCommentsLink = styled.p`
 
 export default {
   MainContainer,
-  NoUnderlineLink,
   ViewCommentsLink,
 };
