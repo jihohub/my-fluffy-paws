@@ -2,16 +2,19 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUserInfo, logout } from "../../store/reducers/userSlice";
+import { getUserInfo, selectIsLoading, logout } from "../../store/reducers/userSlice";
 import { RootState } from "../../store/store";
 import Styled from "./index.styles";
 import PostGrid from "../../Components/PostGrid";
 import Button from "../../Components/Button";
+import Loading from "../../Components/Loading";
 
 const User = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userId } = useParams<{ userId: string }>();
+
+  const isLoading = useSelector(selectIsLoading);
   const myUserId = useSelector((state: RootState) => state.user.user?.userId);
   const otherUser = useSelector((state: RootState) => state.user.otherUser);
 
@@ -21,16 +24,15 @@ const User = () => {
   };
 
   useEffect(() => {
-    console.log("otherUser", otherUser);
-  }, [dispatch, otherUser]);
-
-  useEffect(() => {
-    console.log("otherUser", otherUser);
     // 사용자 정보와 사용자가 작성한 포스트 정보를 가져오는 액션 호출
     if (userId !== undefined) {
       dispatch(getUserInfo(parseInt(userId)));
     }
   }, [userId]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Styled.UserProfileContainer>

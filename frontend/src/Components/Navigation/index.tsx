@@ -35,7 +35,7 @@ const Navigation = () => {
       <Styled.NavItem to="/post/new">
         <CgAddR />
       </Styled.NavItem>
-      <Styled.NavItem to="/notifications">
+      <Styled.NavItem to="/movie">
         <BiMoviePlay />
       </Styled.NavItem>
       {!isLoggedIn ? (
