@@ -26,12 +26,12 @@ const getAllComments = async (req, res) => {
 // 댓글 작성
 const createComment = async (req, res) => {
   try {
-    const { postId, userId, content } = req.body;
+    const { postId, text } = req.body;
 
     const comment = await Comment.create({
       postId,
-      userId,
-      content,
+      userId: req.session.userId,
+      text,
     });
 
     const post = await Post.findByPk(postId);
@@ -53,7 +53,7 @@ const createComment = async (req, res) => {
 const updateComment = async (req, res) => {
   try {
     const { commentId } = req.params;
-    const { content } = req.body;
+    const { text } = req.body;
 
     const comment = await Comment.findByPk(commentId);
 
@@ -61,7 +61,7 @@ const updateComment = async (req, res) => {
       return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
     }
 
-    comment.update({ content });
+    comment.update({ text });
 
     res.status(200).json(comment);
   } catch (error) {

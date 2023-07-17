@@ -16,8 +16,8 @@ const Modal: React.FC<ModalProps> = ({ onClose, children, modalRef }) => {
   return (
     <Styled.ModalContainer>
       <Styled.ModalContentContainer ref={modalRef}>
-        <Styled.ModalContent>{children}</Styled.ModalContent>
         <Styled.CloseButton onClick={onClose}>+</Styled.CloseButton>
+        <Styled.ModalContent>{children}</Styled.ModalContent>
       </Styled.ModalContentContainer>
     </Styled.ModalContainer>
   );

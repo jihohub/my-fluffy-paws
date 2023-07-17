@@ -22,3 +22,6 @@ dist/
 
 # Log files
 /*.log
+
+# misc
+uplodas/

@@ -10,7 +10,10 @@ import {
 } from "../../store/reducers/postSlice";
 import Styled from "./index.styles";
 import PostContainer from "../../Components/PostContainer";
+import { fetchComments } from "../../store/reducers/commentSlice";
 import CommentsContainer from "../../Components/CommentsContainer";
+import CommentForm from "../../Components/CommentForm";
+import Loading from "../../Components/Loading";
 
 const Post = () => {
   const { postId } = useParams() as { postId: string };
@@ -22,11 +25,11 @@ const Post = () => {
 
   useEffect(() => {
     dispatch(fetchPostById(parseInt(postId)));
-    console.log(post?.Comments);
-  }, []);
+    dispatch(fetchComments(parseInt(postId)));
+  }, [dispatch, postId]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
@@ -43,6 +46,7 @@ const Post = () => {
         <PostContainer post={post}></PostContainer>
         <CommentsContainer comments={post.Comments} />
       </Styled.PostContainer>
+      <CommentForm />
     </Styled.MainContainer>
   );
 };
