@@ -9,11 +9,11 @@ interface PostContainerProps {
 const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
   return (
     <Styled.PostContainer>
-      <Styled.AuthorContainer>
+      <Styled.AuthorContainer to={`/user/${post.userId}`}>
         <Styled.AuthorImage src={post.userImage} alt="User Image" />
         <Styled.AuthorName>{post.userName}</Styled.AuthorName>
       </Styled.AuthorContainer>
-      <Styled.ContentContainer>
+      <Styled.ContentContainer to={`/post/${post.postId}`}>
         <Styled.PostImage src={post.image} alt="Post" />
         <Styled.PostText>{post.text}</Styled.PostText>
       </Styled.ContentContainer>

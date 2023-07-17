@@ -1,11 +1,22 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const PostContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
 `;
 
-const AuthorContainer = styled.div`
+const AuthorContainer = styled(Link)`
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+
   margin-bottom: 5px;
   display: flex;
   align-items: center;
@@ -24,7 +35,17 @@ const AuthorName = styled.p`
   text-decoration: none;
 `;
 
-const ContentContainer = styled.div`
+const ContentContainer = styled(Link)`
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;

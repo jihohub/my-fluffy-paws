@@ -6,18 +6,6 @@ const MainContainer = styled.div`
   margin: 0 auto;
 `;
 
-const NoUnderlineLink = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-`;
-
 const ViewCommentsLink = styled.p`
   color: #8d7b68;
   font-size: 24px;
@@ -28,6 +16,5 @@ const ViewCommentsLink = styled.p`
 
 export default {
   MainContainer,
-  NoUnderlineLink,
   ViewCommentsLink,
 };
