@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Styled from "./index.styles";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { createNewPost } from "../../store/reducers/postSlice";
 import PostImage from "../../Components/PostImage";
+import { RootState } from "../../store/store";
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const navigate = useNavigate();
+  const token = useSelector((state: RootState) => state.user.token);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [text, setText] = useState<string>("");
@@ -32,7 +34,7 @@ const PostForm: React.FC = () => {
     formData.append("image", selectedImage as Blob);
     formData.append("text", text);
 
-    await dispatch(createNewPost(formData));
+    await dispatch(createNewPost({ formData, token }));
     navigate("/");
   };
 

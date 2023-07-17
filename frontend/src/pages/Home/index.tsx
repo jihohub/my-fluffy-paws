@@ -21,7 +21,6 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchPosts());
-    console.log(posts);
   }, []);
 
   const isLoading = useSelector(selectIsLoading);

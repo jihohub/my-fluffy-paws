@@ -9,7 +9,7 @@ const getAllComments = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["userName", "userImage", "createAt"],
+          attributes: ["userName", "userImage"],
         },
       ],
     });

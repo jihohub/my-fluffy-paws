@@ -114,6 +114,7 @@ const login = async (req, res) => {
       expiresIn: "1h",
     });
 
+    console.log(token)
     req.session.userId = user.userId;
 
     res.status(200).json({ token });
