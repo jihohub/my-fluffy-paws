@@ -27,7 +27,7 @@ const AuthorName = styled.p`
 const ContentContainer = styled.div`
   margin-bottom: 5px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `;
 
 const PostImage = styled.img`
