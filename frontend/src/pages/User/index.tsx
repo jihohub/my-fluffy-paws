@@ -1,16 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { useParams } from "react-router-dom";
-import { getUserInfo } from "../../store/reducers/userSlice";
+import { useParams, useNavigate } from "react-router-dom";
+import { getUserInfo, logout } from "../../store/reducers/userSlice";
 import { RootState } from "../../store/store";
 import Styled from "./index.styles";
 import PostGrid from "../../Components/PostGrid";
+import Button from "../../Components/Button";
 
 const User = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userId } = useParams<{ userId: string }>();
+  const myUserId = useSelector((state: RootState) => state.user.user?.userId);
   const otherUser = useSelector((state: RootState) => state.user.otherUser);
+
+  const handleLogoutClick = async () => {
+    await dispatch(logout());
+    navigate("/");
+  };
 
   useEffect(() => {
     console.log("otherUser", otherUser);
@@ -30,11 +38,15 @@ const User = () => {
         <>
           <Styled.UserImage src={otherUser.userImage} alt="Profile" />
           <Styled.UserName>{otherUser.userName}</Styled.UserName>
+          {myUserId === otherUser.userId && (
+            <Button
+              color={"#8D7B68"}
+              text="로그아웃"
+              onClick={handleLogoutClick}
+            />
+          )}
           <Styled.PostsContainer>
             <PostGrid posts={otherUser?.posts} />
-            {/* {otherUser?.posts?.map((post) => (
-              <PostGrid post={post} />
-            ))} */}
           </Styled.PostsContainer>
         </>
       ) : (

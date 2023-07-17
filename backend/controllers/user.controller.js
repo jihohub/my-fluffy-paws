@@ -18,7 +18,6 @@ const s3Client = new S3Client({
 });
 
 const uploadFile = async (file) => {
-  console.log(file)
   const uploadParams = {
     Bucket: "jiho-image-storage",
     Key: file.originalname, // 업로드될 파일 이름
@@ -116,10 +115,9 @@ const login = async (req, res) => {
       expiresIn: "1h",
     });
 
-    console.log(token)
     req.session.userId = user.userId;
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

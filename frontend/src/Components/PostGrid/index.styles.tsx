@@ -8,7 +8,7 @@ const PostContainer = styled.div`
   max-width: 600px;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 80px;
 `;
 
 const HoverContainer = styled(Link)`
@@ -58,6 +58,7 @@ const PostCommentCount = styled.p`
 
 const CommentIcon = styled(FaComment)`
   margin-right: 20px;
+  color: white;
 `;
 
 export default {

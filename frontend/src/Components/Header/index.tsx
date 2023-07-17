@@ -36,7 +36,7 @@ const Header: React.FC = () => {
   return (
     <Styled.HeaderContainer>
       <Styled.LogoImage src="./logo.png" onClick={handleLogoClick} />
-      <Styled.ButtonContainer>
+      {/* <Styled.ButtonContainer>
         {!isLoggedIn ? (
           <>
             <Button
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
             onClick={handleLogoutClick}
           />
         )}
-      </Styled.ButtonContainer>
+      </Styled.ButtonContainer> */}
     </Styled.HeaderContainer>
   );
 };

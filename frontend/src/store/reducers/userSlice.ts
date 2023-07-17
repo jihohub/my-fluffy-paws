@@ -54,7 +54,6 @@ export const login = createAsyncThunk(
   async (userData: { email: string; password: string }) => {
     try {
       const response = await axios.post("/api/user/login", userData);
-
       return response.data;
     } catch (error) {
       throw Error("Failed to log in");
