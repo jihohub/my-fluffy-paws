@@ -20,13 +20,6 @@ const UserName = styled.h2`
 `;
 
 const PostsContainer = styled.div`
-  display: grid;
-  width: 600px;
-  max-width: 600px;
-  grid-template-columns: repeat(3, 1fr); // 3개의 열로 구성
-  gap: 10px; // 열과 행 사이의 간격
-  list-style: none;
-  padding: 0;
   margin-top: 10px;
 `;
 

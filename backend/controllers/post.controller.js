@@ -120,13 +120,14 @@ const createPost = async (req, res) => {
   try {
     const { text } = req.body;
     const image = req.file;
+    console.log("image", image)
 
     let uploadedImage = "";
 
     if (image) {
       // 파일을 AWS S3에 업로드
       const uploadedFile = await uploadFile(image); // 파일을 AWS S3에 업로드
-      console.log(uploadFile);
+
       // 업로드된 파일 경로를 image 변수에 할당
       uploadedImage = `https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/${image.originalname}`;
       deleteTempFile(image);

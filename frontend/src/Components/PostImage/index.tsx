@@ -29,7 +29,6 @@ const PostImage: React.FC<PostImageProps> = ({ imageUrl, onChange }) => {
         onChange={handleImageChange}
       />
       {imageUrl !== "empty" && <Styled.HoverText>이미지 변경</Styled.HoverText>}
-      
     </Styled.PostImageContainer>
   );
 };

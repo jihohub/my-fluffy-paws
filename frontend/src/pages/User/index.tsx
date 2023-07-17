@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getUserInfo } from "../../store/reducers/userSlice";
 import { RootState } from "../../store/store";
 import Styled from "./index.styles";
-import PostContainer from "../../Components/PostContainer";
+import PostGrid from "../../Components/PostGrid";
 
 const User = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -31,9 +31,10 @@ const User = () => {
           <Styled.UserImage src={otherUser.userImage} alt="Profile" />
           <Styled.UserName>{otherUser.userName}</Styled.UserName>
           <Styled.PostsContainer>
-              {otherUser?.posts?.map((post) => (
-                <PostContainer post={post} />
-              ))}
+            <PostGrid posts={otherUser?.posts} />
+            {/* {otherUser?.posts?.map((post) => (
+              <PostGrid post={post} />
+            ))} */}
           </Styled.PostsContainer>
         </>
       ) : (
