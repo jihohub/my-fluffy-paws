@@ -47,6 +47,11 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: "이미 가입된 이메일입니다." });
     }
 
+    // 이메일 형식이 올바르지 않은 경우 에러 처리
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      return res.status(400).json({ error: "올바른 이메일 형식이 아닙니다." });
+    }
+
     // 비밀번호가 8자리 이상인지 확인
     if (password.length < 8) {
       return res
@@ -61,7 +66,8 @@ const signup = async (req, res) => {
     }
 
     // 프로필 사진을 입력하지 않았으면 기본 사진으로 지정
-    let uploadedImage = "https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/avatar.png";
+    let uploadedImage =
+      "https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/avatar.png";
 
     // 파일이 업로드된 경우에만 S3에 업로드하고 파일 경로 저장
     if (userImage) {
@@ -156,9 +162,29 @@ const getUser = async (req, res) => {
   }
 };
 
+// 회원가입 시 닉네임 중복 여부를 확인하기
+const checkDuplicateUserName = async (req, res) => {
+  try {
+    const { userName } = req.body;
+
+    // 입력한 닉네임이 존재하는지 중복 검사
+    const existingName = await User.findOne({ where: { userName } });
+    if (existingName) {
+      return res.status(400).json({ error: "이미 존재하는 닉네임입니다." });
+    }
+
+    // 존재하지 않으면 중복되지 않은 닉네임으로 판단
+    res.status(200).json({ message: "사용 가능한 닉네임입니다." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
   signup,
   login,
   logout,
   getUser,
+  checkDuplicateUserName,
 };

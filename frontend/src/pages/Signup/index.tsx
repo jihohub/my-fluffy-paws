@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { signup } from "../../store/reducers/userSlice";
+import {
+  signup,
+  checkDuplicateUserName,
+  selectIsUserNameDuplicate,
+} from "../../store/reducers/userSlice";
 import Styled from "./index.styles";
 import SignupImage from "../../Components/SignupImage";
 import SignupComplete from "../../Components/SignupComplete";
 
 const Signup = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const isUserNameDuplicate = useSelector(selectIsUserNameDuplicate);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [email, setEmail] = useState<string>("");
@@ -15,7 +20,15 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [isSignupComplete, setSignupComplete] = useState<boolean>(false);
-  const [isButtonDisabled, setButtonDisabled] = useState<boolean>(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+
+  const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newUserName = e.target.value;
+    setUserName(newUserName);
+
+    // 닉네임 중복 검사 요청
+    dispatch(checkDuplicateUserName(newUserName));
+  };
 
   useEffect(() => {
     // 아이디가 이메일 형식인지 검사 (간단한 형식 체크 예시)
@@ -25,17 +38,17 @@ const Signup = () => {
     const isPasswordValid = password.length >= 8;
 
     // 비밀번호 확인이 일치하는지 검사
-    const isconfirmPasswordValid = password === confirmPassword;
+    const isConfirmPasswordValid = password === confirmPassword;
 
     // 닉네임이 입력되었는지 검사
     const isUserNameValid = userName.trim() !== "";
 
     // 모든 조건이 만족하면 버튼 활성화
-    setButtonDisabled(
+    setIsButtonDisabled(
       !(
         isEmailValid &&
         isPasswordValid &&
-        isconfirmPasswordValid &&
+        isConfirmPasswordValid &&
         isUserNameValid
       )
     );
@@ -114,10 +127,13 @@ const Signup = () => {
             <Styled.Input
               type="text"
               value={userName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setUserName(e.target.value)
-              }
+              onChange={handleUserNameChange}
             />
+            {isUserNameDuplicate && (
+              <Styled.ErrorMessage>
+                이미 존재하는 닉네임입니다.
+              </Styled.ErrorMessage>
+            )}
           </Styled.InputContainer>
 
           <Styled.InputContainer>

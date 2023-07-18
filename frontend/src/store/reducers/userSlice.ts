@@ -14,6 +14,7 @@ export interface User {
 export interface UserState {
   user: User | null;
   otherUser: User | null;
+  isUserNameDuplicate: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -21,6 +22,7 @@ export interface UserState {
 const initialState: UserState = {
   user: null,
   otherUser: null,
+  isUserNameDuplicate: false,
   loading: false,
   error: "",
 };
@@ -66,6 +68,22 @@ export const getUserInfo = createAsyncThunk(
       return response.data;
     } catch (error) {
       throw Error("Failed to get user info");
+    }
+  }
+);
+
+export const checkDuplicateUserName = createAsyncThunk(
+  "user/checkDuplicateUserName",
+  async (userName: string) => {
+    try {
+      const response = await axios.post("/api/user/checkname", {
+        userName,
+      });
+
+      // 서버로부터 받은 응답에 따라 중복 여부를 판단하여 상태값 반환
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to check duplicate username");
     }
   }
 );
@@ -122,6 +140,12 @@ const userSlice = createSlice({
       .addCase(getUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
+      })
+      .addCase(checkDuplicateUserName.fulfilled, (state, action) => {
+        state.isUserNameDuplicate = false;
+      })
+      .addCase(checkDuplicateUserName.rejected, (state, action) => {
+        state.isUserNameDuplicate = true;
       });
   },
 });
@@ -129,6 +153,8 @@ const userSlice = createSlice({
 // 유저와 관련된 상태 선택자들
 export const selectUserState = (state: RootState) => state.user;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectIsUserNameDuplicate = (state: RootState) =>
+  state.user.isUserNameDuplicate;
 export const selectIsLoading = (state: RootState) => state.user.loading;
 export const selectError = (state: RootState) => state.user.error;
 

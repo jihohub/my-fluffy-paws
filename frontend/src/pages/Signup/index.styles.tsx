@@ -23,6 +23,12 @@ const Input = styled.input`
   border-radius: 4px;
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+`;
+
 const ButtonContainer = styled.div`
   margin-top: 20px;
   display: flex;
@@ -50,6 +56,7 @@ export default {
   InputContainer,
   Label,
   Input,
+  ErrorMessage,
   ButtonContainer,
   Button,
 };
