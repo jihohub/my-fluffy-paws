@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
-import Header from "./Components/Header";
 import Navigation from "./Components/Navigation";
 import Home from "./pages/Home";
 import User from "./pages/User";
@@ -50,7 +49,6 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />

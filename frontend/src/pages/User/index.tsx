@@ -8,6 +8,7 @@ import Styled from "./index.styles";
 import PostGrid from "../../Components/PostGrid";
 import Button from "../../Components/Button";
 import Loading from "../../Components/Loading";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const User = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const User = () => {
 
   const isLoading = useSelector(selectIsLoading);
   const myUserId = useSelector((state: RootState) => state.user.user?.userId);
-  const otherUser = useSelector((state: RootState) => state.user.otherUser);
+  const user = useSelector((state: RootState) => state.user.otherUser);
 
   const handleLogoutClick = async () => {
     await dispatch(logout());
@@ -35,12 +36,29 @@ const User = () => {
   }
 
   return (
-    <Styled.UserProfileContainer>
-      {otherUser ? (
+    <Styled.UserContainer>
+      {user ? (
         <>
-          <Styled.UserImage src={otherUser.userImage} alt="Profile" />
-          <Styled.UserName>{otherUser.userName}</Styled.UserName>
-          {myUserId === otherUser.userId && (
+          <Styled.UserName>{user.userName}</Styled.UserName>
+          <Styled.MenuContainer>
+            <GiHamburgerMenu />
+          </Styled.MenuContainer>
+          <Styled.UserProfileContainer>
+            <Styled.UserImage src={user.userImage} alt="Profile" />
+            <Styled.UserStatContainer>
+              <Styled.UserStat>{"게시물"}</Styled.UserStat>
+              <Styled.UserStat>{user.posts.length}</Styled.UserStat>
+            </Styled.UserStatContainer>
+            <Styled.UserStatContainer>
+              <Styled.UserStat>{"팔로잉"}</Styled.UserStat>
+              <Styled.UserStat>{"0"}</Styled.UserStat>
+            </Styled.UserStatContainer>
+            <Styled.UserStatContainer>
+              <Styled.UserStat>{"팔로워"}</Styled.UserStat>
+              <Styled.UserStat>{"0"}</Styled.UserStat>
+            </Styled.UserStatContainer>
+          </Styled.UserProfileContainer>
+          {myUserId === user.userId && (
             <Button
               color={"#8D7B68"}
               text="로그아웃"
@@ -48,13 +66,13 @@ const User = () => {
             />
           )}
           <Styled.PostsContainer>
-            <PostGrid posts={otherUser?.posts} />
+            <PostGrid posts={user?.posts} />
           </Styled.PostsContainer>
         </>
       ) : (
         <></>
       )}
-    </Styled.UserProfileContainer>
+    </Styled.UserContainer>
   );
 };
 
