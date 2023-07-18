@@ -9,6 +9,7 @@ const PostContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 80px;
+  padding: 10px;
 `;
 
 const HoverContainer = styled(Link)`

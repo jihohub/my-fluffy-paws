@@ -8,6 +8,10 @@ const UserContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
   margin-top: 50px;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const UserName = styled.p`
@@ -20,7 +24,7 @@ const UserName = styled.p`
 const MenuContainer = styled.div`
   position: absolute;
   up: 0;
-  right: 0;
+  right: 20px;
 
   svg {
     font-size: 36px;
@@ -35,6 +39,10 @@ const UserProfileContainer = styled.div`
   align-items: center;
   width: 600px;
   max-width: 600px;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const UserImage = styled.img`

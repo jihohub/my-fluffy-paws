@@ -9,6 +9,7 @@ import PostGrid from "../../Components/PostGrid";
 import Button from "../../Components/Button";
 import Loading from "../../Components/Loading";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Toast from "../../Components/Toast";
 
 const User = () => {
   const navigate = useNavigate();
@@ -68,6 +69,7 @@ const User = () => {
           <Styled.PostsContainer>
             <PostGrid posts={user?.posts} />
           </Styled.PostsContainer>
+          <Toast />
         </>
       ) : (
         <></>

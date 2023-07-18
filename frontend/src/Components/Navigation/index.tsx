@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Styled from "./index.styles";
-import { useSelector, useDispatch } from "react-redux";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectAccessToken } from "../../store/reducers/tokenSlice";
-import { logout, selectUser } from "../../store/reducers/userSlice";
+import { selectUser } from "../../store/reducers/userSlice";
 import { GoHome } from "react-icons/go";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { CgAddR } from "react-icons/cg";
 import { BiMoviePlay } from "react-icons/bi";
-import Button from "../Button";
 
 const Navigation = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const accessToken = useSelector(selectAccessToken);
   const user = useSelector(selectUser);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -26,10 +23,6 @@ const Navigation = () => {
     if (user) {
       navigate(`/user/${user.userId}`);
     }
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
   };
 
   return (
