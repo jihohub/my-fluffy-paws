@@ -8,6 +8,8 @@ import Post from "./pages/Post";
 import PostForm from "./pages/PostForm";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Clip from "./pages/Clip";
+import Search from "./pages/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
@@ -57,6 +59,8 @@ const App: React.FC = () => {
         <Route path="post/new" element={<PostForm />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="clip" element={<Clip />} />
+        <Route path="search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   );
