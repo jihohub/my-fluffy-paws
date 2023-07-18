@@ -3,7 +3,11 @@ import Styled from "./index.styles";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import { logout, selectToken, selectUser } from "../../store/reducers/userSlice";
+import {
+  refreshAccessToken,
+  selectAccessToken,
+} from "../../store/reducers/tokenSlice";
+import { logout, selectUser } from "../../store/reducers/userSlice";
 import { GoHome } from "react-icons/go";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { CgAddR } from "react-icons/cg";
@@ -12,17 +16,23 @@ import { BiMoviePlay } from "react-icons/bi";
 const Navigation = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const token = useSelector(selectToken);
+  const accessToken = useSelector(selectAccessToken);
   const user = useSelector(selectUser);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
+  useEffect(() => {
+    setIsLoggedIn(accessToken !== null);
+  }, [accessToken]);
+
   const handleToProfile = () => {
-    navigate(`/user/${user?.userId}`);
+    if (user) {
+      navigate(`/user/${user.userId}`);
+    }
   };
 
-  useEffect(() => {
-    setIsLoggedIn(token !== null);
-  }, [token]);
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <Styled.NavContainer>
@@ -43,9 +53,12 @@ const Navigation = () => {
           <FaUser />
         </Styled.NavItem>
       ) : (
-        <div onClick={handleToProfile}>
-          <Styled.UserImage src={user?.userImage} />
-        </div>
+        <>
+          <div onClick={handleToProfile}>
+            <Styled.UserImage src={user?.userImage} />
+          </div>
+          <Styled.NavItem onClick={handleLogout}>로그아웃</Styled.NavItem>
+        </>
       )}
     </Styled.NavContainer>
   );

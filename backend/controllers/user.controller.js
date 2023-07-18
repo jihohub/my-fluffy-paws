@@ -5,9 +5,9 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
-const Comment = require("../models/comment.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { issueToken } = require("./token.controller");
 
 const s3Client = new S3Client({
   region: "ap-northeast-2",
@@ -110,14 +110,12 @@ const login = async (req, res) => {
       return res.status(400).json({ error: "잘못된 비밀번호입니다." });
     }
 
-    // JWT 토큰 생성
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    // 사용자 인증이 완료되면, token.controller.js의 issueToken 함수를 호출하여 토큰 발급
+    const { accessToken, refreshToken } = await issueToken(email, password);
 
     req.session.userId = user.userId;
 
-    res.status(200).json({ token, user });
+    res.status(200).json({ accessToken, refreshToken, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
