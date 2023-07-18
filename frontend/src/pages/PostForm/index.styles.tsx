@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const PostFormContainer = styled.div`
   max-width: 600px;
-  margin: auto 0;
+  margin: 0 auto;
 `;
 
 const InputContainer = styled.div`
@@ -20,6 +20,9 @@ const UploadImageArea = styled.div`
 `;
 
 const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
   padding: 10px;
 `;
 
@@ -32,6 +35,13 @@ const Textarea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
+  resize: vertical;
+`;
+
+const CharCount = styled.div`
+  margin-top: 10px;
+  font-size: 12px;
+  color: #aaa;
 `;
 
 const ButtonContainer = styled.div`
@@ -56,6 +66,7 @@ export default {
   UploadImageArea,
   TextContainer,
   Textarea,
+  CharCount,
   ButtonContainer,
   Button,
 };

@@ -23,7 +23,7 @@ Post.init(
       type: DataTypes.STRING,
     },
     text: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1500),
     },
     commentCount: {
       type: DataTypes.INTEGER,

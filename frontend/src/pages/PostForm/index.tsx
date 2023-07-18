@@ -33,7 +33,10 @@ const PostForm: React.FC = () => {
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setText(event.target.value);
+    const newContent = event.target.value;
+    if (newContent.length <= 500) {
+      setText(newContent);
+    }
   };
 
   const handleToCrop = () => {
@@ -109,7 +112,9 @@ const PostForm: React.FC = () => {
                 placeholder="내용을 입력하세요... (선택사항)"
                 value={text}
                 onChange={handleContentChange}
+                maxLength={500}
               />
+              <Styled.CharCount>{text.length}/500</Styled.CharCount>
             </Styled.TextContainer>
           </Styled.InputContainer>
           <Styled.ButtonContainer>
