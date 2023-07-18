@@ -30,10 +30,14 @@ const NavItem = styled(Link)`
   }
 `;
 
+const UserImageContainer = styled.div`
+
+`;
+
 const UserImage = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50px;
 `;
 
-export default { NavContainer, NavItem, UserImage };
+export default { NavContainer, NavItem, UserImageContainer, UserImage };

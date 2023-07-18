@@ -6,8 +6,6 @@ const fs = require("fs");
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { issueToken } = require("./token.controller");
 
 const s3Client = new S3Client({
   region: "ap-northeast-2",
@@ -110,12 +108,12 @@ const login = async (req, res) => {
       return res.status(400).json({ error: "잘못된 비밀번호입니다." });
     }
 
-    // 사용자 인증이 완료되면, token.controller.js의 issueToken 함수를 호출하여 토큰 발급
-    const { accessToken, refreshToken } = await issueToken(email, password);
-
     req.session.userId = user.userId;
 
-    res.status(200).json({ accessToken, refreshToken, user });
+    const { userId, email: userEmail, userName, userImage } = user;
+    const userInfo = { userId, email: userEmail, userName, userImage };
+
+    res.status(200).json({ user: userInfo });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

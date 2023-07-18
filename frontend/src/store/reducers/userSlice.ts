@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 import { Post } from "./postSlice";
@@ -6,7 +6,6 @@ import { Post } from "./postSlice";
 export interface User {
   userId: number;
   email: string;
-  password: string;
   userName: string;
   userImage: string;
   posts: Post[];
@@ -47,6 +46,7 @@ export const login = createAsyncThunk(
   async (userData: { email: string; password: string }) => {
     try {
       const response = await axios.post("/api/user/login", userData);
+
       return response.data;
     } catch (error) {
       throw Error("Failed to log in");

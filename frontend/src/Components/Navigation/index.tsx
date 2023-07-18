@@ -3,15 +3,13 @@ import Styled from "./index.styles";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-import {
-  refreshAccessToken,
-  selectAccessToken,
-} from "../../store/reducers/tokenSlice";
+import { selectAccessToken } from "../../store/reducers/tokenSlice";
 import { logout, selectUser } from "../../store/reducers/userSlice";
 import { GoHome } from "react-icons/go";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { CgAddR } from "react-icons/cg";
 import { BiMoviePlay } from "react-icons/bi";
+import Button from "../Button";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -53,12 +51,9 @@ const Navigation = () => {
           <FaUser />
         </Styled.NavItem>
       ) : (
-        <>
-          <div onClick={handleToProfile}>
-            <Styled.UserImage src={user?.userImage} />
-          </div>
-          <Styled.NavItem onClick={handleLogout}>로그아웃</Styled.NavItem>
-        </>
+        <Styled.UserImageContainer onClick={handleToProfile}>
+          <Styled.UserImage src={user?.userImage} />
+        </Styled.UserImageContainer>
       )}
     </Styled.NavContainer>
   );

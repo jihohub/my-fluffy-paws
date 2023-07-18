@@ -2,21 +2,24 @@ const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const Token = require("../models/token.model");
+const bcrypt = require("bcryptjs");
 
 // 토큰 발급
-const issueToken = async (req, res) => {
+const issueAccessToken = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
 
-    // 이메일과 비밀번호를 검증하는 로직 구현
+    // email로 유저 찾기
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({ error: "잘못된 이메일입니다." });
     }
 
-    const isPasswordValid = await user.comparePassword(password); // 유저 모델에 비밀번호 비교 메서드 구현해야 함
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: "잘못된 비밀번호입니다." });
+    // 비밀번호 비교
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res.status(400).json({ error: "잘못된 비밀번호입니다." });
     }
 
     // 검증이 완료된 사용자의 userId 값을 얻어옴
@@ -47,7 +50,7 @@ const issueToken = async (req, res) => {
 };
 
 // 토큰 갱신
-const refreshToken = async (req, res) => {
+const refreshAccessToken = async (req, res) => {
   try {
     const { refreshToken } = req.body;
 
@@ -78,6 +81,6 @@ const refreshToken = async (req, res) => {
 };
 
 module.exports = {
-  issueToken,
-  refreshToken,
+  issueAccessToken,
+  refreshAccessToken,
 };

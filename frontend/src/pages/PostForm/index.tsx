@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { createNewPost } from "../../store/reducers/postSlice";
+import { selectAccessToken } from "../../store/reducers/tokenSlice";
 import PostImage from "../../Components/PostImage";
-import { RootState } from "../../store/store";
 import CropImage from "../../Components/CropImage";
 import base64ToFile from "../../utils/base64ToFile";
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const navigate = useNavigate();
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useSelector(selectAccessToken);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [croppedImage, setCroppedImage] = useState<string>("");
