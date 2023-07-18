@@ -3,11 +3,11 @@ import styled from "styled-components";
 const CommentFormContainer = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: end;
   width: 600px;
   max-width: 600px;
   margin-top: 20px;
   padding: 10px;
-  align-items: end;
 
   @media (max-width: 768px) {
     width: 100vw;
@@ -22,26 +22,35 @@ const Textarea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
+  resize: vertical;
 `;
 
-const SubmitButton = styled.button`
-  width: 100px;
+const CharCount = styled.div`
   margin-top: 10px;
-  padding: 8px 12px;
-  background-color: #8d7b68;
+  font-size: 12px;
+  color: #aaa;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: ${(props) => props.color};
   color: #fff;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #634f3b;
-  }
+  cursor: ${(props) => (props.disabled ? "" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.3 : 1)};
 `;
 
 export default {
   CommentFormContainer,
   Textarea,
-  SubmitButton,
+  CharCount,
+  ButtonContainer,
+  Button,
 };

@@ -14,7 +14,10 @@ const CommentForm: React.FC = () => {
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setText(event.target.value);
+    const newContent = event.target.value;
+    if (newContent.length <= 100) {
+      setText(newContent);
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -34,14 +37,22 @@ const CommentForm: React.FC = () => {
   };
 
   return (
-    <Styled.CommentFormContainer onSubmit={handleSubmit}>
-      <Styled.Textarea
-        placeholder="댓글을 입력하세요..."
-        value={text}
-        onChange={handleContentChange}
-      />
-      <Styled.SubmitButton type="submit">댓글 작성</Styled.SubmitButton>
-    </Styled.CommentFormContainer>
+    <>
+      <Styled.CommentFormContainer onSubmit={handleSubmit}>
+        <Styled.Textarea
+          placeholder="댓글을 입력하세요..."
+          value={text}
+          onChange={handleContentChange}
+          maxLength={100}
+        />
+        <Styled.CharCount>{text.length}/100</Styled.CharCount>
+      </Styled.CommentFormContainer>
+      <Styled.ButtonContainer>
+        <Styled.Button color="#8D7B68" onClick={handleSubmit}>
+          작성 완료
+        </Styled.Button>
+      </Styled.ButtonContainer>
+    </>
   );
 };
 
