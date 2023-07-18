@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const SignupContainer = styled.div`
   max-width: 400px;
@@ -23,6 +23,12 @@ const Input = styled.input`
   border-radius: 4px;
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+`;
+
 const ButtonContainer = styled.div`
   margin-top: 20px;
   display: flex;
@@ -36,6 +42,13 @@ const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.6;
+      cursor: not-allowed;
+    `}
 `;
 
 export default {
@@ -43,6 +56,7 @@ export default {
   InputContainer,
   Label,
   Input,
+  ErrorMessage,
   ButtonContainer,
   Button,
 };
