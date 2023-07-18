@@ -30,6 +30,12 @@ const PostForm: React.FC = () => {
     setIsUploadImage(true);
   };
 
+  const handleContentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setText(event.target.value);
+  };
+
   const handleToCrop = () => {
     setisCroppedImage(true);
   };
@@ -94,14 +100,13 @@ const PostForm: React.FC = () => {
       {isActiveContent && isCroppedImage && (
         <>
           <Styled.InputContainer>
-            <Styled.Label>문구 추가 (선택 사항)</Styled.Label>
-            <Styled.Input
-              type="text"
-              value={text}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setText(e.target.value)
-              }
-            />
+            <Styled.TextContainer>
+              <Styled.Textarea
+                placeholder="내용을 입력하세요... (선택사항)"
+                value={text}
+                onChange={handleContentChange}
+              />
+            </Styled.TextContainer>
           </Styled.InputContainer>
           <Styled.ButtonContainer>
             <Styled.Button color="#8D7B68" onClick={handleSubmit}>

@@ -80,7 +80,23 @@ const refreshAccessToken = async (req, res) => {
   }
 };
 
+// 토큰 제거
+const removeAccessToken = async (req, res) => {
+  try {
+    const { userId } = req.user; // 미들웨어에서 저장한 인증된 사용자의 userId 정보를 가져옴
+
+    // 해당 사용자의 토큰 정보를 데이터베이스에서 삭제
+    await Token.destroy({ where: { userId } });
+
+    res.status(200).json({ message: "토큰이 성공적으로 제거되었습니다." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 module.exports = {
   issueAccessToken,
   refreshAccessToken,
+  removeAccessToken,
 };

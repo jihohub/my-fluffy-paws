@@ -8,4 +8,7 @@ router.post("/issue", tokenController.issueAccessToken);
 // 토큰 갱신
 router.post("/refresh", tokenController.refreshAccessToken);
 
+// 토큰 제거
+router.post("/remove", tokenController.removeAccessToken);
+
 module.exports = router;

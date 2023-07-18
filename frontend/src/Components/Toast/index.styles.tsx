@@ -54,6 +54,7 @@ const ToastLink = styled(Link)`
   line-height: 50px;
   display: flex;
   align-items: center;
+  text-decoration: none;
   border-bottom: 1px solid #a4907c;
 
   svg {
@@ -80,6 +81,7 @@ const ToastSlot = styled.div`
 const ToastText = styled.p`
   margin-left: 20px;
   font-size: 24px;
+  color: #ffffff;
 `;
 
 export default {

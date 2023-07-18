@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 
@@ -42,6 +42,9 @@ export const refreshAccessToken = createAsyncThunk(
   }
 );
 
+// 액세스 토큰 제거를 위한 createAction
+export const removeAccessToken = createAction("token/remove");
+
 const tokenSlice = createSlice({
   name: "token",
   initialState,
@@ -73,6 +76,10 @@ const tokenSlice = createSlice({
       .addCase(issueAccessToken.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
+      })
+      .addCase(removeAccessToken, (state) => {
+        state.accessToken = null;
+        state.refreshToken = null;
       });
   },
 });

@@ -1,29 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { useParams, useNavigate } from "react-router-dom";
-import { getUserInfo, selectIsLoading, logout } from "../../store/reducers/userSlice";
+import { useParams } from "react-router-dom";
+import { getUserInfo, selectIsLoading } from "../../store/reducers/userSlice";
 import { RootState } from "../../store/store";
 import Styled from "./index.styles";
 import PostGrid from "../../Components/PostGrid";
-import Button from "../../Components/Button";
 import Loading from "../../Components/Loading";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Toast from "../../Components/Toast";
 
 const User = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userId } = useParams<{ userId: string }>();
 
   const isLoading = useSelector(selectIsLoading);
-  const myUserId = useSelector((state: RootState) => state.user.user?.userId);
   const user = useSelector((state: RootState) => state.user.otherUser);
-
-  const handleLogoutClick = async () => {
-    await dispatch(logout());
-    navigate("/");
-  };
+  const [isToastVisible, setIsToastVisible] = useState(false);
 
   useEffect(() => {
     // 사용자 정보와 사용자가 작성한 포스트 정보를 가져오는 액션 호출
@@ -31,6 +24,10 @@ const User = () => {
       dispatch(getUserInfo(parseInt(userId)));
     }
   }, [userId]);
+
+  const handleMenuClick = () => {
+    setIsToastVisible((prevState) => !prevState);
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -41,7 +38,7 @@ const User = () => {
       {user ? (
         <>
           <Styled.UserName>{user.userName}</Styled.UserName>
-          <Styled.MenuContainer>
+          <Styled.MenuContainer onClick={handleMenuClick}>
             <GiHamburgerMenu />
           </Styled.MenuContainer>
           <Styled.UserProfileContainer>
@@ -59,17 +56,10 @@ const User = () => {
               <Styled.UserStat>{"0"}</Styled.UserStat>
             </Styled.UserStatContainer>
           </Styled.UserProfileContainer>
-          {myUserId === user.userId && (
-            <Button
-              color={"#8D7B68"}
-              text="로그아웃"
-              onClick={handleLogoutClick}
-            />
-          )}
           <Styled.PostsContainer>
             <PostGrid posts={user?.posts} />
           </Styled.PostsContainer>
-          <Toast />
+          {isToastVisible && <Toast />}
         </>
       ) : (
         <></>

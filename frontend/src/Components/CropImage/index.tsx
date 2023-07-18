@@ -45,7 +45,7 @@ export const CropImage: React.FC<CropImageProps> = ({
     <Styled.CropContainer>
       <Cropper
         ref={cropperRef}
-        style={{ height: 400, width: "100%" }}
+        style={{ height: 360, width: 360 }}
         zoomTo={0.5}
         initialAspectRatio={1}
         aspectRatio={1}
