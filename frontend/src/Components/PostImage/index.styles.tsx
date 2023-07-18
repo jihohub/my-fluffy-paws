@@ -6,9 +6,16 @@ const PostImageContainer = styled.div`
   max-width: 400px;
   height: 400px;
   margin: 0 auto;
+  margin-top: 50px;
   overflow: hidden;
+  padding: 20px;
+
   &:hover {
     opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    width: 100vw;
   }
 `;
 

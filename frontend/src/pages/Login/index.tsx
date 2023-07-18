@@ -4,6 +4,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
 import Styled from "./index.styles";
 import { login } from "../../store/reducers/userSlice";
+import { issueAccessToken } from "../../store/reducers/tokenSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Login = () => {
 
     // 이메일과 비밀번호를 이용하여 로그인 요청을 보냄
     await dispatch(login({ email, password }));
+    await dispatch(issueAccessToken({ email, password }));
     navigate("/");
   };
 

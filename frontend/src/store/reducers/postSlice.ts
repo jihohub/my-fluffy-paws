@@ -140,52 +140,12 @@ const postSlice = createSlice({
   },
 });
 
+// 게시물과 관련된 상태 선택자들
 export const selectPostState = (state: RootState) => state.post;
-
-// postSlice와 관련된 액션 및 리듀서 내보내기
-export const { actions: postActions, reducer: postReducer } = postSlice;
-export default postSlice.reducer;
-
 export const selectPosts = createSelector(
   selectPostState,
   postAdapter.getSelectors().selectAll
 );
-
-// export const selectCommentById = createSelector(
-//   [selectPosts, (_, commentId: number) => commentId],
-//   (posts, commentId) => {
-//     // posts 배열에서 필요한 댓글 정보를 가져와 반환합니다.
-//     // 예시로는 모든 게시물의 comments 배열에서 commentId에 해당하는 댓글을 찾는 로직을 작성합니다.
-//     const comment = posts
-//       .flatMap((post) => post.comments)
-//       .find((comment) => comment.commentId === commentId);
-//     return comment;
-//   }
-// );
-
-// export const selectPostById = createSelector(
-//   [selectPosts, selectPostState, (_, postId: number) => postId],
-//   (posts, postState, postId) => {
-//     const post = posts.find((post) => post.postId === postId);
-//     console.log(post);
-//     if (post && post.comments) {
-//       return {
-//         ...post,
-//         comments: post.comments.map((comment) =>
-//           selectCommentById(postState, comment.commentId)
-//         ),
-//       };
-//     }
-//     return undefined;
-//   }
-// );
-
-// export const selectPostById = createSelector(
-//   [selectPosts, (_, postId: number) => postId],
-//   (posts, postId) => {
-//     return posts.find((post) => post.postId === postId);
-//   }
-// );
 
 export const selectPostById = (postId: number) =>
   createSelector([selectPosts], (posts) =>
@@ -194,3 +154,7 @@ export const selectPostById = (postId: number) =>
 
 export const selectIsLoading = (state: RootState) => state.post.loading;
 export const selectError = (state: RootState) => state.post.error;
+
+// postSlice와 관련된 액션 및 리듀서 내보내기
+export const { actions: postActions, reducer: postReducer } = postSlice;
+export default postSlice.reducer;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const PostFormContainer = styled.div`
   max-width: 600px;
-  margin: 0 auto;
+  margin: auto 0;
 `;
 
 const InputContainer = styled.div`
@@ -19,19 +19,19 @@ const UploadImageArea = styled.div`
   cursor: pointer;
 `;
 
-const Label = styled.label`
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
+const TextContainer = styled.div`
+  padding: 10px;
 `;
 
-const Input = styled.input`
-  width: 600px;
-  max-width: 600px;
-  height: 400px;
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 200px;
+  margin-top: 150px;
   padding: 10px;
+  resize: none;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 14px;
 `;
 
 const ButtonContainer = styled.div`
@@ -54,8 +54,8 @@ export default {
   PostFormContainer,
   InputContainer,
   UploadImageArea,
-  Label,
-  Input,
+  TextContainer,
+  Textarea,
   ButtonContainer,
   Button,
 };

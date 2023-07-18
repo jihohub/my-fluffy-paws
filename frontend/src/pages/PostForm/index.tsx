@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { createNewPost } from "../../store/reducers/postSlice";
+import { selectAccessToken } from "../../store/reducers/tokenSlice";
 import PostImage from "../../Components/PostImage";
-import { RootState } from "../../store/store";
 import CropImage from "../../Components/CropImage";
 import base64ToFile from "../../utils/base64ToFile";
 
 const PostForm: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const navigate = useNavigate();
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useSelector(selectAccessToken);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [croppedImage, setCroppedImage] = useState<string>("");
@@ -30,6 +30,12 @@ const PostForm: React.FC = () => {
     setIsUploadImage(true);
   };
 
+  const handleContentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setText(event.target.value);
+  };
+
   const handleToCrop = () => {
     setisCroppedImage(true);
   };
@@ -37,6 +43,10 @@ const PostForm: React.FC = () => {
   const handleToSubmit = () => {
     setIsActiveContent(true);
   };
+
+  useEffect(() => {
+    console.log(croppedImage);
+  }, [croppedImage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,14 +104,13 @@ const PostForm: React.FC = () => {
       {isActiveContent && isCroppedImage && (
         <>
           <Styled.InputContainer>
-            <Styled.Label>문구 추가 (선택 사항)</Styled.Label>
-            <Styled.Input
-              type="text"
-              value={text}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setText(e.target.value)
-              }
-            />
+            <Styled.TextContainer>
+              <Styled.Textarea
+                placeholder="내용을 입력하세요... (선택사항)"
+                value={text}
+                onChange={handleContentChange}
+              />
+            </Styled.TextContainer>
           </Styled.InputContainer>
           <Styled.ButtonContainer>
             <Styled.Button color="#8D7B68" onClick={handleSubmit}>

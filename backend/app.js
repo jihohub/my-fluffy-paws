@@ -9,6 +9,7 @@ const verifyToken = require("./middlewares/authMiddleware");
 const userRouter = require("./routes/api/user");
 const postRouter = require("./routes/api/post");
 const commentRouter = require("./routes/api/comment");
+const tokenRouter = require("./routes/api/token");
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use(express.static("./public"));
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
+app.use("/api/token", tokenRouter);
 
 module.exports = app;

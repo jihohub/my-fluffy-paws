@@ -3,7 +3,15 @@ import styled from "styled-components";
 const CommentFormContainer = styled.form`
   display: flex;
   flex-direction: column;
+  width: 600px;
+  max-width: 600px;
   margin-top: 20px;
+  padding: 10px;
+  align-items: end;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const Textarea = styled.textarea`

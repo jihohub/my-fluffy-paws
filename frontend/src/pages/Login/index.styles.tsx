@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const LoginContainer = styled.div`
   max-width: 400px;
   margin: 0 auto;
+  margin-top: 200px;
   padding: 20px;
 `;
 
