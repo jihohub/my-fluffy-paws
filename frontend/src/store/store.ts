@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import userReducer, { selectUserState } from "./reducers/userSlice";
 import postReducer, { selectPostState } from "./reducers/postSlice";
 import commentReducer, { selectCommentState } from "./reducers/commentSlice";
+import tokenReducer, { selectTokenState } from "./reducers/tokenSlice";
 
 const persistConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   post: postReducer,
   comment: commentReducer,
+  token: tokenReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -28,6 +30,7 @@ export type AppDispatch = typeof store.dispatch;
 export const selectUser = (state: RootState) => selectUserState(state).user;
 export const selectPost = (state: RootState) => selectPostState(state).posts;
 export const selectComment = (state: RootState) => selectCommentState(state).comments;
+export const selectAccessToken = (state: RootState) => selectTokenState(state).accessToken;
 
 export const persistor = persistStore(store);
 export default store;

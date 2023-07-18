@@ -14,9 +14,7 @@ export const CropImage: React.FC<CropImageProps> = ({
   croppedImage,
   onChangeImageUrl,
 }) => {
-  // const [image, setImage] = useState(defaultSrc);
   const [imageUrl, setImageUrl] = useState("");
-  const [cropData, setCropData] = useState("#");
   const cropperRef = createRef<ReactCropperElement>();
 
   useEffect(() => {
@@ -30,22 +28,17 @@ export const CropImage: React.FC<CropImageProps> = ({
 
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
-      setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
       onChangeImageUrl(
         cropperRef.current?.cropper.getCroppedCanvas().toDataURL()
       );
     }
   };
 
-  useEffect(() => {
-    console.log(cropData);
-  }, [cropData]);
-
   return (
     <Styled.CropContainer>
       <Cropper
         ref={cropperRef}
-        style={{ height: 400, width: "100%" }}
+        style={{ height: 360, width: 360 }}
         zoomTo={0.5}
         initialAspectRatio={1}
         aspectRatio={1}
@@ -54,13 +47,13 @@ export const CropImage: React.FC<CropImageProps> = ({
         viewMode={1}
         minCropBoxHeight={10}
         minCropBoxWidth={10}
+        autoCropArea={1}
         background={false}
         responsive={true}
-        autoCropArea={1}
         checkOrientation={false}
         guides={true}
-        cropstart={getCropData}
         cropend={getCropData}
+        ready={getCropData}
       />
     </Styled.CropContainer>
   );

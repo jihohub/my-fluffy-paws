@@ -23,11 +23,12 @@ const ModalContentContainer = styled.div`
 const ModalContent = styled.div`
   background-color: #fff;
   width: 600px;
-  padding: 60px 20px 20px 20px;
+  padding: 20px;
   border-radius: 4px;
 
   @media (max-width: 768px) {
-    width: 80vw;
+    width: 90vw;
+    padding: 10px;
   }
 `;
 

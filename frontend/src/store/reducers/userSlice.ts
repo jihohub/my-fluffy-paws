@@ -1,9 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createAction,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 import { Post } from "./postSlice";
@@ -11,7 +6,6 @@ import { Post } from "./postSlice";
 export interface User {
   userId: number;
   email: string;
-  password: string;
   userName: string;
   userImage: string;
   posts: Post[];
@@ -19,7 +13,6 @@ export interface User {
 
 export interface UserState {
   user: User | null;
-  token: string | null;
   otherUser: User | null;
   loading: boolean;
   error: string | null;
@@ -27,7 +20,6 @@ export interface UserState {
 
 const initialState: UserState = {
   user: null,
-  token: null,
   otherUser: null,
   loading: false,
   error: "",
@@ -54,6 +46,7 @@ export const login = createAsyncThunk(
   async (userData: { email: string; password: string }) => {
     try {
       const response = await axios.post("/api/user/login", userData);
+
       return response.data;
     } catch (error) {
       throw Error("Failed to log in");
@@ -61,12 +54,9 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "user/logout",
-  async () => {
-    return
-  }
-);
+export const logout = createAsyncThunk("user/logout", async () => {
+  return;
+});
 
 export const getUserInfo = createAsyncThunk(
   "user/getUserInfo",
@@ -104,7 +94,6 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        state.token = action.payload.token;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -116,7 +105,7 @@ const userSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
-        state.token = null;
+        state.user = null;
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
@@ -133,17 +122,16 @@ const userSlice = createSlice({
       .addCase(getUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
-      })
+      });
   },
 });
 
+// 유저와 관련된 상태 선택자들
 export const selectUserState = (state: RootState) => state.user;
+export const selectUser = (state: RootState) => state.user.user;
+export const selectIsLoading = (state: RootState) => state.user.loading;
+export const selectError = (state: RootState) => state.user.error;
 
 // userSlice와 관련된 액션 및 리듀서 내보내기
 export const { actions: userActions, reducer: userReducer } = userSlice;
 export default userSlice.reducer;
-
-export const selectUser = (state: RootState) => state.user.user;
-export const selectToken = (state: RootState) => state.user.token;
-export const selectIsLoading = (state: RootState) => state.user.loading;
-export const selectError = (state: RootState) => state.user.error;

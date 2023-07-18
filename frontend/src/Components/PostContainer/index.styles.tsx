@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const PostContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;
+  padding: 10px;
 `;
 
 const AuthorContainer = styled(Link)`

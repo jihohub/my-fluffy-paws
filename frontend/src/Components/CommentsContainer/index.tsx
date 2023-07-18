@@ -16,30 +16,30 @@ interface CommentsContainerProps {
 }
 
 const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
-  // const showTimeDiff: string = (createdAt: Date) => {
-  //   Const now = Moment();
-  //   return ""
-  // }
-
-
   return (
-    <Styled.CommentList>
+    <Styled.CommentContainer>
       {comments.map((comment) => (
         <Styled.CommentItem key={comment.commentId}>
           <Styled.CommentUserImage
             src={comment.User.userImage}
             alt="User Image"
           />
-          <Styled.CommentUserName>
-            {comment.User.userName}
-          </Styled.CommentUserName>
-          <Styled.CommentContent>{comment.text}</Styled.CommentContent>
-          <Styled.CommentDate>
-            {moment(comment.createdAt).fromNow()}
-          </Styled.CommentDate>
+          <Styled.TextContainer>
+            <Styled.UpperContainer>
+              <Styled.CommentUserName>
+                {comment.User.userName}
+              </Styled.CommentUserName>
+              <Styled.CommentDate>
+                {moment(comment.createdAt).fromNow()}
+              </Styled.CommentDate>
+            </Styled.UpperContainer>
+            <Styled.LowerContainer>
+              <Styled.CommentText>{comment.text}</Styled.CommentText>
+            </Styled.LowerContainer>
+          </Styled.TextContainer>
         </Styled.CommentItem>
       ))}
-    </Styled.CommentList>
+    </Styled.CommentContainer>
   );
 };
 

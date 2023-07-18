@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
 
@@ -143,6 +143,7 @@ const commentSlice = createSlice({
   },
 });
 
+// 댓글과 관련된 상태 선택자들
 export const selectCommentState = (state: RootState) => state.comment;
 export const selectComments = (state: RootState) => state.comment.comments;
 export const selectLoading = (state: RootState) => state.comment.loading;
