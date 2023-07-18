@@ -44,6 +44,10 @@ const PostForm: React.FC = () => {
     setIsActiveContent(true);
   };
 
+  useEffect(() => {
+    console.log(croppedImage);
+  }, [croppedImage]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
