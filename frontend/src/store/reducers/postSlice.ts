@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
   createEntityAdapter,
+  EntityAdapter,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
@@ -23,6 +24,11 @@ export interface PostState {
   posts: Post[];
   loading: boolean;
   error: string | null;
+}
+
+export interface UpdatePostPayload {
+  postId: number;
+  text: string;
 }
 
 const postAdapter = createEntityAdapter<Post>({
@@ -76,8 +82,9 @@ export const createNewPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   "post/updatePost",
-  async ({ postId, text }: { postId: number; text: string }) => {
+  async (payload: UpdatePostPayload) => {
     try {
+      const { postId, text } = payload;
       const response = await axios.put(`/api/post/${postId}`, { text });
       return response.data as Post;
     } catch (error) {
@@ -136,7 +143,7 @@ const postSlice = createSlice({
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         postAdapter.removeOne(state, action.payload);
-      });
+      })
   },
 });
 

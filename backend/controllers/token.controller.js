@@ -8,7 +8,6 @@ const bcrypt = require("bcryptjs");
 const issueAccessToken = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
 
     // email로 유저 찾기
     const user = await User.findOne({ where: { email } });

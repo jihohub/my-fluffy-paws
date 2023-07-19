@@ -7,19 +7,15 @@ const PostContainer = styled.div`
 `;
 
 const AuthorContainer = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-
+  position: relative;
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+
+  svg {
+    position: absolute;
+    right: 0;
+  }
 `;
 
 const AuthorImage = styled.img`
@@ -33,19 +29,10 @@ const AuthorName = styled.p`
   font-weight: bold;
   margin-right: 5px;
   text-decoration: none;
+  color: #000;
 `;
 
 const ContentContainer = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;

@@ -180,6 +180,7 @@ const deletePost = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
+    await Comment.destroy({ where: { postId } });
     await post.destroy();
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });
