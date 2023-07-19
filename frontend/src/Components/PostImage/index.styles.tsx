@@ -13,10 +13,6 @@ const PostImageContainer = styled.div`
   &:hover {
     opacity: 0.5;
   }
-
-  @media (max-width: 768px) {
-    width: 100vw;
-  }
 `;
 
 const PreviewImage = styled.img`
@@ -27,6 +23,7 @@ const PreviewImage = styled.img`
 
 const EmptyImage = styled.div`
   width: 100%;
+  max-width: 100%;
   height: 100%;
   border: 2px dashed #ccc;
   display: flex;
@@ -34,6 +31,7 @@ const EmptyImage = styled.div`
   justify-content: center;
   cursor: pointer;
   overflow: visible;
+
   &:hover {
     opacity: 1;
   }

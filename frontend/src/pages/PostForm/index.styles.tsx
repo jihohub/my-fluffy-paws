@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const PostFormContainer = styled.div`
-  max-width: 600px;
   margin: 0 auto;
 `;
 

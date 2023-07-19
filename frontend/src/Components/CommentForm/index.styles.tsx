@@ -4,14 +4,8 @@ const CommentFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: end;
-  width: 600px;
-  max-width: 600px;
   margin-top: 20px;
   padding: 10px;
-
-  @media (max-width: 768px) {
-    width: 100vw;
-  }
 `;
 
 const Textarea = styled.textarea`

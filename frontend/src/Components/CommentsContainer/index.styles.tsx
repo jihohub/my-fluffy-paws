@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const CommentContainer = styled.div`
-  max-width: 600px;
   padding: 10px;
 `;
 

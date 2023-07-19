@@ -3,7 +3,6 @@ import styled from "styled-components";
 const HeaderContainer = styled.header`
   display: flex;
   flex-direction: column;
-  max-width: 600px;
   margin: 0 auto;
   background-color: #fff;
   padding: 20px;

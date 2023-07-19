@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const PostContainer = styled.div`
-  max-width: 600px;
   margin: 0 auto;
   padding: 10px;
 `;
@@ -63,6 +62,7 @@ const PostText = styled.p`
   font-size: 24px;
   margin-bottom: 10px;
   text-decoration: none;
+  color: #000;
 `;
 
 export default {

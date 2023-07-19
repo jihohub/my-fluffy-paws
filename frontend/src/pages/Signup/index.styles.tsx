@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 const SignupContainer = styled.div`
-  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   margin-bottom: 80px;
