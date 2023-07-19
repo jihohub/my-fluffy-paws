@@ -35,13 +35,23 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
         <Styled.AuthorImage src={post.userImage} alt="User Image" />
         <Styled.AuthorName>{post.userName}</Styled.AuthorName>
         {isPostRoute && user?.userId === post.userId && (
-          <BsThreeDotsVertical onClick={handleIconClick} />
+          <Styled.IconConatainer>
+            <BsThreeDotsVertical onClick={handleIconClick} />
+          </Styled.IconConatainer>
         )}
       </Styled.AuthorContainer>
-      <Styled.ContentContainer to={`/post/${post.postId}`}>
-        <Styled.PostImage src={post.image} alt="Post" />
-        <Styled.PostText>{post.text}</Styled.PostText>
-      </Styled.ContentContainer>
+      {!isPostRoute ? (
+        <Styled.ContentLinkContainer to={`/post/${post.postId}`}>
+          <Styled.PostImage src={post.image} alt="Post" />
+          <Styled.PostText>{post.text}</Styled.PostText>
+        </Styled.ContentLinkContainer>
+      ) : (
+        <Styled.ContentContainer>
+          <Styled.PostImage src={post.image} alt="Post" />
+          <Styled.PostText>{post.text}</Styled.PostText>
+        </Styled.ContentContainer>
+      )}
+
       {isToastVisible && <Toast path="post" />}
     </Styled.PostContainer>
   );

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CommentContainer = styled.div`
   padding: 10px;
@@ -12,6 +13,9 @@ const CommentItem = styled.div`
   min-height: 40px;
   margin-bottom: 5px;
   // align-items: center;
+`;
+
+const LinkContainer = styled(Link)`
 `;
 
 const CommentUserImage = styled.img`
@@ -61,6 +65,7 @@ const IconConatainer = styled.div`
 export default {
   CommentContainer,
   CommentItem,
+  LinkContainer,
   CommentUserImage,
   TextContainer,
   UpperContainer,

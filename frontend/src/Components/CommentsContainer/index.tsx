@@ -45,10 +45,12 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
     <Styled.CommentContainer>
       {comments.map((comment) => (
         <Styled.CommentItem key={comment.commentId}>
-          <Styled.CommentUserImage
-            src={comment.User.userImage}
-            alt="User Image"
-          />
+          <Styled.LinkContainer to={`/user/${comment.userId}`}>
+            <Styled.CommentUserImage
+              src={comment.User.userImage}
+              alt="User Image"
+            />
+          </Styled.LinkContainer>
           <Styled.TextContainer>
             <Styled.UpperContainer>
               <Styled.CommentUserName>

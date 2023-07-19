@@ -11,11 +11,12 @@ const AuthorContainer = styled(Link)`
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+`;
 
-  svg {
-    position: absolute;
-    right: 0;
-  }
+const IconConatainer = styled.div`
+  position: absolute;
+  right: 0;
+  padding-left: 50px;
 `;
 
 const AuthorImage = styled.img`
@@ -32,7 +33,13 @@ const AuthorName = styled.p`
   color: #000;
 `;
 
-const ContentContainer = styled(Link)`
+const ContentLinkContainer = styled(Link)`
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ContentContainer = styled.div`
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
@@ -55,8 +62,10 @@ const PostText = styled.p`
 export default {
   PostContainer,
   AuthorContainer,
+  IconConatainer,
   AuthorImage,
   AuthorName,
+  ContentLinkContainer,
   ContentContainer,
   PostImage,
   PostText,

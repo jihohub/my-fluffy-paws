@@ -73,7 +73,7 @@ const Home = () => {
 
           return (
             <>
-              <PostContainer post={post} />
+              <PostContainer post={post} key={post.postId} />
               {post?.Comments?.length > 0 && (
                 <>
                   <Styled.ViewCommentsLink
