@@ -16,7 +16,6 @@ export interface Post {
   image: string;
   text: string;
   userId: number;
-  commentCount: number;
   Comments: Comment[];
 }
 

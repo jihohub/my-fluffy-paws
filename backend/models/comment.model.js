@@ -35,6 +35,6 @@ Comment.init(
   }
 );
 
-Comment.belongsTo(User, { foreignKey: "userId" });
+Comment.belongsTo(User, { foreignKey: "userId", constraints: false });
 
 module.exports = Comment;

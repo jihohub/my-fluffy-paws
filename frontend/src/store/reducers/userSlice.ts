@@ -65,6 +65,7 @@ export const getUserInfo = createAsyncThunk(
   async (userId: number) => {
     try {
       const response = await axios.get(`/api/user/${userId}`);
+
       return response.data;
     } catch (error) {
       throw Error("Failed to get user info");

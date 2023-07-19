@@ -1,6 +1,7 @@
-const Comment = require("../models/comment.model");
-const User = require("../models/user.model")
-const Post = require("../models/post.model");
+// const Comment = require("../models/comment.model");
+// const User = require("../models/user.model")
+// const Post = require("../models/post.model");
+const { User, Post, Comment, Token } = require("../models/model");
 
 // 전체 댓글 조회
 const getAllComments = async (req, res) => {

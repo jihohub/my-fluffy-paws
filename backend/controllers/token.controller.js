@@ -1,7 +1,6 @@
+const { User, Post, Comment, Token } = require("../models/model");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user.model");
-const Token = require("../models/token.model");
 const bcrypt = require("bcryptjs");
 
 // 토큰 발급
@@ -56,7 +55,9 @@ const refreshAccessToken = async (req, res) => {
     // 리프레시 토큰이 유효한지 검사
     const token = await Token.findOne({ where: { refreshToken } });
     if (!token) {
-      return res.status(401).json({ error: "유효하지 않은 리프레시 토큰입니다." });
+      return res
+        .status(401)
+        .json({ error: "유효하지 않은 리프레시 토큰입니다." });
     }
 
     // 리프레시 토큰이 만료되었는지 검사

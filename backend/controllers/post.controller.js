@@ -1,11 +1,9 @@
+const { User, Post, Comment, Token } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
-const Post = require("../models/post.model");
-const User = require("../models/user.model");
-const Comment = require("../models/comment.model");
 
 const s3Client = new S3Client({
   region: "ap-northeast-2",

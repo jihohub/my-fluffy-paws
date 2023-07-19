@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const db = require("../config/db.config");
+// const Comment = require("./comment.model");
 
 class User extends Model {}
 
@@ -24,11 +25,22 @@ User.init(
     userImage: {
       type: DataTypes.STRING,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      onUpdate: DataTypes.NOW,
+    },
   },
   {
     sequelize: db,
     modelName: "User",
   }
 );
+
+// User.hasMany(Comment, { foreignKey: "userId" });
 
 module.exports = User;
