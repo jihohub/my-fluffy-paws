@@ -9,12 +9,12 @@ const getAllComments = async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["userName", "userImage"],
+          attributes: ["userId", "userName", "userImage"],
         },
       ],
     });
 
-    // comments 데이터와 함께 userName과 userImage가 포함된 결과를 반환
+    // comments 데이터와 함께 userId, userName, userImage가 포함된 결과를 반환
     res.status(200).json(comments);
   } catch (error) {
     console.error(error);
@@ -34,36 +34,7 @@ const createComment = async (req, res) => {
       text,
     });
 
-    const post = await Post.findByPk(postId);
-    if (post) {
-      const commentCount = await Comment.count({
-        where: { postId: post.postId },
-      });
-      await post.update({ commentCount });
-    }
-
     res.status(201).json(comment);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
-
-// 댓글 수정
-const updateComment = async (req, res) => {
-  try {
-    const { commentId } = req.params;
-    const { text } = req.body;
-
-    const comment = await Comment.findByPk(commentId);
-
-    if (!comment) {
-      return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });
-    }
-
-    comment.update({ text });
-
-    res.status(200).json(comment);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -93,6 +64,5 @@ const deleteComment = async (req, res) => {
 module.exports = {
   getAllComments,
   createComment,
-  updateComment,
   deleteComment,
 };

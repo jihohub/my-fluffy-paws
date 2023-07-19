@@ -10,19 +10,21 @@ import {
   selectError,
   updatePost,
 } from "../../store/reducers/postSlice";
+import { fetchComments } from "../../store/reducers/commentSlice";
 import Loading from "../../Components/Loading";
 
 const EditForm: React.FC = () => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { postId } = useParams() as { postId: string };
   const navigate = useNavigate();
 
   const post = useSelector(selectPostById(parseInt(postId)));
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
     dispatch(fetchPostById(parseInt(postId)));
+    dispatch(fetchComments(parseInt(postId)));
   }, [dispatch, postId]);
 
   const [text, setText] = useState<string>(post?.text || "");
@@ -45,11 +47,9 @@ const EditForm: React.FC = () => {
     await dispatch(
       updatePost({
         postId: parseInt(postId),
-        text: text,
+        text,
       })
     );
-    // Replace "YOUR_ACCESS_TOKEN" with the actual access token. You can obtain it from the state or local storage.
-
     navigate("/");
   };
 

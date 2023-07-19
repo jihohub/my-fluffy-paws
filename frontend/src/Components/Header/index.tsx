@@ -29,7 +29,7 @@ const Header = () => {
       <Styled.MenuIcon onClick={handleMenuClick}>
         <GiHamburgerMenu />
       </Styled.MenuIcon>
-      {isToastVisible && <Toast />}
+      {/* {isToastVisible && <Toast />} */}
     </Styled.HeaderContainer>
   );
 };

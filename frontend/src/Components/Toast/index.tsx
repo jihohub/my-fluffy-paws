@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { deletePost } from "../../store/reducers/postSlice";
+import { fetchPostById, deletePost } from "../../store/reducers/postSlice";
 import { logout } from "../../store/reducers/userSlice";
+import { fetchComments , deleteComment } from "../../store/reducers/commentSlice";
 import { selectAccessToken, removeAccessToken } from "../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 import {
@@ -14,11 +15,13 @@ import {
   MdDelete,
 } from "react-icons/md";
 
-const Toast: React.FC = () => {
+interface ToastProps {
+  path: string;
+  commentId?: number;
+}
+
+const Toast: React.FC<ToastProps> = ({ path, commentId }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isUserRoute = location.pathname.startsWith("/user/");
-  const isPostRoute = location.pathname.startsWith("/post/");
   const { postId } = useParams<{ postId: string }>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const accessToken = useSelector(selectAccessToken);
@@ -42,13 +45,19 @@ const Toast: React.FC = () => {
     }
   };
 
-  const handleEditPostClick = async () => {
+  const handleEditPost = async () => {
     navigate(`/post/${postId}/edit`);
   };
 
-  const handleDeletePostClick = async () => {
+  const handleDeletePost = async () => {
     postId && await dispatch(deletePost(parseInt(postId)));
     navigate("/");
+  };
+
+  const handleDeleteComment = async () => {
+    commentId && await dispatch(deleteComment(commentId));
+    postId && (await dispatch(fetchPostById(parseInt(postId))));
+    postId && await dispatch(fetchComments(parseInt(postId)));
   };
 
   const handleLogoutClick = async () => {
@@ -78,7 +87,7 @@ const Toast: React.FC = () => {
           <Styled.ToastUpperSlot>
             <Styled.ToastUpperText>-</Styled.ToastUpperText>
           </Styled.ToastUpperSlot>
-          {isUserRoute && (
+          {path === "user" && (
             <>
               <Styled.ToastSlot onClick={handleLogoutClick}>
                 <MdEdit />
@@ -90,15 +99,23 @@ const Toast: React.FC = () => {
               </Styled.ToastSlot>
             </>
           )}
-          {isPostRoute && (
+          {path === "post" && (
             <>
-              <Styled.ToastSlot onClick={handleEditPostClick}>
+              <Styled.ToastSlot onClick={handleEditPost}>
                 <MdEdit />
                 <Styled.ToastText>게시물 수정</Styled.ToastText>
               </Styled.ToastSlot>
-              <Styled.ToastSlot onClick={handleDeletePostClick}>
+              <Styled.ToastSlot onClick={handleDeletePost}>
                 <MdDelete />
                 <Styled.ToastText>게시물 삭제</Styled.ToastText>
+              </Styled.ToastSlot>
+            </>
+          )}
+          {path === "comment" && (
+            <>
+              <Styled.ToastSlot onClick={handleDeleteComment}>
+                <MdDelete />
+                <Styled.ToastText>댓글 삭제</Styled.ToastText>
               </Styled.ToastSlot>
             </>
           )}

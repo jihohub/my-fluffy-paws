@@ -59,7 +59,7 @@ const User = () => {
           <Styled.PostsContainer>
             <PostGrid posts={user?.posts} />
           </Styled.PostsContainer>
-          {isToastVisible && <Toast />}
+          {isToastVisible && <Toast path="user" />}
         </>
       ) : (
         <></>

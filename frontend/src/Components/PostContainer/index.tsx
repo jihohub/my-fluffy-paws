@@ -42,7 +42,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
         <Styled.PostImage src={post.image} alt="Post" />
         <Styled.PostText>{post.text}</Styled.PostText>
       </Styled.ContentContainer>
-      {isToastVisible && <Toast />}
+      {isToastVisible && <Toast path="post" />}
     </Styled.PostContainer>
   );
 };

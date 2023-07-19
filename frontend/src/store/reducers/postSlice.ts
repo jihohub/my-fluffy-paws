@@ -31,7 +31,7 @@ export interface UpdatePostPayload {
   text: string;
 }
 
-const postAdapter = createEntityAdapter<Post>({
+export const postAdapter: EntityAdapter<Post> = createEntityAdapter<Post>({
   selectId: (post) => post.postId,
 });
 

@@ -16,7 +16,6 @@ const s3Client = new S3Client({
 });
 
 const uploadFile = async (file) => {
-  console.log(file);
   const uploadParams = {
     Bucket: "jiho-image-storage",
     Key: file.originalname, // 업로드될 파일 이름
@@ -102,12 +101,6 @@ const getPostById = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    // post.Comments = post.Comments.map((comment) => ({
-    //   ...comment.toJSON(),
-    //   userName: comment.User.userName,
-    //   userImage: comment.User.userImage,
-    // }));
-
     res.status(200).json(post);
   } catch (error) {
     console.error(error);
@@ -120,7 +113,6 @@ const createPost = async (req, res) => {
   try {
     const { text } = req.body;
     const image = req.file;
-    console.log("image", image)
 
     let uploadedImage = "";
 
