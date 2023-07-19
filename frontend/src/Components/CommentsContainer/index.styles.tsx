@@ -5,6 +5,7 @@ const CommentContainer = styled.div`
 `;
 
 const CommentItem = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   max-width: 600px;
@@ -51,6 +52,12 @@ const CommentText = styled.div`
   padding-right: 30px;
 `;
 
+const IconConatainer = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+`;
+
 export default {
   CommentContainer,
   CommentItem,
@@ -61,4 +68,5 @@ export default {
   CommentDate,
   LowerContainer,
   CommentText,
+  IconConatainer,
 };

@@ -61,10 +61,14 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
             <Styled.LowerContainer>
               <Styled.CommentText>{comment.text}</Styled.CommentText>
             </Styled.LowerContainer>
-            {isPostRoute && user?.userId === comment.userId && (
-              <BsThreeDotsVertical onClick={(e) => handleIconClick(e, comment.commentId)} />
-            )}
           </Styled.TextContainer>
+          {isPostRoute && user?.userId === comment.userId && (
+            <Styled.IconConatainer>
+              <BsThreeDotsVertical
+                onClick={(e) => handleIconClick(e, comment.commentId)}
+              />
+            </Styled.IconConatainer>
+          )}
         </Styled.CommentItem>
       ))}
       {isToastVisible && <Toast path="comment" commentId={commentId} />}
