@@ -23,15 +23,7 @@ Post.init(
       type: DataTypes.STRING,
     },
     text: {
-      type: DataTypes.STRING,
-    },
-    commentCount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-      get() {
-        return this.getDataValue("commentCount");
-      },
+      type: DataTypes.STRING(1500),
     },
   },
   {
@@ -39,23 +31,6 @@ Post.init(
     modelName: "Post",
   }
 );
-
-Post.addHook("afterFind", (result) => {
-  if (Array.isArray(result)) {
-    result.forEach((post) => {
-      post.commentCount = parseInt(post.commentCount, 10);
-    });
-  } else {
-    result.commentCount = parseInt(result.commentCount, 10);
-  }
-});
-
-Post.addHook("afterCreate", async (post) => {
-  const count = await Comment.count({
-    where: { postId: post.postId },
-  });
-  await post.update({ commentCount: count });
-});
 
 Post.hasMany(Comment, { foreignKey: "postId" });
 User.hasMany(Post, { as: "posts", foreignKey: "userId" });

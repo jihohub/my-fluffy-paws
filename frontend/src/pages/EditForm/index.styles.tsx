@@ -1,21 +1,11 @@
 import styled from "styled-components";
 
-const PostFormContainer = styled.div`
+const EditFormContainer = styled.div`
   margin: 0 auto;
 `;
 
 const InputContainer = styled.div`
   margin-bottom: 10px;
-`;
-
-const UploadImageArea = styled.div`
-  width: 100%;
-  height: 100%;
-  border: 2px dashed #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 `;
 
 const TextContainer = styled.div`
@@ -60,9 +50,8 @@ const Button = styled.button`
 `;
 
 export default {
-  PostFormContainer,
+  EditFormContainer,
   InputContainer,
-  UploadImageArea,
   TextContainer,
   Textarea,
   CharCount,

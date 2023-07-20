@@ -15,9 +15,17 @@ const GlobalStyle = createGlobalStyle`
     font-family: Helvetica, Arial, sans-serif;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   #root {
-    max-width: 1200px;
+    max-width: 500px;
     margin: 0 auto;
+
+    @media (max-width: 768px) {
+      width: 100vw;
+    }
   }
 `;
 

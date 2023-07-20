@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 import Post from "./pages/Post";
 import PostForm from "./pages/PostForm";
+import EditForm from "./pages/EditForm";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Clip from "./pages/Clip";
@@ -57,6 +58,7 @@ const App: React.FC = () => {
         <Route path="user/:userId" element={<User />} />
         <Route path="post/:postId" element={<Post />} />
         <Route path="post/new" element={<PostForm />} />
+        <Route path="post/:postId/edit" element={<EditForm />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
         <Route path="clip" element={<Clip />} />

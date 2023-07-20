@@ -23,8 +23,8 @@ const ToastButton = styled.button`
 const ToastContainer = styled.div`
   position: fixed;
   bottom: 0;
-  width: 600px;
-  max-width: 600px;
+  width: 500px;
+  max-width: 500px;
   background-color: #8d7b68;
   color: white;
   border-radius: 5px;

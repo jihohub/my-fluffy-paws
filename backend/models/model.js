@@ -1,0 +1,166 @@
+const { DataTypes, Model } = require("sequelize");
+const db = require("../config/db.config");
+
+class User extends Model {}
+
+User.init(
+  {
+    userId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+    },
+    userName: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    userImage: {
+      type: DataTypes.STRING,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      onUpdate: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "User",
+  }
+);
+
+class Post extends Model {}
+
+Post.init(
+  {
+    postId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    image: {
+      type: DataTypes.STRING,
+    },
+    text: {
+      type: DataTypes.STRING(1500),
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "Post",
+  }
+);
+
+class Comment extends Model {}
+
+Comment.init(
+  {
+    commentId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    postId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Post",
+        key: "postId",
+      },
+    },
+    text: {
+      type: DataTypes.STRING(300),
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "Comment",
+  }
+);
+
+class Token extends Model {}
+
+Token.init(
+  {
+    tokenId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    accessToken: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    refreshToken: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+    accessTokenExpireAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    refreshTokenExpireAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+      onUpdate: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "Token",
+  }
+);
+
+User.hasMany(Post, { as: "posts", foreignKey: "userId" });
+Post.belongsTo(User, { foreignKey: "userId" });
+
+User.hasMany(Comment, { foreignKey: "userId" });
+Comment.belongsTo(User, { foreignKey: "userId" });
+
+Post.hasMany(Comment, { foreignKey: "postId" });
+Comment.hasMany(Post, { foreignKey: "postId" });
+
+User.hasOne(Token, { foreignKey: "userId" });
+Token.belongsTo(User, { foreignKey: "userId" });
+
+module.exports = { User, Post, Comment, Token };

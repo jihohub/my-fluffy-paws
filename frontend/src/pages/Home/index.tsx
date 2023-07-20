@@ -64,17 +64,17 @@ const Home = () => {
 
   return (
     <Styled.MainContainer>
-      {posts.length > 0 ? (
-        posts.map((post) => {
+      {posts?.length > 0 ? (
+        posts?.map((post) => {
           const commentLinkText =
-            post.commentCount > 3
-              ? `댓글 ${post.commentCount}개 모두 보기`
-              : `댓글 ${post.commentCount}개 보기`;
+            post?.Comments?.length > 3
+              ? `댓글 ${post?.Comments?.length}개 모두 보기`
+              : `댓글 ${post?.Comments?.length}개 보기`;
 
           return (
             <>
-              <PostContainer post={post} />
-              {post?.commentCount > 0 && (
+              <PostContainer post={post} key={post.postId} />
+              {post?.Comments?.length > 0 && (
                 <>
                   <Styled.ViewCommentsLink
                     onClick={() => handleOpenModal(post)}

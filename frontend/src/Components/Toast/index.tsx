@@ -1,28 +1,36 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
+import { fetchPostById, deletePost } from "../../store/reducers/postSlice";
 import { logout } from "../../store/reducers/userSlice";
+import { fetchComments , deleteComment } from "../../store/reducers/commentSlice";
 import { selectAccessToken, removeAccessToken } from "../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
-import { MdLogin, MdLogout } from "react-icons/md";
-import { MdOutlineWatchLater } from "react-icons/md";
+import {
+  MdLogin,
+  MdLogout,
+  MdOutlineWatchLater,
+  MdEdit,
+  MdDelete,
+} from "react-icons/md";
 
-const Toast = () => {
+interface ToastProps {
+  path: string;
+  commentId?: number;
+}
+
+const Toast: React.FC<ToastProps> = ({ path, commentId }) => {
   const navigate = useNavigate();
+  const { postId } = useParams<{ postId: string }>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const accessToken = useSelector(selectAccessToken);
-  const [isToastVisible, setIsToastVisible] = useState(true);
-
+  const [isToastVisible, setIsToastVisible] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     setIsLoggedIn(accessToken !== null);
   }, [accessToken]);
-
-  const showToast = () => {
-    setIsToastVisible(true);
-  };
 
   const hideToast = () => {
     setIsToastVisible(false);
@@ -35,6 +43,21 @@ const Toast = () => {
     ) {
       hideToast();
     }
+  };
+
+  const handleEditPost = async () => {
+    navigate(`/post/${postId}/edit`);
+  };
+
+  const handleDeletePost = async () => {
+    postId && await dispatch(deletePost(parseInt(postId)));
+    navigate("/");
+  };
+
+  const handleDeleteComment = async () => {
+    commentId && await dispatch(deleteComment(commentId));
+    postId && (await dispatch(fetchPostById(parseInt(postId))));
+    postId && await dispatch(fetchComments(parseInt(postId)));
   };
 
   const handleLogoutClick = async () => {
@@ -64,30 +87,37 @@ const Toast = () => {
           <Styled.ToastUpperSlot>
             <Styled.ToastUpperText>-</Styled.ToastUpperText>
           </Styled.ToastUpperSlot>
-          {isLoggedIn ? (
+          {path === "user" && (
             <>
+              <Styled.ToastSlot onClick={handleLogoutClick}>
+                <MdEdit />
+                <Styled.ToastText>회원정보 수정</Styled.ToastText>
+              </Styled.ToastSlot>
               <Styled.ToastSlot onClick={handleLogoutClick}>
                 <MdLogout />
                 <Styled.ToastText>로그아웃</Styled.ToastText>
               </Styled.ToastSlot>
-              <Styled.ToastSlot>
-                <MdOutlineWatchLater />
-                <Styled.ToastText>미구현</Styled.ToastText>
+            </>
+          )}
+          {path === "post" && (
+            <>
+              <Styled.ToastSlot onClick={handleEditPost}>
+                <MdEdit />
+                <Styled.ToastText>게시물 수정</Styled.ToastText>
               </Styled.ToastSlot>
-              <Styled.ToastSlot>
-                <MdOutlineWatchLater />
-                <Styled.ToastText>미구현</Styled.ToastText>
-              </Styled.ToastSlot>
-              <Styled.ToastSlot>
-                <MdOutlineWatchLater />
-                <Styled.ToastText>미구현</Styled.ToastText>
+              <Styled.ToastSlot onClick={handleDeletePost}>
+                <MdDelete />
+                <Styled.ToastText>게시물 삭제</Styled.ToastText>
               </Styled.ToastSlot>
             </>
-          ) : (
-            <Styled.ToastLink to="/login">
-              <MdLogin />
-              <Styled.ToastText>로그인</Styled.ToastText>
-            </Styled.ToastLink>
+          )}
+          {path === "comment" && (
+            <>
+              <Styled.ToastSlot onClick={handleDeleteComment}>
+                <MdDelete />
+                <Styled.ToastText>댓글 삭제</Styled.ToastText>
+              </Styled.ToastSlot>
+            </>
           )}
         </Styled.ToastContainer>
       )}

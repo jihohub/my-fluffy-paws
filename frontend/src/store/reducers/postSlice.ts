@@ -3,6 +3,7 @@ import {
   createAsyncThunk,
   createSelector,
   createEntityAdapter,
+  EntityAdapter,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
@@ -15,7 +16,6 @@ export interface Post {
   image: string;
   text: string;
   userId: number;
-  commentCount: number;
   Comments: Comment[];
 }
 
@@ -25,7 +25,12 @@ export interface PostState {
   error: string | null;
 }
 
-const postAdapter = createEntityAdapter<Post>({
+export interface UpdatePostPayload {
+  postId: number;
+  text: string;
+}
+
+export const postAdapter: EntityAdapter<Post> = createEntityAdapter<Post>({
   selectId: (post) => post.postId,
 });
 
@@ -76,8 +81,9 @@ export const createNewPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   "post/updatePost",
-  async ({ postId, text }: { postId: number; text: string }) => {
+  async (payload: UpdatePostPayload) => {
     try {
+      const { postId, text } = payload;
       const response = await axios.put(`/api/post/${postId}`, { text });
       return response.data as Post;
     } catch (error) {
@@ -136,7 +142,7 @@ const postSlice = createSlice({
       })
       .addCase(deletePost.fulfilled, (state, action) => {
         postAdapter.removeOne(state, action.payload);
-      });
+      })
   },
 });
 

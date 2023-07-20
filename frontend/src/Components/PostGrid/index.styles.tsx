@@ -5,7 +5,6 @@ import { FaComment } from "react-icons/fa";
 const PostContainer = styled.div`
   position: relative;
   display: grid;
-  max-width: 600px;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 80px;

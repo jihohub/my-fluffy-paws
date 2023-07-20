@@ -6,13 +6,17 @@ const NavContainer = styled.nav`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 600px;
+  width: 500px;
+  max-width: 500px;
   display: flex;
   background-color: #ffffff;
   justify-content: space-around;
   padding: 12px 0;
   z-index: 2;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const NavItem = styled(Link)`

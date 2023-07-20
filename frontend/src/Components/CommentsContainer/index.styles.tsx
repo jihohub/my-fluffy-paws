@@ -1,17 +1,21 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CommentContainer = styled.div`
-  max-width: 600px;
   padding: 10px;
 `;
 
 const CommentItem = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   max-width: 600px;
   min-height: 40px;
   margin-bottom: 5px;
   // align-items: center;
+`;
+
+const LinkContainer = styled(Link)`
 `;
 
 const CommentUserImage = styled.img`
@@ -52,9 +56,16 @@ const CommentText = styled.div`
   padding-right: 30px;
 `;
 
+const IconConatainer = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+`;
+
 export default {
   CommentContainer,
   CommentItem,
+  LinkContainer,
   CommentUserImage,
   TextContainer,
   UpperContainer,
@@ -62,4 +73,5 @@ export default {
   CommentDate,
   LowerContainer,
   CommentText,
+  IconConatainer,
 };
