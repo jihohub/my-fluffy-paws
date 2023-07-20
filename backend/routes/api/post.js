@@ -9,10 +9,10 @@ const upload = multer({ dest: "uploads/" });
 router.post("/", verifyToken, upload.single("image"), postController.createPost);
 
 // 게시물 수정
-router.put("/:postId", postController.updatePost);
+router.put("/:postId", verifyToken, postController.updatePost);
 
 // 게시물 삭제
-router.delete("/:postId", postController.deletePost);
+router.delete("/:postId", verifyToken, postController.deletePost);
 
 // 모든 게시물 가져오기
 router.get("/", postController.getAllPosts);
