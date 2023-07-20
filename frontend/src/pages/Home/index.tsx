@@ -21,7 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchPosts());
-  }, []);
+  }, [dispatch]);
 
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -58,9 +58,12 @@ const Home = () => {
     return <div>Error: {error}</div>;
   }
 
-  if (!posts) {
-    return <div>Posts not found</div>;
+  if (!posts || posts.length === 0) {
+    return <div>게시물이 없습니다.</div>;
   }
+  console.log(posts);
+  console.log(posts);
+  console.log(posts);
 
   return (
     <Styled.MainContainer>
@@ -88,7 +91,7 @@ const Home = () => {
           );
         })
       ) : (
-        <></>
+        <p>게시물이 없습니다.</p>
       )}
       {selectedPost && (
         <Modal onClose={handleCloseModal} modalRef={modalRef}>

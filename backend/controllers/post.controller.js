@@ -49,7 +49,14 @@ const getAllPosts = async (req, res) => {
             },
             {
               model: CommentLike,
+              as: "likedUser",
               attributes: ["userId"],
+              include: [
+                {
+                  model: User,
+                  attributes: ["userId", "userName", "userImage"],
+                },
+              ],
             },
           ],
         },
@@ -60,6 +67,13 @@ const getAllPosts = async (req, res) => {
         {
           model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
           attributes: ["userId"],
+          as: "likedUser",
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
         },
       ],
     });
@@ -78,7 +92,7 @@ const getAllPosts = async (req, res) => {
         userName,
         userImage,
         comments,
-        likedUsers: PostLikes,
+        PostLikes,
       };
 
       return postWithUser;
@@ -107,7 +121,14 @@ const getPostById = async (req, res) => {
             },
             {
               model: CommentLike,
+              as: "likedUser",
               attributes: ["userId"],
+              include: [
+                {
+                  model: User,
+                  attributes: ["userId", "userName", "userImage"],
+                },
+              ],
             },
           ],
         },
@@ -118,6 +139,13 @@ const getPostById = async (req, res) => {
         {
           model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
           attributes: ["userId"],
+          as: "likedUser",
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
         },
       ],
     });
@@ -139,7 +167,7 @@ const getPostById = async (req, res) => {
       userName,
       userImage,
       comments,
-      likedUsers: PostLikes,
+      PostLikes,
     };
 
     res.status(200).json(postWithUser);
@@ -193,7 +221,8 @@ const updatePost = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    post.update({ text });
+    post.setDataValue("text", text);
+    await post.save();
 
     res.status(200).json({ message: "게시물 수정이 완료되었습니다.", post });
   } catch (error) {

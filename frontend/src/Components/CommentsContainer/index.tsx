@@ -7,24 +7,16 @@ import moment from "moment";
 import "moment/locale/ko";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Toast from "../../Components/Toast";
+import { Comment } from "../../store/reducers/commentSlice";
 
-interface CommentsContainerProps {
-  comments: {
-    commentId: number;
-    userId: number;
-    User: {
-      userName: string;
-      userImage: string;
-    };
-    text: string;
-    createdAt: Date;
-  }[];
+export interface CommentsContainerProps {
+  comments: Comment[];
 }
 
 const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
   const location = useLocation();
   const isPostRoute = location.pathname.startsWith("/post/");
-  console.log(comments)
+  console.log(comments);
 
   const user = useSelector(selectUser);
 
@@ -35,7 +27,10 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
     setIsToastVisible((prevState) => !prevState);
   };
 
-  const handleIconClick = (event: React.MouseEvent<SVGElement, MouseEvent>, id: number) => {
+  const handleIconClick = (
+    event: React.MouseEvent<SVGElement, MouseEvent>,
+    id: number
+  ) => {
     event.preventDefault();
     event.stopPropagation();
     handleMenuClick();

@@ -7,7 +7,7 @@ const commentController = require("../../controllers/comment.controller");
 router.get("/", commentController.getAllComments);
 
 // 댓글 작성
-router.post("/", commentController.createComment);
+router.post("/", verifyToken, commentController.createComment);
 
 // 댓글 삭제
 router.delete("/:commentId", verifyToken, commentController.deleteComment);

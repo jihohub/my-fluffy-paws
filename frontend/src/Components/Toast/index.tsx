@@ -50,12 +50,13 @@ const Toast: React.FC<ToastProps> = ({ path, commentId }) => {
   };
 
   const handleDeletePost = async () => {
-    postId && await dispatch(deletePost(parseInt(postId)));
+    postId && (await dispatch(deletePost({postId: parseInt(postId), token: accessToken})));
     navigate("/");
   };
 
   const handleDeleteComment = async () => {
-    commentId && await dispatch(deleteComment(commentId));
+    commentId &&
+      (await dispatch(deleteComment({ commentId, token: accessToken })));
     postId && (await dispatch(fetchPostById(parseInt(postId))));
     postId && await dispatch(fetchComments(parseInt(postId)));
   };

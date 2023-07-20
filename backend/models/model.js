@@ -210,13 +210,13 @@ Token.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(PostLike, { foreignKey: "userId" });
 PostLike.belongsTo(User, { foreignKey: "userId" });
 
-Post.hasMany(PostLike, { foreignKey: "postId" });
+Post.hasMany(PostLike, { as: "likedUser", foreignKey: "postId" });
 PostLike.belongsTo(Post, { foreignKey: "postId" });
 
 User.hasMany(CommentLike, { foreignKey: "userId" });
 CommentLike.belongsTo(User, { foreignKey: "userId" });
 
-Comment.hasMany(CommentLike, { foreignKey: "commentId" });
+Comment.hasMany(CommentLike, { as: "likedUser", foreignKey: "commentId" });
 CommentLike.belongsTo(Comment, { foreignKey: "commentId" });
 
 module.exports = { User, Post, Comment, Token, PostLike, CommentLike };

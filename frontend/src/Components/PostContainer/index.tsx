@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import {
   selectUser,
-  selectUsersLikePost,
-  getUsersInfoBatch,
 } from "../../store/reducers/userSlice";
 import { Post as PostData } from "../../store/reducers/postSlice";
-import { User } from "../../store/reducers/userSlice";
 import { BsThreeDotsVertical } from "react-icons/bs"
 import Toast from "../../Components/Toast";
+import { CommentsContainerProps } from "../CommentsContainer";
 
-interface PostContainerProps {
-  post: PostData;
-}
-
-interface UserInfo {
-  userId: number;
-  userName: string;
-  userImage: string;
+export interface PostContainerProps {
+  post: PostData
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
@@ -28,9 +19,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
   const isPostRoute = location.pathname.startsWith("/post/");
 
   const user = useSelector(selectUser);
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  console.log(post)
-
+  console.log(post);
 
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
 
@@ -44,21 +33,15 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
     handleMenuClick();
   };
 
-  const likedUsersWithInfo = useSelector(selectUsersLikePost);
-
-  useEffect(() => {
-    if (post.likedUsers && post.likedUsers.length > 0) {
-      const userIds = post.likedUsers.map((user) => user.userId);
-      dispatch(getUsersInfoBatch(userIds));
-    }
-  }, [dispatch, post.likedUsers]);
-
   const renderLikedUsers = () => {
-    if (likedUsersWithInfo && likedUsersWithInfo.length > 0) {
-      return likedUsersWithInfo.map((user) => (
-        <Styled.LikedUser key={user.userId}>
-          <Styled.LikedUserImage src={user.userImage} alt="Liked User" />
-          <Styled.LikedUserName>{user.userName}</Styled.LikedUserName>
+    if (post.likedUser && post.likedUser.length > 0) {
+      return post.likedUser.map((eachUser) => (
+        <Styled.LikedUser key={eachUser.User.userId}>
+          <Styled.LikedUserImage
+            src={eachUser.User.userImage}
+            alt="Liked User"
+          />
+          <Styled.LikedUserName>{eachUser.User.userName}</Styled.LikedUserName>
         </Styled.LikedUser>
       ));
     } else {
@@ -82,7 +65,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
           <Styled.PostImage src={post.image} alt="Post" />
           <Styled.PostText>{post.text}</Styled.PostText>
           <Styled.LikesContainer>
-            <Styled.LikesCount>{post.likedUsers.length} likes</Styled.LikesCount>
+            <Styled.LikesCount>{post.likedUser.length} likes</Styled.LikesCount>
             <Styled.LikedUser>{renderLikedUsers()}</Styled.LikedUser>
           </Styled.LikesContainer>
         </Styled.ContentLinkContainer>
@@ -91,9 +74,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
           <Styled.PostImage src={post.image} alt="Post" />
           <Styled.PostText>{post.text}</Styled.PostText>
           <Styled.LikesContainer>
-            <Styled.LikesCount>
-              {post.likedUsers.length} likes
-            </Styled.LikesCount>
+            <Styled.LikesCount>{post.likedUser.length} likes</Styled.LikesCount>
             <Styled.LikedUser>{renderLikedUsers()}</Styled.LikedUser>
           </Styled.LikesContainer>
         </Styled.ContentContainer>
