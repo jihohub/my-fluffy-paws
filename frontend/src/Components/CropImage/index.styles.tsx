@@ -4,14 +4,8 @@ const CropContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 600px;
-  max-width: 600px;
   margin: 0 auto;
   margin-top: 70px;
-
-  @media (max-width: 768px) {
-    width: 100vw;
-  }
 `;
 
 const ButtonContainer = styled.div`

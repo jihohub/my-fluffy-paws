@@ -2,25 +2,21 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const PostContainer = styled.div`
-  max-width: 600px;
   margin: 0 auto;
   padding: 10px;
 `;
 
 const AuthorContainer = styled(Link)`
-  text-decoration: none;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-
+  position: relative;
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+`;
+
+const IconConatainer = styled.div`
+  position: absolute;
+  right: 0;
+  padding-left: 50px;
 `;
 
 const AuthorImage = styled.img`
@@ -34,19 +30,16 @@ const AuthorName = styled.p`
   font-weight: bold;
   margin-right: 5px;
   text-decoration: none;
+  color: #000;
 `;
 
-const ContentContainer = styled(Link)`
-  text-decoration: none;
+const ContentLinkContainer = styled(Link)`
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+`;
 
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
-
+const ContentContainer = styled.div`
   margin-bottom: 5px;
   display: flex;
   flex-direction: column;
@@ -63,13 +56,16 @@ const PostText = styled.p`
   font-size: 24px;
   margin-bottom: 10px;
   text-decoration: none;
+  color: #000;
 `;
 
 export default {
   PostContainer,
   AuthorContainer,
+  IconConatainer,
   AuthorImage,
   AuthorName,
+  ContentLinkContainer,
   ContentContainer,
   PostImage,
   PostText,

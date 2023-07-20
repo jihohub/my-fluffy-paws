@@ -1,10 +1,9 @@
+const { User, Post, Comment, Token } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
-const User = require("../models/user.model");
-const Post = require("../models/post.model");
 const bcrypt = require("bcryptjs");
 
 const s3Client = new S3Client({
@@ -141,19 +140,24 @@ const getUser = async (req, res) => {
   try {
     const { userId } = req.params;
 
-      const user = await User.findByPk(userId, {
-        attributes: ["userId", "userName", "userImage"],
-        include: [
-          {
-            model: Post,
-            as: "posts",
-          },
-        ],
-      });
+    const user = await User.findByPk(userId, {
+      attributes: ["userId", "userName", "userImage"],
+      include: [
+        {
+          model: Post,
+          as: "posts",
+          include: [
+            {
+              model: Comment,
+            },
+          ],
+        },
+      ],
+    });
 
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
     res.status(200).json(user);
   } catch (error) {

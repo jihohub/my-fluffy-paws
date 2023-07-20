@@ -9,6 +9,7 @@ export interface Comment {
   text: string;
   createdAt: Date;
   User: {
+    userId: number;
     userName: string;
     userImage: string;
   };
@@ -50,24 +51,9 @@ export const createComment = createAsyncThunk(
   }
 );
 
-export const updateComment = createAsyncThunk(
-  "comment/updateComment",
-  async (commentData: Comment) => {
-    try {
-      const response = await axios.put(
-        `/api/comment/${commentData.commentId}`,
-        commentData
-      );
-      return response.data as Comment;
-    } catch (error) {
-      throw Error("Failed to update comment");
-    }
-  }
-);
-
 export const deleteComment = createAsyncThunk(
   "comment/deleteComment",
-  async (commentId: number) => {
+  async (commentId: number, { getState, dispatch }) => {
     try {
       await axios.delete(`/api/comment/${commentId}`);
       return commentId;
@@ -104,24 +90,6 @@ const commentSlice = createSlice({
         state.comments.push(action.payload);
       })
       .addCase(createComment.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error?.message || "";
-      })
-      .addCase(updateComment.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(updateComment.fulfilled, (state, action) => {
-        state.loading = false;
-        const updatedComment = action.payload;
-        const index = state.comments.findIndex(
-          (comment) => comment.commentId === updatedComment.commentId
-        );
-        if (index !== -1) {
-          state.comments[index] = updatedComment;
-        }
-      })
-      .addCase(updateComment.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })

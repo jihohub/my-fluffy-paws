@@ -7,6 +7,8 @@ interface PostContainerProps {
 }
 
 const PostGrid: React.FC<PostContainerProps> = ({ posts }) => {
+  console.log(posts);
+  console.log(posts);
   return (
     <Styled.PostContainer>
       {posts?.map((post) => (
@@ -15,7 +17,7 @@ const PostGrid: React.FC<PostContainerProps> = ({ posts }) => {
           <Styled.PostHover>
             <Styled.CommentIcon />
             <Styled.PostCommentCount>
-              {post.commentCount}
+              {post?.Comments?.length || 0}
             </Styled.PostCommentCount>
           </Styled.PostHover>
         </Styled.HoverContainer>

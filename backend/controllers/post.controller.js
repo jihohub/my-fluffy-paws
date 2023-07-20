@@ -1,11 +1,9 @@
+const { User, Post, Comment, Token } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
-const Post = require("../models/post.model");
-const User = require("../models/user.model");
-const Comment = require("../models/comment.model");
 
 const s3Client = new S3Client({
   region: "ap-northeast-2",
@@ -16,7 +14,6 @@ const s3Client = new S3Client({
 });
 
 const uploadFile = async (file) => {
-  console.log(file);
   const uploadParams = {
     Bucket: "jiho-image-storage",
     Key: file.originalname, // 업로드될 파일 이름
@@ -102,12 +99,6 @@ const getPostById = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    // post.Comments = post.Comments.map((comment) => ({
-    //   ...comment.toJSON(),
-    //   userName: comment.User.userName,
-    //   userImage: comment.User.userImage,
-    // }));
-
     res.status(200).json(post);
   } catch (error) {
     console.error(error);
@@ -120,7 +111,6 @@ const createPost = async (req, res) => {
   try {
     const { text } = req.body;
     const image = req.file;
-    console.log("image", image)
 
     let uploadedImage = "";
 
@@ -180,6 +170,7 @@ const deletePost = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
+    await Comment.destroy({ where: { postId } });
     await post.destroy();
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });

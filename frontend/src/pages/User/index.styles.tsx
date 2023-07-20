@@ -4,14 +4,8 @@ const UserContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 600px;
-  max-width: 600px;
   margin: 0 auto;
   margin-top: 50px;
-
-  @media (max-width: 768px) {
-    width: 100vw;
-  }
 `;
 
 const UserName = styled.p`
@@ -37,12 +31,6 @@ const UserProfileContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  width: 600px;
-  max-width: 600px;
-
-  @media (max-width: 768px) {
-    width: 100vw;
-  }
 `;
 
 const UserImage = styled.img`
