@@ -1,4 +1,5 @@
-const { User, Post, Comment, Token } = require("../models/model");
+const { User, Post, Comment, PostLike, CommentLike } = require("../models/model");
+const sequelize = require("../config/db.config");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
@@ -40,30 +41,47 @@ const getAllPosts = async (req, res) => {
       include: [
         {
           model: Comment,
+          as: "comments",
           include: [
             {
               model: User,
-              attributes: ["userName", "userImage"],
+              attributes: ["userId", "userName", "userImage"],
+            },
+            {
+              model: CommentLike,
+              attributes: ["userId"],
             },
           ],
         },
         {
           model: User,
-          attributes: ["userName", "userImage"],
+          attributes: ["userId", "userName", "userImage"],
+        },
+        {
+          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          attributes: ["userId"],
         },
       ],
     });
 
     const postsWithUser = posts.map((post) => {
       const {
-        User: { userName, userImage },
+        User: { userId, userName, userImage },
+        comments,
+        PostLikes,
         ...postAttributes
       } = post.toJSON();
-      return {
+
+      const postWithUser = {
         ...postAttributes,
+        userId,
         userName,
         userImage,
+        comments,
+        likedUsers: PostLikes,
       };
+
+      return postWithUser;
     });
 
     res.status(200).json(postsWithUser);
@@ -81,16 +99,25 @@ const getPostById = async (req, res) => {
       include: [
         {
           model: Comment,
+          as: "comments",
           include: [
             {
               model: User,
-              attributes: ["userName", "userImage"],
+              attributes: ["userId", "userName", "userImage"],
+            },
+            {
+              model: CommentLike,
+              attributes: ["userId"],
             },
           ],
         },
         {
           model: User,
-          attributes: ["userName", "userImage"],
+          attributes: ["userId", "userName", "userImage"],
+        },
+        {
+          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          attributes: ["userId"],
         },
       ],
     });
@@ -99,10 +126,26 @@ const getPostById = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    res.status(200).json(post);
+    const {
+      User: { userId, userName, userImage },
+      comments,
+      PostLikes,
+      ...postAttributes
+    } = post.toJSON();
+
+    const postWithUser = {
+      ...postAttributes,
+      userId,
+      userName,
+      userImage,
+      comments,
+      likedUsers: PostLikes,
+    };
+
+    res.status(200).json(postWithUser);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "서버 오류" });
   }
 };
 

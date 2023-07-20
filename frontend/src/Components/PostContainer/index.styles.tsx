@@ -59,6 +59,33 @@ const PostText = styled.p`
   color: #000;
 `;
 
+const LikesContainer = styled.div`
+  margin-top: 8px;
+`;
+
+const LikedUser = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+`;
+
+const LikedUserImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+`;
+
+const LikedUserName = styled.span`
+  font-weight: 500;
+`;
+
+const LikesCount = styled.span`
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+`;
+
 export default {
   PostContainer,
   AuthorContainer,
@@ -69,4 +96,9 @@ export default {
   ContentContainer,
   PostImage,
   PostText,
+  LikesContainer,
+  LikedUser,
+  LikedUserImage,
+  LikedUserName,
+  LikesCount,
 };

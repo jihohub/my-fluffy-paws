@@ -7,16 +7,18 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { User } from "./userSlice";
 import { Comment } from "./commentSlice";
 
 export interface Post {
   postId: number;
+  userId: number;
   userName: string;
   userImage: string;
   image: string;
   text: string;
-  userId: number;
-  Comments: Comment[];
+  comments: Comment[];
+  likedUsers: User[];
 }
 
 export interface PostState {

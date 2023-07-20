@@ -24,6 +24,7 @@ interface CommentsContainerProps {
 const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
   const location = useLocation();
   const isPostRoute = location.pathname.startsWith("/post/");
+  console.log(comments)
 
   const user = useSelector(selectUser);
 
@@ -43,7 +44,7 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
 
   return (
     <Styled.CommentContainer>
-      {comments.map((comment) => (
+      {comments?.map((comment) => (
         <Styled.CommentItem key={comment.commentId}>
           <Styled.LinkContainer to={`/user/${comment.userId}`}>
             <Styled.CommentUserImage

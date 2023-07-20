@@ -5,6 +5,7 @@ import userReducer, { selectUserState } from "./reducers/userSlice";
 import postReducer, { selectPostState } from "./reducers/postSlice";
 import commentReducer, { selectCommentState } from "./reducers/commentSlice";
 import tokenReducer, { selectTokenState } from "./reducers/tokenSlice";
+import likeReducer from "./reducers/tokenSlice";
 
 const persistConfig = {
   key: "root",
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   post: postReducer,
   comment: commentReducer,
   token: tokenReducer,
+  like: likeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

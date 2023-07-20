@@ -15,16 +15,15 @@ const User = () => {
   const { userId } = useParams<{ userId: string }>();
 
   const isLoading = useSelector(selectIsLoading);
-  const user = useSelector((state: RootState) => state.user.otherUser);
+  const user = useSelector((state: RootState) => state.user.userOnProfile);
   const [isToastVisible, setIsToastVisible] = useState(false);
 
   useEffect(() => {
     // 사용자 정보와 사용자가 작성한 포스트 정보를 가져오는 액션 호출
     if (userId !== undefined) {
       dispatch(getUserInfo(parseInt(userId)));
-      console.log(user);
-      console.log(user);
     }
+    console.log(user)
   }, [userId]);
 
   const handleMenuClick = () => {

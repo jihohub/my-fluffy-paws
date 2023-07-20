@@ -44,7 +44,7 @@ const Post = () => {
     <Styled.MainContainer>
       <Styled.PostContainer>
         <PostContainer post={post}></PostContainer>
-        <CommentsContainer comments={post.Comments} />
+        <CommentsContainer comments={post.comments} />
       </Styled.PostContainer>
       <CommentForm />
     </Styled.MainContainer>

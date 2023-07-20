@@ -24,15 +24,6 @@ User.init(
     userImage: {
       type: DataTypes.STRING,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      onUpdate: DataTypes.NOW,
-    },
   },
   {
     sequelize: db,
@@ -135,19 +126,72 @@ Token.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      onUpdate: DataTypes.NOW,
-    },
   },
   {
     sequelize: db,
     modelName: "Token",
+  }
+);
+
+class PostLike extends Model { }
+
+PostLike.init(
+  {
+    likeId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    postId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Post",
+        key: "postId",
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "PostLike",
+    tableName: "post_likes",
+  }
+);
+
+class CommentLike extends Model {}
+
+CommentLike.init(
+  {
+    likeId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    commentId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Comment",
+        key: "commentId",
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "CommentLike",
+    tableName: "comment_likes",
   }
 );
 
@@ -157,10 +201,22 @@ Post.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Comment, { foreignKey: "userId" });
 Comment.belongsTo(User, { foreignKey: "userId" });
 
-Post.hasMany(Comment, { foreignKey: "postId" });
+Post.hasMany(Comment, { as: "comments", foreignKey: "postId" });
 Comment.hasMany(Post, { foreignKey: "postId" });
 
 User.hasOne(Token, { foreignKey: "userId" });
 Token.belongsTo(User, { foreignKey: "userId" });
 
-module.exports = { User, Post, Comment, Token };
+User.hasMany(PostLike, { foreignKey: "userId" });
+PostLike.belongsTo(User, { foreignKey: "userId" });
+
+Post.hasMany(PostLike, { foreignKey: "postId" });
+PostLike.belongsTo(Post, { foreignKey: "postId" });
+
+User.hasMany(CommentLike, { foreignKey: "userId" });
+CommentLike.belongsTo(User, { foreignKey: "userId" });
+
+Comment.hasMany(CommentLike, { foreignKey: "commentId" });
+CommentLike.belongsTo(Comment, { foreignKey: "commentId" });
+
+module.exports = { User, Post, Comment, Token, PostLike, CommentLike };
