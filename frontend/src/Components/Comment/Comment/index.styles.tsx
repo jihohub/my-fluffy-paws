@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const CommentContainer = styled.div`
-  padding: 10px;
+  // padding: 10px;
 `;
 
 const CommentItem = styled.div`
@@ -75,6 +75,13 @@ const HeartConatainer = styled.div`
   padding-left: 50px;
 `;
 
+const CountText = styled.p`
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #888;
+`;
+
 export default {
   CommentContainer,
   CommentItem,
@@ -90,4 +97,5 @@ export default {
   LikesContainer,
   LikesCount,
   HeartConatainer,
+  CountText,
 };

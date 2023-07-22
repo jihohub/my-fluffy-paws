@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LikeText = styled.p`
+const CountText = styled.p`
   font-size: 24px;
   margin-bottom: 10px;
   text-decoration: none;
@@ -8,5 +8,5 @@ const LikeText = styled.p`
 `;
 
 export default {
-  LikeText,
+  CountText,
 };

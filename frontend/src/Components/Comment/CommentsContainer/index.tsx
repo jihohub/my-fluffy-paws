@@ -57,32 +57,6 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
 
   return (
     <Styled.CommentContainer>
-      {/* {posts?.length > 0 ? (
-        posts?.map((post) => {
-          const commentLinkText =
-            post?.comments?.length > 3
-              ? `댓글 ${post?.comments?.length}개 모두 보기`
-              : `댓글 ${post?.comments?.length}개 보기`;
-
-          return (
-            <>
-              <PostContainer post={post} key={post.postId} />
-              {post?.comments?.length > 0 && (
-                <>
-                  <Styled.ViewCommentsLink
-                    onClick={() => handleOpenModal(post)}
-                  >
-                    {commentLinkText}
-                  </Styled.ViewCommentsLink>
-                  <CommentsContainer comments={post.comments.slice(0, 3)} />
-                </>
-              )}
-            </>
-          );
-        })
-      ) : (
-        <p>게시물이 없습니다.</p>
-      )} */}
       {comments?.map((comment) => (
         <Styled.CommentItem key={comment.commentId}>
           <Styled.LinkContainer to={`/user/${comment.userId}`}>
@@ -114,7 +88,7 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
               )}
             </Styled.HeartConatainer>
           </Styled.LikesContainer>
-          {isPostRoute && user?.userId === comment.userId && (
+          {user?.userId === comment.userId && (
             <Styled.IconContainer>
               <BsThreeDotsVertical
                 onClick={(e) => handleIconClick(e, comment.commentId)}

@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const CommentContainer = styled.div`
-  padding: 10px;
+  height: 30vh;
+  overflow: auto;
 `;
 
 const CommentItem = styled.div`
@@ -11,8 +12,8 @@ const CommentItem = styled.div`
   width: 100%;
   max-width: 600px;
   min-height: 40px;
+  padding: 10px;
   margin-bottom: 5px;
-  // align-items: center;
 `;
 
 const LinkContainer = styled(Link)`

@@ -10,10 +10,11 @@ export interface PostContainerProps {
 }
 
 const Author: React.FC<PostContainerProps> = ({ author }) => {
+  const { userId, userName, userImage } = author;
   return (
-    <Styled.AuthorContainer to={`/user/${author.userId}`}>
-      <Styled.AuthorImage src={author.userImage} alt="User Image" />
-      <Styled.AuthorName>{author.userName}</Styled.AuthorName>
+    <Styled.AuthorContainer to={`/user/${userId}`}>
+      <Styled.AuthorImage src={userImage} alt="User Image" />
+      <Styled.AuthorName>{userName}</Styled.AuthorName>
     </Styled.AuthorContainer>
   );
 };

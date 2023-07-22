@@ -16,7 +16,7 @@ import Toast from "../../Toast";
 import { Comment } from "../../../store/reducers/commentSlice";
 
 export interface LikeContainerProps {
-  like: {
+  likeProps: {
     likeCount: number;
     likedUser: {
       userId: number;
@@ -29,12 +29,11 @@ export interface LikeContainerProps {
   };
 }
 
-const Like: React.FC<LikeContainerProps> = ({ like }) => {
-  const likeText = like.likeCount > 0 && `좋아요 ${like.likeCount}개`;
+const Like: React.FC<LikeContainerProps> = ({ likeProps }) => {
+  const { likeCount, likedUser } = likeProps;
+  const countText = likeCount > 0 && `좋아요 ${likeCount}개`;
 
-  return (
-    <Styled.LikeText>{likeText}</Styled.LikeText>
-  );
+  return <Styled.CountText>{countText}</Styled.CountText>;
 };
 
 export default Like;

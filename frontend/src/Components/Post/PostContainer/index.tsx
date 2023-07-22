@@ -62,10 +62,10 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
     <Styled.PostContainer>
       <Author author={User} />
       <Image image={image} />
-      <Icons iconsProps={{ postId, likedUser }} />
-      <Like like={{ likeCount, likedUser }}></Like>
+      <Icons iconsProps={{ postId, likedUser, comments }} />
+      <Like likeProps={{ likeCount, likedUser }}></Like>
       <Text text={text} />
-      <Comment comments={comments}></Comment>
+      <Comment commentProps={{ commentCount, comments }}></Comment>
     </Styled.PostContainer>
   );
 };
