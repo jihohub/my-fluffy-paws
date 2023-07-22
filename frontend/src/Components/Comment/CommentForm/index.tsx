@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { fetchPostById } from "../../store/reducers/postSlice";
-import { createComment } from "../../store/reducers/commentSlice";
-import { selectAccessToken } from "../../store/reducers/tokenSlice";
+import { fetchPostById } from "../../../store/reducers/postSlice";
+import { createComment } from "../../../store/reducers/commentSlice";
+import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 
 const CommentForm: React.FC = () => {

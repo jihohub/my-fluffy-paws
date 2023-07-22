@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getUserInfo, selectIsLoading } from "../../store/reducers/userSlice";
 import { RootState } from "../../store/store";
 import Styled from "./index.styles";
-import PostGrid from "../../Components/PostGrid";
+import PostGrid from "../../Components/Post/PostGrid";
 import Loading from "../../Components/Loading";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Toast from "../../Components/Toast";

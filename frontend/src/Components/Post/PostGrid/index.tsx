@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "./index.styles";
-import { Post as PostData } from "../../store/reducers/postSlice";
+import { Post as PostData } from "../../../store/reducers/postSlice";
 
 interface PostContainerProps {
   posts: PostData[];

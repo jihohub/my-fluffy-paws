@@ -10,8 +10,8 @@ import {
   selectIsLoading,
   selectError,
 } from "../../store/reducers/postSlice";
-import PostContainer from "../../Components/PostContainer";
-import CommentsContainer from "../../Components/CommentsContainer";
+import PostsContainer from "../../Components/Post/PostsContainer";
+import CommentsContainer from "../../Components/Comment/CommentsContainer";
 import Modal from "../../Components/Modal";
 import Loading from "../../Components/Loading";
 
@@ -64,37 +64,7 @@ const Home = () => {
 
   return (
     <Styled.MainContainer>
-      {posts?.length > 0 ? (
-        posts?.map((post) => {
-          const commentLinkText =
-            post?.comments?.length > 3
-              ? `댓글 ${post?.comments?.length}개 모두 보기`
-              : `댓글 ${post?.comments?.length}개 보기`;
-
-          return (
-            <>
-              <PostContainer post={post} key={post.postId} />
-              {post?.comments?.length > 0 && (
-                <>
-                  <Styled.ViewCommentsLink
-                    onClick={() => handleOpenModal(post)}
-                  >
-                    {commentLinkText}
-                  </Styled.ViewCommentsLink>
-                  <CommentsContainer comments={post.comments.slice(0, 3)} />
-                </>
-              )}
-            </>
-          );
-        })
-      ) : (
-        <p>게시물이 없습니다.</p>
-      )}
-      {selectedPost && (
-        <Modal onClose={handleCloseModal} modalRef={modalRef}>
-          <CommentsContainer comments={selectedPost.comments} />
-        </Modal>
-      )}
+      <PostsContainer posts={posts}></PostsContainer>
     </Styled.MainContainer>
   );
 };

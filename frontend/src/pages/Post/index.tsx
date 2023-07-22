@@ -9,10 +9,10 @@ import {
   selectError,
 } from "../../store/reducers/postSlice";
 import Styled from "./index.styles";
-import PostContainer from "../../Components/PostContainer";
+import PostContainer from "../../Components/Post/PostContainer";
 import { fetchComments } from "../../store/reducers/commentSlice";
-import CommentsContainer from "../../Components/CommentsContainer";
-import CommentForm from "../../Components/CommentForm";
+import CommentsContainer from "../../Components/Comment/CommentsContainer";
+import CommentForm from "../../Components/Comment/CommentForm";
 import Loading from "../../Components/Loading";
 
 const Post = () => {

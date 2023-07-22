@@ -9,18 +9,25 @@ import axios from "axios";
 import { RootState } from "../store";
 import { User } from "./userSlice";
 import { Comment } from "./commentSlice";
-import { CommentsContainerProps } from "../../Components/CommentsContainer";
+import { CommentsContainerProps } from "../../Components/Comment/CommentsContainer";
 
 export interface Post {
   postId: number;
-  userId: number;
-  userName: string;
-  userImage: string;
+  User: {
+    userId: number;
+    userName: string;
+    userImage: string;
+  };
+  // userId: number;
+  // userName: string;
+  // userImage: string;
   image: string;
   text: string;
   createdAt: Date;
   updatedAt: Date;
+  commentCount: number;
   comments: Comment[];
+  likeCount: number;
   likedUser: {
     userId: number;
     User: {

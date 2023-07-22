@@ -78,27 +78,7 @@ const getAllPosts = async (req, res) => {
       ],
     });
 
-    const postsWithUser = posts.map((post) => {
-      const {
-        User: { userId, userName, userImage },
-        comments,
-        PostLikes,
-        ...postAttributes
-      } = post.toJSON();
-
-      const postWithUser = {
-        ...postAttributes,
-        userId,
-        userName,
-        userImage,
-        comments,
-        PostLikes,
-      };
-
-      return postWithUser;
-    });
-
-    res.status(200).json(postsWithUser);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -154,23 +134,7 @@ const getPostById = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    const {
-      User: { userId, userName, userImage },
-      comments,
-      PostLikes,
-      ...postAttributes
-    } = post.toJSON();
-
-    const postWithUser = {
-      ...postAttributes,
-      userId,
-      userName,
-      userImage,
-      comments,
-      PostLikes,
-    };
-
-    res.status(200).json(postWithUser);
+    res.status(200).json(post);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "서버 오류" });
