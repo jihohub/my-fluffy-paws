@@ -61,9 +61,6 @@ const Home = () => {
   if (!posts || posts.length === 0) {
     return <div>게시물이 없습니다.</div>;
   }
-  console.log(posts);
-  console.log(posts);
-  console.log(posts);
 
   return (
     <Styled.MainContainer>

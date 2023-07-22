@@ -53,6 +53,14 @@ Post.init(
     text: {
       type: DataTypes.STRING(1500),
     },
+    commentCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    likeCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   },
   {
     sequelize: db,
@@ -85,6 +93,10 @@ Comment.init(
     },
     text: {
       type: DataTypes.STRING(300),
+    },
+    likeCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   },
   {
