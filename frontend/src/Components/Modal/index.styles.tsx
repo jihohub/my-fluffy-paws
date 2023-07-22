@@ -34,11 +34,11 @@ const ModalContentContainer = styled.div`
 
 const ModalContent = styled.div`
   background-color: #fff;
-  width: 600px;
+  width: 500px;
   border-radius: 4px;
 
   @media (max-width: 768px) {
-    width: 100vw;
+    max-width: 100vw;
   }
 `;
 
