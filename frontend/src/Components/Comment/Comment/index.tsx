@@ -12,13 +12,13 @@ import moment from "moment";
 import "moment/locale/ko";
 import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 import Toast from "../../Toast";
-import { Comment } from "../../../store/reducers/commentSlice";
+import { Comment as CommentData } from "../../../store/reducers/commentSlice";
 
 export interface CommentsContainerProps {
-  comments: Comment[];
+  comments: CommentData[];
 }
 
-const CommentsView: React.FC<CommentsContainerProps> = ({ comments }) => {
+const Comment: React.FC<CommentsContainerProps> = ({ comments }) => {
   
 
   return (
@@ -50,4 +50,4 @@ const CommentsView: React.FC<CommentsContainerProps> = ({ comments }) => {
   );
 };
 
-export default CommentsView;
+export default Comment;

@@ -1,4 +1,4 @@
-const { PostLike, CommentLike } = require("../models/model");
+const { Post, PostLike, CommentLike } = require("../models/model");
 
 // 게시물 좋아요
 const likePost = async (req, res) => {
@@ -8,6 +8,7 @@ const likePost = async (req, res) => {
 
     // 게시물 좋아요 추가
     await PostLike.create({ userId, postId });
+    await Post.increment("likeCount", { where: { postId } });
 
     res.status(200).json({ message: "게시물을 좋아요했습니다." });
   } catch (error) {
@@ -24,6 +25,7 @@ const unlikePost = async (req, res) => {
 
     // 게시물 좋아요 삭제
     await PostLike.destroy({ where: { userId, postId } });
+    await Post.decrement("likeCount", { where: { postId } });
 
     res.status(200).json({ message: "게시물 좋아요를 취소했습니다." });
   } catch (error) {

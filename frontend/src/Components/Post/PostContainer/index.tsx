@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
@@ -12,9 +11,12 @@ import { likePost, unlikePost } from "../../../store/reducers/likeSlice";
 import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 import Toast from "../../Toast";
 
-import AuthorView from "../AuthorView";
-import PostView from "../PostView";
-import LikeView from "../LikeView";
+import Author from "../Author";
+import Image from "../Image";
+import Text from "../Text";
+import Like from "../Like";
+import Icons from "../Icons";
+import Comment from "../../Comment/Comment";
 
 export interface PostContainerProps {
   post: PostData
@@ -22,8 +24,6 @@ export interface PostContainerProps {
 
 const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const location = useLocation();
-  const isPostRoute = location.pathname.startsWith("/post/");
 
   const user = useSelector(selectUser);
   const token = useSelector(selectAccessToken);
@@ -45,9 +45,6 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
     postId,
     text,
     User,
-    // userId,
-    // userImage,
-    // userName,
   } = post;
 
   console.log("commentCount", commentCount);
@@ -60,67 +57,16 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
   console.log("postId", postId);
   console.log("text", text);
   console.log("User", User);
-  // console.log("userId", userId);
-  // console.log("userImage", userImage);
-  // console.log("userName", userName);
-
-
-  
-  
 
   return (
     <Styled.PostContainer>
-      <AuthorView author={User}></AuthorView>
-      <PostView post={{ postId, text, image }}></PostView>
-      <LikeView like={{ likeCount, likedUser }}></LikeView>
-      {/* <CommentView></CommentView> */}
+      <Author author={User} />
+      <Image image={image} />
+      <Icons iconsProps={{ postId, likedUser }} />
+      <Like like={{ likeCount, likedUser }}></Like>
+      <Text text={text} />
+      <Comment comments={comments}></Comment>
     </Styled.PostContainer>
-    // <Styled.PostContainer>
-    //   <Styled.AuthorContainer to={`/user/${post.userId}`}>
-    //     <Styled.AuthorImage src={post.userImage} alt="User Image" />
-    //     <Styled.AuthorName>{post.userName}</Styled.AuthorName>
-    //     {isPostRoute && user?.userId === post.userId && (
-    //       <Styled.IconConatainer>
-    //         <BsThreeDotsVertical onClick={handleIconClick} />
-    //       </Styled.IconConatainer>
-    //     )}
-    //   </Styled.AuthorContainer>
-    //   {!isPostRoute ? (
-    //     <Styled.ContentLinkContainer to={`/post/${post.postId}`}>
-    //       <Styled.PostImage src={post.image} alt="Post" />
-    //       <Styled.PostText>{post.text}</Styled.PostText>
-    //       <Styled.LikesContainer>
-    //         <Styled.LikesCount>{post.likedUser.length} likes</Styled.LikesCount>
-    //         {/* <Styled.HeartConatainer>
-    //           {isLiked ? (
-    //             <BsHeartFill onClick={handleUnlikePost} />
-    //           ) : (
-    //             <BsHeart onClick={handleLikePost} />
-    //           )}
-    //         </Styled.HeartConatainer> */}
-    //         <Styled.LikedUser>{renderLikedUsers()}</Styled.LikedUser>
-    //       </Styled.LikesContainer>
-    //     </Styled.ContentLinkContainer>
-    //   ) : (
-    //     <Styled.ContentContainer>
-    //       <Styled.PostImage src={post.image} alt="Post" />
-    //       <Styled.PostText>{post.text}</Styled.PostText>
-    //       <Styled.LikesContainer>
-    //         <Styled.LikesCount>{post.likedUser.length} likes</Styled.LikesCount>
-    //         {/* <Styled.HeartConatainer>
-    //           {isLiked ? (
-    //             <BsHeartFill onClick={handleUnlikePost} />
-    //           ) : (
-    //             <BsHeart onClick={handleLikePost} />
-    //           )}
-    //         </Styled.HeartConatainer> */}
-    //         <Styled.LikedUser>{renderLikedUsers()}</Styled.LikedUser>
-    //       </Styled.LikesContainer>
-    //     </Styled.ContentContainer>
-    //   )}
-
-    //   {isToastVisible && <Toast path="post" />}
-    // </Styled.PostContainer>
   );
 };
 

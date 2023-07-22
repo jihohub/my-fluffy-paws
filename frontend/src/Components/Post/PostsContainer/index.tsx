@@ -19,8 +19,6 @@ export interface PostsContainerProps {
 }
 
 const PostsContainer: React.FC<PostsContainerProps> = ({ posts }) => {
-  console.log("posts", posts);
-
   return (
     <>
       {posts.map((post) => (

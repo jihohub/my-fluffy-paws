@@ -9,7 +9,7 @@ export interface PostContainerProps {
   };
 }
 
-const AuthorView: React.FC<PostContainerProps> = ({ author }) => {
+const Author: React.FC<PostContainerProps> = ({ author }) => {
   return (
     <Styled.AuthorContainer to={`/user/${author.userId}`}>
       <Styled.AuthorImage src={author.userImage} alt="User Image" />
@@ -18,4 +18,4 @@ const AuthorView: React.FC<PostContainerProps> = ({ author }) => {
   );
 };
 
-export default AuthorView;
+export default Author;
