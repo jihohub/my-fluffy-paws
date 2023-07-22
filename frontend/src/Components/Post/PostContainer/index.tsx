@@ -47,16 +47,16 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
     User,
   } = post;
 
-  console.log("commentCount", commentCount);
-  console.log("comments", comments);
-  console.log("createdAt", createdAt);
-  console.log("updatedAt", updatedAt);
-  console.log("image", image);
-  console.log("likeCount", likeCount);
-  console.log("likedUser", likedUser);
-  console.log("postId", postId);
-  console.log("text", text);
-  console.log("User", User);
+  // console.log("commentCount", commentCount);
+  // console.log("comments", comments);
+  // console.log("createdAt", createdAt);
+  // console.log("updatedAt", updatedAt);
+  // console.log("image", image);
+  // console.log("likeCount", likeCount);
+  // console.log("likedUser", likedUser);
+  // console.log("postId", postId);
+  // console.log("text", text);
+  // console.log("User", User);
 
   return (
     <Styled.PostContainer>

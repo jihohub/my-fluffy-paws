@@ -6,6 +6,7 @@ import { fetchPostById } from "../../../store/reducers/postSlice";
 import { createComment } from "../../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
+import { BsSendFill } from "react-icons/bs";
 
 const CommentForm: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -41,19 +42,21 @@ const CommentForm: React.FC = () => {
   return (
     <>
       <Styled.CommentFormContainer onSubmit={handleSubmit}>
-        <Styled.Textarea
-          placeholder="댓글을 입력하세요..."
-          value={text}
-          onChange={handleContentChange}
-          maxLength={100}
-        />
-        <Styled.CharCount>{text.length}/100</Styled.CharCount>
+        <Styled.CommentContainer>
+          <Styled.Textarea
+            placeholder="댓글을 입력하세요..."
+            value={text}
+            onChange={handleContentChange}
+            maxLength={100}
+          />
+          <Styled.CharCount>{text.length}/100</Styled.CharCount>
+        </Styled.CommentContainer>
+        <Styled.ButtonContainer>
+          <Styled.Button color="#8D7B68" onClick={handleSubmit}>
+            <BsSendFill />
+          </Styled.Button>
+        </Styled.ButtonContainer>
       </Styled.CommentFormContainer>
-      <Styled.ButtonContainer>
-        <Styled.Button color="#8D7B68" onClick={handleSubmit}>
-          작성 완료
-        </Styled.Button>
-      </Styled.ButtonContainer>
     </>
   );
 };

@@ -22,7 +22,7 @@ const PostsContainer: React.FC<PostsContainerProps> = ({ posts }) => {
   return (
     <>
       {posts.map((post) => (
-        <PostContainer post={post} />
+        <PostContainer post={post} key={post.postId} />
       ))}
     </>
   );

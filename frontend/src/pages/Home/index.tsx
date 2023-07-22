@@ -50,9 +50,9 @@ const Home = () => {
     };
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   if (error) {
     return <div>Error: {error}</div>;

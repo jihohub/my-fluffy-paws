@@ -22,6 +22,16 @@ const ModalContainer = styled.div`
   z-index: 2;
 `;
 
+const ModalTitleContainer = styled.div`
+  height: 30px;
+  border-bottom: 1px #dddddd solid;
+`;
+
+const ModalTitle = styled.p`
+  font-size: 24px;
+  color: #8d7b68;
+`;
+
 const ModalContentContainer = styled.div`
   position: relative;
   display: flex;
@@ -61,6 +71,8 @@ const CloseButton = styled.span`
 
 export default {
   ModalContainer,
+  ModalTitleContainer,
+  ModalTitle,
   ModalContentContainer,
   ModalContent,
   CloseButton,
