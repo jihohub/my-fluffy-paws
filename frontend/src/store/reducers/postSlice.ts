@@ -126,7 +126,7 @@ export const deletePost = createAsyncThunk(
       const { postId, token } = payload;
       await axios.delete(`/api/post/${postId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       });
       return postId;

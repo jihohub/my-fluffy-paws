@@ -1,27 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import {
   selectUser,
 } from "../../store/reducers/userSlice";
-import { Post as PostData } from "../../store/reducers/postSlice";
-import { BsThreeDotsVertical } from "react-icons/bs"
+import { Post as PostData, fetchPostById } from "../../store/reducers/postSlice";
+import { selectAccessToken } from "../../store/reducers/tokenSlice";
+import { likePost, unlikePost } from "../../store/reducers/likeSlice";
+import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 import Toast from "../../Components/Toast";
-import { CommentsContainerProps } from "../CommentsContainer";
 
 export interface PostContainerProps {
   post: PostData
 }
 
 const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const location = useLocation();
   const isPostRoute = location.pathname.startsWith("/post/");
 
   const user = useSelector(selectUser);
-  console.log(post);
+  const token = useSelector(selectAccessToken);
 
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(
+    user !== null &&
+      post.likedUser.some((likedUser) => likedUser.userId === user.userId)
+  );
+
+  
+  const handleLikePost = async () => {
+    await dispatch(likePost({ postId: post.postId, token }));
+    await dispatch(fetchPostById(post.postId));
+    setIsLiked(true);
+  };
+
+  const handleUnlikePost = async () => {
+    await dispatch(unlikePost({ postId: post.postId, token }));
+    await dispatch(fetchPostById(post.postId));
+    setIsLiked(false);
+  };
 
   const handleMenuClick = () => {
     setIsToastVisible((prevState) => !prevState);
@@ -66,6 +86,13 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
           <Styled.PostText>{post.text}</Styled.PostText>
           <Styled.LikesContainer>
             <Styled.LikesCount>{post.likedUser.length} likes</Styled.LikesCount>
+            <Styled.HeartConatainer>
+              {isLiked ? (
+                <BsHeartFill onClick={handleUnlikePost} />
+              ) : (
+                <BsHeart onClick={handleLikePost} />
+              )}
+            </Styled.HeartConatainer>
             <Styled.LikedUser>{renderLikedUsers()}</Styled.LikedUser>
           </Styled.LikesContainer>
         </Styled.ContentLinkContainer>
@@ -75,6 +102,13 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
           <Styled.PostText>{post.text}</Styled.PostText>
           <Styled.LikesContainer>
             <Styled.LikesCount>{post.likedUser.length} likes</Styled.LikesCount>
+            <Styled.HeartConatainer>
+              {isLiked ? (
+                <BsHeartFill onClick={handleUnlikePost} />
+              ) : (
+                <BsHeart onClick={handleLikePost} />
+              )}
+            </Styled.HeartConatainer>
             <Styled.LikedUser>{renderLikedUsers()}</Styled.LikedUser>
           </Styled.LikesContainer>
         </Styled.ContentContainer>

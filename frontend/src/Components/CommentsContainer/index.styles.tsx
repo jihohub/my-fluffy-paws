@@ -56,10 +56,24 @@ const CommentText = styled.div`
   padding-right: 30px;
 `;
 
-const IconConatainer = styled.div`
+const IconContainer = styled.div`
   position: absolute;
   top: 15px;
   right: 15px;
+`;
+
+const LikesContainer = styled.div`
+  margin-top: 8px;
+`;
+
+const LikesCount = styled.span`
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+`;
+
+const HeartConatainer = styled.div`
+  padding-left: 50px;
 `;
 
 export default {
@@ -73,5 +87,8 @@ export default {
   CommentDate,
   LowerContainer,
   CommentText,
-  IconConatainer,
+  IconContainer,
+  LikesContainer,
+  LikesCount,
+  HeartConatainer,
 };

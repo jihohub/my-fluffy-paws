@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { selectUser } from "../../store/reducers/userSlice";
+import { fetchPostById } from "../../store/reducers/postSlice";
+import { fetchComments } from "../../store/reducers/commentSlice";
+import { selectAccessToken } from "../../store/reducers/tokenSlice";
+import { likeComment, unlikeComment } from "../../store/reducers/likeSlice";
 import moment from "moment";
 import "moment/locale/ko";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 import Toast from "../../Components/Toast";
 import { Comment } from "../../store/reducers/commentSlice";
 
@@ -14,17 +19,30 @@ export interface CommentsContainerProps {
 }
 
 const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const location = useLocation();
   const isPostRoute = location.pathname.startsWith("/post/");
-  console.log(comments);
 
   const user = useSelector(selectUser);
+  const token = useSelector(selectAccessToken);
 
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
   const [commentId, setCommentId] = useState<number>(0);
 
   const handleMenuClick = () => {
     setIsToastVisible((prevState) => !prevState);
+  };
+
+  const handleLikeComment = async () => {
+    await dispatch(likeComment({ commentId, token }));
+    await dispatch(fetchComments(commentId));
+    // setIsLiked(true);
+  };
+
+  const handleUnlikeComment = async () => {
+    await dispatch(unlikeComment({ commentId, token }));
+    await dispatch(fetchComments(commentId));
+    // setIsLiked(false);
   };
 
   const handleIconClick = (
@@ -60,12 +78,24 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
               <Styled.CommentText>{comment.text}</Styled.CommentText>
             </Styled.LowerContainer>
           </Styled.TextContainer>
+          <Styled.LikesContainer>
+            <Styled.LikesCount>
+              {comment?.likedUser?.userId}
+            </Styled.LikesCount>
+            <Styled.HeartConatainer>
+              {comment?.likedUser?.userId === user?.userId ? (
+                <BsHeartFill onClick={handleUnlikeComment} />
+              ) : (
+                <BsHeart onClick={handleLikeComment} />
+              )}
+            </Styled.HeartConatainer>
+          </Styled.LikesContainer>
           {isPostRoute && user?.userId === comment.userId && (
-            <Styled.IconConatainer>
+            <Styled.IconContainer>
               <BsThreeDotsVertical
                 onClick={(e) => handleIconClick(e, comment.commentId)}
               />
-            </Styled.IconConatainer>
+            </Styled.IconContainer>
           )}
         </Styled.CommentItem>
       ))}

@@ -4,7 +4,7 @@ const { PostLike, CommentLike } = require("../models/model");
 const likePost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const { userId } = req.body;
+    const userId = req.session.userId;
 
     // 게시물 좋아요 추가
     await PostLike.create({ userId, postId });
@@ -20,7 +20,7 @@ const likePost = async (req, res) => {
 const unlikePost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const { userId } = req.body;
+    const userId = req.session.userId;
 
     // 게시물 좋아요 삭제
     await PostLike.destroy({ where: { userId, postId } });
@@ -36,8 +36,7 @@ const unlikePost = async (req, res) => {
 const likeComment = async (req, res) => {
   try {
     const { commentId } = req.params;
-    const { userId } = req.body;
-    console.log(commentId, userId);
+    const userId = req.session.userId;
 
     // 댓글 좋아요 추가
     await CommentLike.create({ userId, commentId });
@@ -53,7 +52,7 @@ const likeComment = async (req, res) => {
 const unlikeComment = async (req, res) => {
   try {
     const { commentId } = req.params;
-    const { userId } = req.body;
+    const userId = req.session.userId;
 
     // 댓글 좋아요 삭제
     await CommentLike.destroy({ where: { userId, commentId } });

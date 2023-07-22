@@ -12,11 +12,26 @@ const initialState: LikeState = {
   error: null,
 };
 
+export interface PostPayload {
+  postId: number;
+  token: string | null;
+}
+
+export interface CommentPayload {
+  commentId: number;
+  token: string | null;
+}
+
 export const likePost = createAsyncThunk(
   "like/likePost",
-  async (postId: number) => {
+  async (payload: PostPayload) => {
     try {
-      await axios.post(`/api/like/post/${postId}`);
+      const { postId, token } = payload;
+      await axios.post(`/api/like/post/${postId}`, {}, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
     } catch (error) {
       throw Error("Failed to like the post");
     }
@@ -25,9 +40,14 @@ export const likePost = createAsyncThunk(
 
 export const unlikePost = createAsyncThunk(
   "like/unlikePost",
-  async (postId: number) => {
+  async (payload: PostPayload) => {
     try {
-      await axios.delete(`/api/like/post/${postId}`);
+      const { postId, token } = payload;
+      await axios.delete(`/api/like/post/${postId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
     } catch (error) {
       throw Error("Failed to unlike the post");
     }
@@ -36,9 +56,18 @@ export const unlikePost = createAsyncThunk(
 
 export const likeComment = createAsyncThunk(
   "like/likeComment",
-  async (commentId: number) => {
+  async (payload: CommentPayload) => {
     try {
-      await axios.post(`/api/like/comment/${commentId}`);
+      const { commentId, token } = payload;
+      await axios.post(
+        `/api/like/comment/${commentId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
       throw Error("Failed to like the comment");
     }
@@ -47,9 +76,14 @@ export const likeComment = createAsyncThunk(
 
 export const unlikeComment = createAsyncThunk(
   "like/unlikeComment",
-  async (commentId: number) => {
+  async (payload: CommentPayload) => {
     try {
-      await axios.delete(`/api/like/comment/${commentId}`);
+      const { commentId, token } = payload;
+      await axios.delete(`/api/like/comment/${commentId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
     } catch (error) {
       throw Error("Failed to unlike the comment");
     }

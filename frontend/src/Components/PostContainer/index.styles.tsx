@@ -86,6 +86,14 @@ const LikesCount = styled.span`
   margin-top: 4px;
 `;
 
+const HeartConatainer = styled.div`
+  padding-left: 50px;
+
+  svg {
+    color: red;
+  }
+`;
+
 export default {
   PostContainer,
   AuthorContainer,
@@ -101,4 +109,5 @@ export default {
   LikedUserImage,
   LikedUserName,
   LikesCount,
+  HeartConatainer,
 };
