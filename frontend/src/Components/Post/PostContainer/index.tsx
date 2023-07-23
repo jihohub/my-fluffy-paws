@@ -27,10 +27,6 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
   const token = useSelector(selectAccessToken);
 
   const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
-  // const [isLiked, setIsLiked] = useState<boolean>(
-  //   user !== null &&
-  //     post.likedUser.some((likedUser) => likedUser.userId === user.userId)
-  // );
 
   const {
     commentCount,
@@ -44,17 +40,6 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
     text,
     User,
   } = post;
-
-  // console.log("commentCount", commentCount);
-  // console.log("comments", comments);
-  // console.log("createdAt", createdAt);
-  // console.log("updatedAt", updatedAt);
-  // console.log("image", image);
-  // console.log("likeCount", likeCount);
-  // console.log("likedUser", likedUser);
-  // console.log("postId", postId);
-  // console.log("text", text);
-  // console.log("User", User);
 
   return (
     <Styled.PostContainer>

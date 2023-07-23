@@ -4,6 +4,7 @@ import {
   createSelector,
   createEntityAdapter,
   EntityAdapter,
+  AsyncThunk,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
@@ -18,9 +19,6 @@ export interface Post {
     userName: string;
     userImage: string;
   };
-  // userId: number;
-  // userName: string;
-  // userImage: string;
   image: string;
   text: string;
   createdAt: Date;
@@ -44,6 +42,11 @@ export interface PostState {
   error: string | null;
 }
 
+export interface CreatePostPayload {
+  formData: FormData;
+  token: string | null;
+}
+
 export interface UpdatePostPayload {
   postId: number;
   text: string;
@@ -53,6 +56,11 @@ export interface UpdatePostPayload {
 export interface DeletePostPayload {
   postId: number;
   token: string | null;
+}
+
+interface CreateNewPostResponse {
+  message: string;
+  post: Post;
 }
 
 export const postAdapter: EntityAdapter<Post> = createEntityAdapter<Post>({
@@ -86,18 +94,23 @@ export const fetchPostById = createAsyncThunk(
   }
 );
 
-export const createNewPost = createAsyncThunk(
+export const createNewPost: AsyncThunk<
+  CreateNewPostResponse,
+  CreatePostPayload,
+  {}
+> = createAsyncThunk(
   "post/createNewPost",
-  async ({ formData, token }: { formData: FormData; token: string | null }) => {
+  async (payload: CreatePostPayload) => {
     try {
+      const { formData, token } = payload;
       const response = await axios.post("/api/post", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      return response.data as Post;
+      return response.data as CreateNewPostResponse;
     } catch (error) {
       throw Error("Failed to create new post");
     }
@@ -179,7 +192,7 @@ const postSlice = createSlice({
       })
       .addCase(createNewPost.fulfilled, (state, action) => {
         state.loading = false;
-        postAdapter.addOne(state, action.payload);
+        postAdapter.addOne(state, action.payload.post);
       })
       .addCase(createNewPost.rejected, (state, action) => {
         state.loading = false;
