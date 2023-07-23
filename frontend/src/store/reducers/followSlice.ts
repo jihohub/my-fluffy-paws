@@ -128,7 +128,6 @@ const followSlice = createSlice({
       })
       .addCase(followUser.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.followers = action.payload.followers;
         state.followings = action.payload.followings;
       })
@@ -142,7 +141,6 @@ const followSlice = createSlice({
       })
       .addCase(unfollowUser.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.followers = action.payload.followers;
         state.followings = action.payload.followings;
       })
