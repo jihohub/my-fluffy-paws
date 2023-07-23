@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 
 const CommentContainer = styled.div`
-  padding: 10px;
+  height: 30vh;
+  overflow: auto;
 `;
 
 const CommentItem = styled.div`
@@ -11,12 +13,11 @@ const CommentItem = styled.div`
   width: 100%;
   max-width: 600px;
   min-height: 40px;
+  padding: 10px;
   margin-bottom: 5px;
-  // align-items: center;
 `;
 
-const LinkContainer = styled(Link)`
-`;
+const LinkContainer = styled(Link)``;
 
 const CommentUserImage = styled.img`
   width: 30px;
@@ -56,10 +57,40 @@ const CommentText = styled.div`
   padding-right: 30px;
 `;
 
-const IconConatainer = styled.div`
+const IconContainer = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 35px;
+`;
+
+const LikeConatainer = styled.div`
   position: absolute;
   top: 15px;
   right: 15px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const LikeCount = styled.p`
+  font-size: 12px;
+  color: #888;
+  margin-left: 4px;
+`;
+
+const HeartConatainer = styled.div`
+  // padding-left: 10px;
+`;
+
+const DotIcon = styled(BsThreeDotsVertical)`
+
+`;
+
+const HeartIcon = styled(BsHeart)`
+  color: #000000;
+`;
+
+const HeartFillIcon = styled(BsHeartFill)`
+  color: #dc143c;
 `;
 
 export default {
@@ -73,5 +104,11 @@ export default {
   CommentDate,
   LowerContainer,
   CommentText,
-  IconConatainer,
+  IconContainer,
+  LikeConatainer,
+  LikeCount,
+  HeartConatainer,
+  DotIcon,
+  HeartIcon,
+  HeartFillIcon,
 };

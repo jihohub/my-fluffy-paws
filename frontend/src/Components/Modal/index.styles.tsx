@@ -1,35 +1,54 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const slideInUpAnimation = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
 
 const ModalContainer = styled.div`
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: center;
   z-index: 2;
+`;
+
+const ModalTitleContainer = styled.div`
+  height: 30px;
+  border-bottom: 1px #dddddd solid;
+`;
+
+const ModalTitle = styled.p`
+  font-size: 24px;
+  color: #8d7b68;
 `;
 
 const ModalContentContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  max-height: 60%;
   // justify-content: center;
   align-items: center;
+  animation: ${slideInUpAnimation} 0.3s ease;
 `;
 
 const ModalContent = styled.div`
   background-color: #fff;
-  width: 600px;
-  padding: 20px;
+  width: 500px;
   border-radius: 4px;
 
   @media (max-width: 768px) {
-    width: 90vw;
-    padding: 10px;
+    max-width: 100vw;
   }
 `;
 
@@ -52,6 +71,8 @@ const CloseButton = styled.span`
 
 export default {
   ModalContainer,
+  ModalTitleContainer,
+  ModalTitle,
   ModalContentContainer,
   ModalContent,
   CloseButton,

@@ -9,10 +9,10 @@ import {
   selectError,
 } from "../../store/reducers/postSlice";
 import Styled from "./index.styles";
-import PostContainer from "../../Components/PostContainer";
+import PostContainer from "../../Components/Post/PostContainer";
 import { fetchComments } from "../../store/reducers/commentSlice";
-import CommentsContainer from "../../Components/CommentsContainer";
-import CommentForm from "../../Components/CommentForm";
+import CommentsContainer from "../../Components/Comment/CommentsContainer";
+import CommentForm from "../../Components/Comment/CommentForm";
 import Loading from "../../Components/Loading";
 
 const Post = () => {
@@ -28,9 +28,9 @@ const Post = () => {
     dispatch(fetchComments(parseInt(postId)));
   }, [dispatch, postId]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -44,9 +44,7 @@ const Post = () => {
     <Styled.MainContainer>
       <Styled.PostContainer>
         <PostContainer post={post}></PostContainer>
-        <CommentsContainer comments={post.Comments} />
       </Styled.PostContainer>
-      <CommentForm />
     </Styled.MainContainer>
   );
 };

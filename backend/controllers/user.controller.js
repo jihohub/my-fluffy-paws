@@ -1,4 +1,4 @@
-const { User, Post, Comment, Token } = require("../models/model");
+const { User, Post, Comment, Follower } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
@@ -149,6 +149,29 @@ const getUser = async (req, res) => {
           include: [
             {
               model: Comment,
+              as: "comments",
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followers",
+          attributes: ["followerId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followings",
+          attributes: ["followingId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
             },
           ],
         },
@@ -160,6 +183,64 @@ const getUser = async (req, res) => {
     }
 
     res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// 여러 사용자 정보를 한 번에 가져오기
+const getUsersBatch = async (req, res) => {
+  try {
+    const { userIds } = req.body;
+
+    // 여러 사용자 ID를 입력받아 해당 사용자들의 정보를 한 번에 가져옵니다.
+    const users = await User.findAll({
+      where: {
+        userId: userIds,
+      },
+      attributes: ["userId", "userName", "userImage"],
+      include: [
+        {
+          model: Post,
+          as: "posts",
+          include: [
+            {
+              model: Comment,
+              as: "comments",
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followers",
+          attributes: ["followerId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followings",
+          attributes: ["followingId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!users) {
+      return res.status(404).json({ error: "Users not found" });
+    }
+
+    res.status(200).json(users);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -190,5 +271,6 @@ module.exports = {
   login,
   logout,
   getUser,
+  getUsersBatch,
   checkDuplicateUserName,
 };
