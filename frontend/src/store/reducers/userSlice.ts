@@ -197,6 +197,7 @@ const userSlice = createSlice({
 // 유저와 관련된 상태 선택자들
 export const selectUserState = (state: RootState) => state.user;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectUserOnProfile = (state: RootState) => state.user.userOnProfile;
 export const selectUsersLikePost = (state: RootState) =>
   state.user.usersLikePost;
 export const selectIsUserNameDuplicate = (state: RootState) =>

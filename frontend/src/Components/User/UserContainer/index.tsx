@@ -5,6 +5,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
   User,
   selectUser,
+  selectUserOnProfile,
   getUserInfo,
 } from "../../../store/reducers/userSlice";
 import {
@@ -19,7 +20,7 @@ import Toast from "../../Toast";
 
 export interface UserContainerProps {
   userContainerProps: {
-    user: User | null;
+    // user: User | null;
     handleMenuClick: () => void;
     isToastVisible: boolean;
   };
@@ -28,10 +29,10 @@ export interface UserContainerProps {
 const UserContainer: React.FC<UserContainerProps> = ({
   userContainerProps
 }) => {
-  const { user, handleMenuClick, isToastVisible } =
-    userContainerProps;
+  const { handleMenuClick, isToastVisible } = userContainerProps;
   const { userId } = useParams<{ userId: string }>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const user = useSelector(selectUserOnProfile);
   const loggedinUser = useSelector(selectUser);
   const token = useSelector(selectAccessToken);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
@@ -52,12 +53,6 @@ const UserContainer: React.FC<UserContainerProps> = ({
         )
       );
   }, [user, loggedinUser]);
-
-  // const isFollowing = followers
-  //   ? followers.some(
-  //       (follower) => follower.User.userId === loggedinUser?.userId
-  //     )
-  //   : false;
 
   const handleFollow = async () => {
     if (user && userId) {
