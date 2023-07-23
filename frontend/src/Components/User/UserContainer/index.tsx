@@ -7,6 +7,7 @@ import {
   selectUser,
   selectUserOnProfile,
   getUserInfo,
+  selectIsLoading,
 } from "../../../store/reducers/userSlice";
 import {
   followUser,
@@ -17,6 +18,7 @@ import Styled from "./index.styles";
 import { GiHamburgerMenu } from "react-icons/gi";
 import PostGrid from "../../Post/PostGrid";
 import Toast from "../../Toast";
+import Loading from "../../Loading";
 
 export interface UserContainerProps {
   userContainerProps: {
@@ -34,6 +36,7 @@ const UserContainer: React.FC<UserContainerProps> = ({
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const user = useSelector(selectUserOnProfile);
   const loggedinUser = useSelector(selectUser);
+  const isLoading = useSelector(selectIsLoading);
   const token = useSelector(selectAccessToken);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
@@ -72,6 +75,10 @@ const UserContainer: React.FC<UserContainerProps> = ({
       }
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

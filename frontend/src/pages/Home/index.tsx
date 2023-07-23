@@ -19,47 +19,18 @@ const Home = () => {
   const posts = useSelector(selectPosts);
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
+  const isLoading = useSelector(selectIsLoading);
+
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-
-  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  const handleOpenModal = (post: PostData) => {
-    setSelectedPost(post);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedPost(null);
-  };
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      handleCloseModal();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
-
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (!posts || posts.length === 0) {
+    return <div></div>;
   }
 
-  if (!posts || posts.length === 0) {
-    return <div>게시물이 없습니다.</div>;
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
