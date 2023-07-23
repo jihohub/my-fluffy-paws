@@ -4,15 +4,25 @@ import { RootState } from "../store";
 
 export interface Comment {
   commentId: number;
-  postId: number;
   userId: number;
-  text: string;
-  createdAt: Date;
+  postId: number;
   User: {
     userId: number;
     userName: string;
     userImage: string;
   };
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+  likeCount: number;
+  likedUser: {
+    userId: number;
+    User: {
+      userId: number;
+      userName: string;
+      userImage: string;
+    };
+  }[];
 }
 
 export interface CommentState {
@@ -26,6 +36,17 @@ const initialState: CommentState = {
   loading: false,
   error: null,
 };
+
+export interface CreateCommentPayload {
+  postId: number;
+  text: string;
+  token: string | null;
+}
+
+export interface DeleteCommentPayload {
+  commentId: number;
+  token: string | null;
+}
 
 export const fetchComments = createAsyncThunk(
   "comment/fetchComments",
@@ -41,9 +62,19 @@ export const fetchComments = createAsyncThunk(
 
 export const createComment = createAsyncThunk(
   "comment/createComment",
-  async (commentData: Partial<Comment>) => {
+  async (payload: CreateCommentPayload) => {
     try {
-      const response = await axios.post("/api/comment", commentData);
+      const { postId, text, token } = payload;
+      const response = await axios.post(
+        "/api/comment",
+        { postId, text },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       return response.data as Comment;
     } catch (error) {
       throw Error("Failed to create comment");
@@ -53,9 +84,14 @@ export const createComment = createAsyncThunk(
 
 export const deleteComment = createAsyncThunk(
   "comment/deleteComment",
-  async (commentId: number, { getState, dispatch }) => {
+  async (payload: DeleteCommentPayload) => {
     try {
-      await axios.delete(`/api/comment/${commentId}`);
+      const { commentId, token } = payload;
+      await axios.delete(`/api/comment/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return commentId;
     } catch (error) {
       throw Error("Failed to delete comment");

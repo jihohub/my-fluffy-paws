@@ -7,7 +7,7 @@ import { selectUser } from "../../store/reducers/userSlice";
 import { GoHome } from "react-icons/go";
 import { FaSearch, FaUser } from "react-icons/fa";
 import { CgAddR } from "react-icons/cg";
-import { BiMoviePlay } from "react-icons/bi";
+import { BiChat } from "react-icons/bi";
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -33,11 +33,17 @@ const Navigation = () => {
       <Styled.NavItem to="/search">
         <FaSearch />
       </Styled.NavItem>
-      <Styled.NavItem to="/post/new">
-        <CgAddR />
-      </Styled.NavItem>
-      <Styled.NavItem to="/clip">
-        <BiMoviePlay />
+      {!isLoggedIn ? (
+        <Styled.NavItem to="/login">
+          <CgAddR />
+        </Styled.NavItem>
+      ) : (
+        <Styled.NavItem to="/post/new">
+          <CgAddR />
+        </Styled.NavItem>
+      )}
+      <Styled.NavItem to="/chat">
+        <BiChat />
       </Styled.NavItem>
       {!isLoggedIn ? (
         <Styled.NavItem to="/login">

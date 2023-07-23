@@ -1,7 +1,5 @@
-// const Comment = require("../models/comment.model");
-// const User = require("../models/user.model")
-// const Post = require("../models/post.model");
-const { User, Post, Comment, Token } = require("../models/model");
+
+const { User, Post, Comment, CommentLike } = require("../models/model");
 
 // 전체 댓글 조회
 const getAllComments = async (req, res) => {
@@ -35,6 +33,8 @@ const createComment = async (req, res) => {
       text,
     });
 
+    await Post.increment("commentCount", { where: { postId } });
+
     res.status(201).json(comment);
   } catch (error) {
     console.error(error);
@@ -47,7 +47,12 @@ const deleteComment = async (req, res) => {
   try {
     const { commentId } = req.params;
 
+    await CommentLike.destroy({ where: { commentId } });
+
     const comment = await Comment.findByPk(commentId);
+    const postId = comment.postId;
+
+    await Post.decrement("commentCount", { where: { postId } });
 
     if (!comment) {
       return res.status(404).json({ error: "댓글을 찾을 수 없습니다." });

@@ -16,6 +16,9 @@ router.post("/logout", userController.logout);
 // 사용자 프로필 정보 가져오기
 router.get("/:userId", userController.getUser);
 
+// 여러 사용자 정보를 한 번에 가져오기
+router.post("/batch", userController.getUsersBatch);
+
 // 닉네임 중복 검사
 router.post("/checkname", userController.checkDuplicateUserName);
 

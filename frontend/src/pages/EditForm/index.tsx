@@ -11,6 +11,7 @@ import {
   updatePost,
 } from "../../store/reducers/postSlice";
 import { fetchComments } from "../../store/reducers/commentSlice";
+import { selectAccessToken } from "../../store/reducers/tokenSlice";
 import Loading from "../../Components/Loading";
 
 const EditForm: React.FC = () => {
@@ -18,6 +19,7 @@ const EditForm: React.FC = () => {
   const { postId } = useParams() as { postId: string };
   const navigate = useNavigate();
 
+  const token = useSelector(selectAccessToken);
   const post = useSelector(selectPostById(parseInt(postId)));
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -41,16 +43,14 @@ const EditForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("text", text);
-
     await dispatch(
       updatePost({
         postId: parseInt(postId),
         text,
+        token,
       })
     );
-    navigate("/");
+    navigate(`/post/${postId}`);
   };
 
   if (isLoading) {

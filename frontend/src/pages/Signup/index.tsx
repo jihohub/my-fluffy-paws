@@ -7,8 +7,8 @@ import {
   selectIsUserNameDuplicate,
 } from "../../store/reducers/userSlice";
 import Styled from "./index.styles";
-import SignupImage from "../../Components/SignupImage";
-import SignupComplete from "../../Components/SignupComplete";
+import SignupImage from "../../Components/Signup/SignupImage";
+import SignupComplete from "../../Components/Signup/SignupComplete";
 
 const Signup = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();

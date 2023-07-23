@@ -10,6 +10,8 @@ const userRouter = require("./routes/api/user");
 const postRouter = require("./routes/api/post");
 const commentRouter = require("./routes/api/comment");
 const tokenRouter = require("./routes/api/token");
+const likeRouter = require("./routes/api/like");
+const followRouter = require("./routes/api/follow");
 
 const app = express();
 
@@ -36,5 +38,7 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 app.use("/api/token", tokenRouter);
+app.use("/api/like", likeRouter);
+app.use("/api/follow", followRouter);
 
 module.exports = app;

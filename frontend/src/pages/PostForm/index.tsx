@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { createNewPost } from "../../store/reducers/postSlice";
 import { selectAccessToken } from "../../store/reducers/tokenSlice";
-import PostImage from "../../Components/PostImage";
-import CropImage from "../../Components/CropImage";
+import PostImage from "../../Components/PostForm/PostImage";
+import CropImage from "../../Components/PostForm/CropImage";
 import base64ToFile from "../../utils/base64ToFile";
 
 const PostForm: React.FC = () => {

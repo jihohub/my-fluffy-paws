@@ -7,16 +7,35 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
+import { User } from "./userSlice";
 import { Comment } from "./commentSlice";
+import { CommentsContainerProps } from "../../Components/Comment/CommentsContainer";
 
 export interface Post {
   postId: number;
-  userName: string;
-  userImage: string;
+  User: {
+    userId: number;
+    userName: string;
+    userImage: string;
+  };
+  // userId: number;
+  // userName: string;
+  // userImage: string;
   image: string;
   text: string;
-  userId: number;
-  Comments: Comment[];
+  createdAt: Date;
+  updatedAt: Date;
+  commentCount: number;
+  comments: Comment[];
+  likeCount: number;
+  likedUser: {
+    userId: number;
+    User: {
+      userId: number;
+      userName: string;
+      userImage: string;
+    };
+  }[];
 }
 
 export interface PostState {
@@ -28,6 +47,12 @@ export interface PostState {
 export interface UpdatePostPayload {
   postId: number;
   text: string;
+  token: string | null;
+}
+
+export interface DeletePostPayload {
+  postId: number;
+  token: string | null;
 }
 
 export const postAdapter: EntityAdapter<Post> = createEntityAdapter<Post>({
@@ -83,8 +108,17 @@ export const updatePost = createAsyncThunk(
   "post/updatePost",
   async (payload: UpdatePostPayload) => {
     try {
-      const { postId, text } = payload;
-      const response = await axios.put(`/api/post/${postId}`, { text });
+      const { postId, text, token } = payload;
+      const response = await axios.put(
+        `/api/post/${postId}`,
+        { text },
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        }
+      );
+
       return response.data as Post;
     } catch (error) {
       throw Error("Failed to update post");
@@ -94,9 +128,14 @@ export const updatePost = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
   "post/deletePost",
-  async (postId: number) => {
+  async (payload: DeletePostPayload) => {
     try {
-      await axios.delete(`/api/post/${postId}`);
+      const { postId, token } = payload;
+      await axios.delete(`/api/post/${postId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
       return postId;
     } catch (error) {
       throw Error("Failed to delete post");
@@ -134,15 +173,47 @@ const postSlice = createSlice({
         state.loading = false;
         state.error = action.error?.message || "";
       })
+      .addCase(createNewPost.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(createNewPost.fulfilled, (state, action) => {
+        state.loading = false;
         postAdapter.addOne(state, action.payload);
       })
+      .addCase(createNewPost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(updatePost.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(updatePost.fulfilled, (state, action) => {
-        postAdapter.upsertOne(state, action.payload);
+        state.loading = false;
+        const updatedPost = action.payload;
+        const existingPost = state.entities[updatedPost.postId];
+        if (existingPost) {
+          existingPost.text = updatedPost.text;
+          existingPost.updatedAt = updatedPost.updatedAt;
+        }
+      })
+      .addCase(updatePost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(deletePost.pending, (state) => {
+        state.loading = true;
+        state.error = null;
       })
       .addCase(deletePost.fulfilled, (state, action) => {
+        state.loading = false;
         postAdapter.removeOne(state, action.payload);
       })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      });
   },
 });
 

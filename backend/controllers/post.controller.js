@@ -1,4 +1,5 @@
-const { User, Post, Comment, Token } = require("../models/model");
+const { User, Post, Comment, PostLike, CommentLike } = require("../models/model");
+const sequelize = require("../config/db.config");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
@@ -40,33 +41,45 @@ const getAllPosts = async (req, res) => {
       include: [
         {
           model: Comment,
+          as: "comments",
           include: [
             {
               model: User,
-              attributes: ["userName", "userImage"],
+              attributes: ["userId", "userName", "userImage"],
+            },
+            {
+              model: CommentLike,
+              as: "likedUser",
+              attributes: ["userId"],
+              include: [
+                {
+                  model: User,
+                  attributes: ["userId", "userName", "userImage"],
+                },
+              ],
             },
           ],
         },
         {
           model: User,
-          attributes: ["userName", "userImage"],
+          attributes: ["userId", "userName", "userImage"],
+        },
+        {
+          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          attributes: ["userId"],
+          as: "likedUser",
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
         },
       ],
+      order: [["createdAt", "DESC"]],
     });
 
-    const postsWithUser = posts.map((post) => {
-      const {
-        User: { userName, userImage },
-        ...postAttributes
-      } = post.toJSON();
-      return {
-        ...postAttributes,
-        userName,
-        userImage,
-      };
-    });
-
-    res.status(200).json(postsWithUser);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: error });
   }
@@ -81,16 +94,39 @@ const getPostById = async (req, res) => {
       include: [
         {
           model: Comment,
+          as: "comments",
           include: [
             {
               model: User,
-              attributes: ["userName", "userImage"],
+              attributes: ["userId", "userName", "userImage"],
+            },
+            {
+              model: CommentLike,
+              as: "likedUser",
+              attributes: ["userId"],
+              include: [
+                {
+                  model: User,
+                  attributes: ["userId", "userName", "userImage"],
+                },
+              ],
             },
           ],
         },
         {
           model: User,
-          attributes: ["userName", "userImage"],
+          attributes: ["userId", "userName", "userImage"],
+        },
+        {
+          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          attributes: ["userId"],
+          as: "likedUser",
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
         },
       ],
     });
@@ -102,7 +138,7 @@ const getPostById = async (req, res) => {
     res.status(200).json(post);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "서버 오류" });
   }
 };
 
@@ -150,7 +186,8 @@ const updatePost = async (req, res) => {
       return res.status(404).json({ error: "게시물을 찾을 수 없습니다." });
     }
 
-    post.update({ text });
+    post.setDataValue("text", text);
+    await post.save();
 
     res.status(200).json({ message: "게시물 수정이 완료되었습니다.", post });
   } catch (error) {
@@ -171,6 +208,16 @@ const deletePost = async (req, res) => {
     }
 
     await Comment.destroy({ where: { postId } });
+    await CommentLike.destroy({
+      where: {
+        commentId: {
+          [Op.in]: Sequelize.literal(
+            `SELECT commentId FROM Comments WHERE postId = ${postId}`
+          ),
+        },
+      },
+    });
+    await PostLike.destroy({ where: { postId } });
     await post.destroy();
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });

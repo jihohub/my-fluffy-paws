@@ -9,11 +9,28 @@ export interface User {
   userName: string;
   userImage: string;
   posts: Post[];
+  followings: {
+    followingId: number;
+    User: {
+      userId: number;
+      userName: string;
+      userImage: string;
+    };
+  }[];
+  followers: {
+    followerId: number;
+    User: {
+      userId: number;
+      userName: string;
+      userImage: string;
+    };
+  }[];
 }
 
 export interface UserState {
   user: User | null;
-  otherUser: User | null;
+  userOnProfile: User | null;
+  usersLikePost: User[] | null;
   isUserNameDuplicate: boolean;
   loading: boolean;
   error: string | null;
@@ -21,7 +38,8 @@ export interface UserState {
 
 const initialState: UserState = {
   user: null,
-  otherUser: null,
+  userOnProfile: null,
+  usersLikePost: null,
   isUserNameDuplicate: false,
   loading: false,
   error: "",
@@ -69,6 +87,19 @@ export const getUserInfo = createAsyncThunk(
       return response.data;
     } catch (error) {
       throw Error("Failed to get user info");
+    }
+  }
+);
+
+export const getUsersInfoBatch = createAsyncThunk(
+  "user/getUsersInfoBatch",
+  async (userIds: number[]) => {
+    try {
+      const response = await axios.post("/api/user/batch", { userIds });
+
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to get users info");
     }
   }
 );
@@ -136,9 +167,21 @@ const userSlice = createSlice({
       })
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.loading = false;
-        state.otherUser = action.payload;
+        state.userOnProfile = action.payload;
       })
       .addCase(getUserInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(getUsersInfoBatch.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getUsersInfoBatch.fulfilled, (state, action) => {
+        state.loading = false;
+        state.usersLikePost = action.payload;
+      })
+      .addCase(getUsersInfoBatch.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })
@@ -154,6 +197,9 @@ const userSlice = createSlice({
 // 유저와 관련된 상태 선택자들
 export const selectUserState = (state: RootState) => state.user;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectUserOnProfile = (state: RootState) => state.user.userOnProfile;
+export const selectUsersLikePost = (state: RootState) =>
+  state.user.usersLikePost;
 export const selectIsUserNameDuplicate = (state: RootState) =>
   state.user.isUserNameDuplicate;
 export const selectIsLoading = (state: RootState) => state.user.loading;
