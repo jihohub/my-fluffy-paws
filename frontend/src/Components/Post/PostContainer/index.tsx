@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
-import {
-  selectUser,
-} from "../../../store/reducers/userSlice";
+import { selectUser } from "../../../store/reducers/userSlice";
 import { Post as PostData, fetchPostById } from "../../../store/reducers/postSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import { likePost, unlikePost } from "../../../store/reducers/likeSlice";

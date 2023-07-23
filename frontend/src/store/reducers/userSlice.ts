@@ -9,6 +9,22 @@ export interface User {
   userName: string;
   userImage: string;
   posts: Post[];
+  followings: {
+    followingId: number;
+    User: {
+      userId: number;
+      userName: string;
+      userImage: string;
+    };
+  }[];
+  followers: {
+    followerId: number;
+    User: {
+      userId: number;
+      userName: string;
+      userImage: string;
+    };
+  }[];
 }
 
 export interface UserState {

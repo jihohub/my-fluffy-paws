@@ -7,10 +7,6 @@ interface PostContainerProps {
 }
 
 const PostGrid: React.FC<PostContainerProps> = ({ posts }) => {
-  console.log(posts);
-  console.log(posts);
-  console.log(posts);
-
   return (
     <Styled.PostContainer>
       {posts?.map((post) => (

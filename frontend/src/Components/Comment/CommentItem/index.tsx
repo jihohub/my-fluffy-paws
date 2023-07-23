@@ -4,12 +4,10 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { selectUser } from "../../../store/reducers/userSlice";
 import { fetchPostById } from "../../../store/reducers/postSlice";
-import { fetchComments } from "../../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import { likeComment, unlikeComment } from "../../../store/reducers/likeSlice";
 import moment from "moment";
 import "moment/locale/ko";
-import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 import Toast from "../../Toast";
 import { Comment } from "../../../store/reducers/commentSlice";
 
@@ -18,7 +16,6 @@ export interface CommentsContainerProps {
 }
 
 const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
-  console.log(comment)
   const {
     User,
     commentId,
@@ -72,7 +69,6 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
             <Styled.CommentText>{text}</Styled.CommentText>
           </Styled.LowerContainer>
         </Styled.TextContainer>
-
         {user?.userId === userId && (
           <Styled.IconContainer>
             <Styled.DotIcon onClick={handleMenuClick} />
@@ -88,17 +84,12 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
               <Styled.HeartIcon onClick={handleLikeComment} />
             )}
           </Styled.HeartConatainer>
-          <Styled.LikeCount>{likedUser?.length}</Styled.LikeCount>
+          <Styled.LikeCount>{likeCount}</Styled.LikeCount>
         </Styled.LikeConatainer>
       </Styled.CommentItem>
       {isToastVisible && (
         <Toast toastProps={{ path: "comment", postId, commentId }} />
       )}
-      {/* {selectedPost && (
-        <Modal onClose={handleCloseModal} modalRef={modalRef}>
-          <CommentsContainer comments={selectedPost.comments} />
-        </Modal>
-      )} */}
     </>
   );
 };

@@ -1,4 +1,4 @@
-const { User, Post, Comment } = require("../models/model");
+const { User, Post, Comment, Follower } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 const session = require("express-session");
@@ -153,6 +153,28 @@ const getUser = async (req, res) => {
             },
           ],
         },
+        {
+          model: Follower,
+          as: "followers",
+          attributes: ["followerId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followings",
+          attributes: ["followingId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
       ],
     });
 
@@ -178,6 +200,40 @@ const getUsersBatch = async (req, res) => {
         userId: userIds,
       },
       attributes: ["userId", "userName", "userImage"],
+      include: [
+        {
+          model: Post,
+          as: "posts",
+          include: [
+            {
+              model: Comment,
+              as: "comments",
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followers",
+          attributes: ["followerId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followings",
+          attributes: ["followingId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+      ],
     });
 
     if (!users) {

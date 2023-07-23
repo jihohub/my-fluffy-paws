@@ -25,11 +25,16 @@ const initialState: FollowState = {
   error: null,
 };
 
+export interface FollowPayload {
+  followerId: number;
+  token: string | null;
+}
+
 export const fetchFollowers = createAsyncThunk(
   "follow/fetchFollowers",
   async (userId: number) => {
     try {
-      const response = await axios.get(`/api/followers/${userId}`);
+      const response = await axios.get(`/api/follow/${userId}/followers`);
       return response.data as Follower[];
     } catch (error) {
       throw Error("Failed to fetch followers");
@@ -41,10 +46,48 @@ export const fetchFollowings = createAsyncThunk(
   "follow/fetchFollowings",
   async (userId: number) => {
     try {
-      const response = await axios.get(`/api/followings/${userId}`);
+      const response = await axios.get(`/api/follow/${userId}/followings`);
       return response.data as Follower[];
     } catch (error) {
       throw Error("Failed to fetch followings");
+    }
+  }
+);
+
+export const followUser = createAsyncThunk(
+  "follow/followUser",
+  async (payload: FollowPayload) => {
+    try {
+      const { followerId, token } = payload;
+      const response = await axios.post(
+        `/api/follow/${followerId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data
+    } catch (error) {
+      throw new Error("Failed to follow user");
+    }
+  }
+);
+
+export const unfollowUser = createAsyncThunk(
+  "follow/unfollowUser",
+  async (payload: FollowPayload) => {
+    try {
+      const { followerId, token } = payload;
+      const response = await axios.delete(`/api/follow/${followerId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data
+    } catch (error) {
+      throw new Error("Failed to unfollow user");
     }
   }
 );
@@ -76,6 +119,34 @@ const followSlice = createSlice({
         state.followings = action.payload;
       })
       .addCase(fetchFollowings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(followUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(followUser.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log(action.payload);
+        state.followers = action.payload.followers;
+        state.followings = action.payload.followings;
+      })
+      .addCase(followUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(unfollowUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(unfollowUser.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log(action.payload);
+        state.followers = action.payload.followers;
+        state.followings = action.payload.followings;
+      })
+      .addCase(unfollowUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       });

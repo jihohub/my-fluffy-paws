@@ -213,6 +213,7 @@ Follower.init(
   {
     followerId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       references: {
         model: "User",
         key: "userId",
@@ -220,6 +221,7 @@ Follower.init(
     },
     followingId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       references: {
         model: "User",
         key: "userId",
@@ -257,7 +259,6 @@ CommentLike.belongsTo(User, { foreignKey: "userId" });
 Comment.hasMany(CommentLike, { as: "likedUser", foreignKey: "commentId" });
 CommentLike.belongsTo(Comment, { foreignKey: "commentId" });
 
-
 User.hasMany(Follower, {
   foreignKey: "followerId",
   sourceKey: "userId",
@@ -266,7 +267,6 @@ User.hasMany(Follower, {
 Follower.belongsTo(User, {
   foreignKey: "followerId",
   targetKey: "userId",
-  as: "follower",
 });
 
 User.hasMany(Follower, {
@@ -277,7 +277,6 @@ User.hasMany(Follower, {
 Follower.belongsTo(User, {
   foreignKey: "followingId",
   targetKey: "userId",
-  as: "following",
 });
 
 module.exports = { User, Post, Comment, Token, PostLike, CommentLike, Follower };

@@ -3,15 +3,22 @@ const { User, Follower } = require("../models/model");
 // 유저를 팔로우하기
 const followUser = async (req, res) => {
   try {
-    const { followingId } = req.params;
-    const followerId = req.session.userId;
+    const { followerId } = req.params;
+    const followingId = req.session.userId;
 
     const follower = await Follower.create({
       followerId,
       followingId,
     });
 
-    res.status(201).json({ message: "유저를 팔로우했습니다.", follower });
+    const updatedFollowers = await Follower.findAll({ where: { followingId } });
+    const updatedFollowings = await Follower.findAll({ where: { followerId } });
+
+    res.status(201).json({
+      message: "유저를 팔로우했습니다.",
+      followers: updatedFollowers,
+      followings: updatedFollowings,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "서버 오류" });
@@ -21,8 +28,8 @@ const followUser = async (req, res) => {
 // 유저의 팔로우 취소하기
 const unfollowUser = async (req, res) => {
   try {
-    const { followingId } = req.params;
-    const followerId = req.session.userId;
+    const { followerId } = req.params;
+    const followingId = req.session.userId;
 
     await Follower.destroy({
       where: {
@@ -31,7 +38,14 @@ const unfollowUser = async (req, res) => {
       },
     });
 
-    res.status(200).json({ message: "유저의 팔로우를 취소했습니다." });
+    const updatedFollowers = await Follower.findAll({ where: { followingId } });
+    const updatedFollowings = await Follower.findAll({ where: { followerId } });
+
+    res.status(201).json({
+      message: "유저를 언팔로우했습니다.",
+      followers: updatedFollowers,
+      followings: updatedFollowings,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "서버 오류" });
