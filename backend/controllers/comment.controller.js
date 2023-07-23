@@ -1,5 +1,5 @@
 
-const { User, Post, Comment } = require("../models/model");
+const { User, Post, Comment, CommentLike } = require("../models/model");
 
 // 전체 댓글 조회
 const getAllComments = async (req, res) => {
@@ -47,7 +47,10 @@ const deleteComment = async (req, res) => {
   try {
     const { commentId } = req.params;
 
+    await CommentLike.destroy({ where: { commentId } });
+
     const comment = await Comment.findByPk(commentId);
+    const postId = comment.postId;
 
     await Post.decrement("commentCount", { where: { postId } });
 

@@ -42,15 +42,19 @@ const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const handleLikePost = async () => {
-    await dispatch(likePost({ postId, token }));
-    await dispatch(fetchPostById(postId));
-    setIsLiked(true);
+    if (user) {
+      await dispatch(likePost({ postId, token }));
+      await dispatch(fetchPostById(postId));
+      setIsLiked(true);
+    }
   };
 
   const handleUnlikePost = async () => {
-    await dispatch(unlikePost({ postId, token }));
-    await dispatch(fetchPostById(postId));
-    setIsLiked(false);
+    if (user) {
+      await dispatch(unlikePost({ postId, token }));
+      await dispatch(fetchPostById(postId));
+      setIsLiked(false);
+    }
   };
 
   const handleCommentClick = () => {
@@ -81,11 +85,11 @@ const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
         <Styled.HeartFillIcon onClick={handleUnlikePost} />
       )}
       <Styled.CommentIcon onClick={handleOpenModal} />
-      {isToastVisible && <Toast path="user" />}
+      {isToastVisible && <Toast toastProps={{ path: "user" }} />}
       {isModalVisible && (
         <Modal onClose={handleCloseModal} modalRef={modalRef}>
           <CommentsContainer comments={comments} />
-          <CommentForm />
+          {user && <CommentForm postId={postId} />}
         </Modal>
       )}
     </>

@@ -207,6 +207,16 @@ const deletePost = async (req, res) => {
     }
 
     await Comment.destroy({ where: { postId } });
+    await CommentLike.destroy({
+      where: {
+        commentId: {
+          [Op.in]: Sequelize.literal(
+            `SELECT commentId FROM Comments WHERE postId = ${postId}`
+          ),
+        },
+      },
+    });
+    await PostLike.destroy({ where: { postId } });
     await post.destroy();
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });

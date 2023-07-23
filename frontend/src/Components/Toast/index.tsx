@@ -16,13 +16,17 @@ import {
 } from "react-icons/md";
 
 interface ToastProps {
-  path: string;
-  commentId?: number;
+  toastProps: {
+    path: string;
+    postId?: number;
+    commentId?: number;
+  }
 }
 
-const Toast: React.FC<ToastProps> = ({ path, commentId }) => {
+const Toast: React.FC<ToastProps> = ({ toastProps }) => {
+  const { path, postId, commentId } = toastProps;
+  console.log(toastProps)
   const navigate = useNavigate();
-  const { postId } = useParams<{ postId: string }>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const accessToken = useSelector(selectAccessToken);
   const [isToastVisible, setIsToastVisible] = useState<boolean>(true);
@@ -50,15 +54,16 @@ const Toast: React.FC<ToastProps> = ({ path, commentId }) => {
   };
 
   const handleDeletePost = async () => {
-    postId && (await dispatch(deletePost({postId: parseInt(postId), token: accessToken})));
-    navigate("/");
+    postId && (await dispatch(deletePost({ postId, token: accessToken })));
   };
 
   const handleDeleteComment = async () => {
-    commentId &&
-      (await dispatch(deleteComment({ commentId, token: accessToken })));
-    postId && (await dispatch(fetchPostById(parseInt(postId))));
-    postId && await dispatch(fetchComments(parseInt(postId)));
+    (postId && commentId) &&
+      (await dispatch(
+        deleteComment({ commentId, token: accessToken })
+      ));
+    postId && (await dispatch(fetchPostById(postId)));
+    postId && (await dispatch(fetchComments(postId)));
   };
 
   const handleLogoutClick = async () => {

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchPostById } from "../../../store/reducers/postSlice";
@@ -8,11 +7,15 @@ import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 import { BsSendFill } from "react-icons/bs";
 
-const CommentForm: React.FC = () => {
+export interface CommentFormProps {
+  postId: number;
+}
+
+
+const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const { postId } = useParams() as { postId: string };
   const token = useSelector(selectAccessToken);
-  const [ text, setText] = useState("");
+  const [text, setText] = useState("");
 
   const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -32,8 +35,8 @@ const CommentForm: React.FC = () => {
     }
 
     // 댓글 생성 액션 디스패치
-    await dispatch(createComment({ postId: parseInt(postId), text, token }));
-    await dispatch(fetchPostById(parseInt(postId)));
+    await dispatch(createComment({ postId, text, token }));
+    await dispatch(fetchPostById(postId));
 
     // 댓글 내용 초기화
     setText("");

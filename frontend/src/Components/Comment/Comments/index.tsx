@@ -19,14 +19,15 @@ import CommentForm from "../CommentForm";
 import { Comment as CommentData } from "../../../store/reducers/commentSlice";
 
 export interface CommentsContainerProps {
-  commentProps: {
+  commentsProps: {
+    postId: number;
     commentCount: number;
     comments: CommentData[];
   };
 }
 
-const Comment: React.FC<CommentsContainerProps> = ({ commentProps }) => {
-  const { commentCount, comments } = commentProps;
+const Comments: React.FC<CommentsContainerProps> = ({ commentsProps }) => {
+  const { postId, commentCount, comments } = commentsProps;
   const countText = commentCount > 0 && `댓글 ${commentCount}개 보기`;
 
   const user = useSelector(selectUser);
@@ -65,11 +66,13 @@ const Comment: React.FC<CommentsContainerProps> = ({ commentProps }) => {
   return (
     <Styled.CommentContainer>
       <Styled.CountText onClick={handleOpenModal}>{countText}</Styled.CountText>
-      {isToastVisible && <Toast path="user" />}
-      {isModalVisible && <Modal onClose={handleCloseModal} modalRef={modalRef}>
-        <CommentsContainer comments={comments} />
-        <CommentForm />
-      </Modal>}
+      {isToastVisible && <Toast toastProps={{ path: "user" }} />}
+      {isModalVisible && (
+        <Modal onClose={handleCloseModal} modalRef={modalRef}>
+          <CommentsContainer comments={comments} />
+          {user && <CommentForm postId={postId} />}
+        </Modal>
+      )}
       {/* {comments?.map((comment) => (
         <Styled.CommentItem key={comment.commentId}>
           <Styled.LinkContainer to={`/user/${comment.userId}`}>
@@ -97,4 +100,4 @@ const Comment: React.FC<CommentsContainerProps> = ({ commentProps }) => {
   );
 };
 
-export default Comment;
+export default Comments;

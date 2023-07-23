@@ -13,6 +13,7 @@ import "moment/locale/ko";
 import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 import Toast from "../../Toast";
 import { Comment } from "../../../store/reducers/commentSlice";
+import CommentItem from "../CommentItem";
 
 export interface CommentsContainerProps {
   comments: Comment[];
@@ -58,46 +59,9 @@ const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
   return (
     <Styled.CommentContainer>
       {comments?.map((comment) => (
-        <Styled.CommentItem key={comment.commentId}>
-          <Styled.LinkContainer to={`/user/${comment.userId}`}>
-            <Styled.CommentUserImage
-              src={comment.User.userImage}
-              alt="User Image"
-            />
-          </Styled.LinkContainer>
-          <Styled.TextContainer>
-            <Styled.UpperContainer>
-              <Styled.CommentUserName>
-                {comment.User.userName}
-              </Styled.CommentUserName>
-              <Styled.CommentDate>
-                {moment(comment.createdAt).fromNow()}
-              </Styled.CommentDate>
-            </Styled.UpperContainer>
-            <Styled.LowerContainer>
-              <Styled.CommentText>{comment.text}</Styled.CommentText>
-            </Styled.LowerContainer>
-          </Styled.TextContainer>
-          <Styled.LikesContainer>
-            <Styled.LikesCount>{comment?.likedUser?.userId}</Styled.LikesCount>
-            <Styled.HeartConatainer>
-              {comment?.likedUser?.userId === user?.userId ? (
-                <BsHeartFill onClick={handleUnlikeComment} />
-              ) : (
-                <BsHeart onClick={handleLikeComment} />
-              )}
-            </Styled.HeartConatainer>
-          </Styled.LikesContainer>
-          {user?.userId === comment.userId && (
-            <Styled.IconContainer>
-              <BsThreeDotsVertical
-                onClick={(e) => handleIconClick(e, comment.commentId)}
-              />
-            </Styled.IconContainer>
-          )}
-        </Styled.CommentItem>
+        <CommentItem comment={comment} key={comment.commentId} />
       ))}
-      {isToastVisible && <Toast path="comment" commentId={commentId} />}
+      {isToastVisible && <Toast toastProps={{ path: "comment", commentId }} />}
       {/* {selectedPost && (
         <Modal onClose={handleCloseModal} modalRef={modalRef}>
           <CommentsContainer comments={selectedPost.comments} />

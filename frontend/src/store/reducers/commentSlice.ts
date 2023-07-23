@@ -14,14 +14,15 @@ export interface Comment {
   text: string;
   createdAt: Date;
   updatedAt: Date;
+  likeCount: number;
   likedUser: {
     userId: number;
     User: {
       userId: number;
       userName: string;
       userImage: string;
-    }[];
-  };
+    };
+  }[];
 }
 
 export interface CommentState {

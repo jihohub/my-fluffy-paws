@@ -16,7 +16,7 @@ import Image from "../Image";
 import Text from "../Text";
 import Like from "../Like";
 import Icons from "../Icons";
-import Comment from "../../Comment/Comment";
+import Comments from "../../Comment/Comments";
 
 export interface PostContainerProps {
   post: PostData
@@ -65,7 +65,7 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
       <Icons iconsProps={{ postId, likedUser, comments }} />
       <Like likeProps={{ likeCount, likedUser }}></Like>
       <Text text={text} />
-      <Comment commentProps={{ commentCount, comments }}></Comment>
+      <Comments commentsProps={{ postId, commentCount, comments }}></Comments>
     </Styled.PostContainer>
   );
 };

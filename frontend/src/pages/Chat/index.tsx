@@ -2,7 +2,7 @@ import React from "react";
 import Styled from "./index.styles";
 import { IoMdHammer } from "react-icons/io";
 
-const Clip: React.FC = () => {
+const Chat: React.FC = () => {
   return (
     <Styled.MainContainer>
       <Styled.TextContainer to="/">
@@ -14,4 +14,4 @@ const Clip: React.FC = () => {
   );
 };
 
-export default Clip;
+export default Chat;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const PostContainer = styled.div`
-  margin: 0 auto;
+  margin: 30px auto;
   padding: 10px;
 `;
 

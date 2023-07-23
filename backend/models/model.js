@@ -207,6 +207,32 @@ CommentLike.init(
   }
 );
 
+class Follower extends Model {}
+
+Follower.init(
+  {
+    followerId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+    followingId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "userId",
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "Follower",
+    timestamps: false,
+  }
+);
+
 User.hasMany(Post, { as: "posts", foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
@@ -231,4 +257,27 @@ CommentLike.belongsTo(User, { foreignKey: "userId" });
 Comment.hasMany(CommentLike, { as: "likedUser", foreignKey: "commentId" });
 CommentLike.belongsTo(Comment, { foreignKey: "commentId" });
 
-module.exports = { User, Post, Comment, Token, PostLike, CommentLike };
+
+User.hasMany(Follower, {
+  foreignKey: "followerId",
+  sourceKey: "userId",
+  as: "followers",
+});
+Follower.belongsTo(User, {
+  foreignKey: "followerId",
+  targetKey: "userId",
+  as: "follower",
+});
+
+User.hasMany(Follower, {
+  foreignKey: "followingId",
+  sourceKey: "userId",
+  as: "followings",
+});
+Follower.belongsTo(User, {
+  foreignKey: "followingId",
+  targetKey: "userId",
+  as: "following",
+});
+
+module.exports = { User, Post, Comment, Token, PostLike, CommentLike, Follower };
