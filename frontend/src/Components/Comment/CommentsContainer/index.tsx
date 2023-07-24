@@ -20,53 +20,11 @@ export interface CommentsContainerProps {
 }
 
 const CommentsContainer: React.FC<CommentsContainerProps> = ({ comments }) => {
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const location = useLocation();
-  const isPostRoute = location.pathname.startsWith("/post/");
-
-  const user = useSelector(selectUser);
-  const token = useSelector(selectAccessToken);
-
-  const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
-  const [commentId, setCommentId] = useState<number>(0);
-
-  const handleMenuClick = () => {
-    setIsToastVisible((prevState) => !prevState);
-  };
-
-  const handleLikeComment = async () => {
-    await dispatch(likeComment({ commentId, token }));
-    await dispatch(fetchComments(commentId));
-    // setIsLiked(true);
-  };
-
-  const handleUnlikeComment = async () => {
-    await dispatch(unlikeComment({ commentId, token }));
-    await dispatch(fetchComments(commentId));
-    // setIsLiked(false);
-  };
-
-  const handleIconClick = (
-    event: React.MouseEvent<SVGElement, MouseEvent>,
-    id: number
-  ) => {
-    event.preventDefault();
-    event.stopPropagation();
-    handleMenuClick();
-    id && setCommentId(id);
-  };
-
   return (
     <Styled.CommentContainer>
       {comments?.map((comment) => (
         <CommentItem comment={comment} key={comment.commentId} />
       ))}
-      {isToastVisible && <Toast toastProps={{ path: "comment", commentId }} />}
-      {/* {selectedPost && (
-        <Modal onClose={handleCloseModal} modalRef={modalRef}>
-          <CommentsContainer comments={selectedPost.comments} />
-        </Modal>
-      )} */}
     </Styled.CommentContainer>
   );
 };

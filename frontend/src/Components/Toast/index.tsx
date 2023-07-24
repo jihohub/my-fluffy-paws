@@ -25,7 +25,6 @@ interface ToastProps {
 
 const Toast: React.FC<ToastProps> = ({ toastProps }) => {
   const { path, postId, commentId } = toastProps;
-  console.log(toastProps)
   const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const accessToken = useSelector(selectAccessToken);
@@ -50,6 +49,7 @@ const Toast: React.FC<ToastProps> = ({ toastProps }) => {
   };
 
   const handleEditPost = async () => {
+    console.log("ef")
     navigate(`/post/${postId}/edit`);
   };
 
