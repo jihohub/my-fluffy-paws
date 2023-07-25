@@ -1,7 +1,6 @@
 const { User, Post, Comment, Follower } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
-const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
@@ -98,7 +97,6 @@ const signup = async (req, res) => {
 
     res.status(201).json({ message: "가입이 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -127,7 +125,6 @@ const login = async (req, res) => {
 
     res.status(200).json({ user: userInfo });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -137,7 +134,6 @@ const logout = async (req, res) => {
   try {
     res.status(200).json({ message: "로그아웃이 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -191,7 +187,6 @@ const getUser = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -249,7 +244,6 @@ const getUsersBatch = async (req, res) => {
 
     res.status(200).json(users);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -268,7 +262,6 @@ const checkDuplicateUserName = async (req, res) => {
     // 존재하지 않으면 중복되지 않은 닉네임으로 판단
     res.status(200).json({ message: "사용 가능한 닉네임입니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };

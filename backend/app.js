@@ -4,7 +4,6 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const verifyToken = require("./middlewares/authMiddleware");
 
 const userRouter = require("./routes/api/user");
 const postRouter = require("./routes/api/post");

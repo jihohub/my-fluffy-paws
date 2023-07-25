@@ -127,7 +127,7 @@ const Signup = () => {
             <Styled.Input
               type="text"
               value={userName}
-              placeholder="영어와 숫자만 허용됩니다."
+              placeholder="닉네임은 영어와 숫자만 포함해야 합니다."
               onChange={handleUserNameChange}
             />
             {isUserNameDuplicate && (

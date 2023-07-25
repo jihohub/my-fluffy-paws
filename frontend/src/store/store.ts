@@ -1,12 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userReducer, { selectUserState } from "./reducers/userSlice";
-import postReducer, { selectPostState } from "./reducers/postSlice";
-import commentReducer, { selectCommentState } from "./reducers/commentSlice";
-import tokenReducer, { selectTokenState } from "./reducers/tokenSlice";
+import userReducer from "./reducers/userSlice";
+import postReducer from "./reducers/postSlice";
+import commentReducer from "./reducers/commentSlice";
+import tokenReducer from "./reducers/tokenSlice";
 import likeReducer from "./reducers/likeSlice";
-import followReducer, { selectFollowState } from "./reducers/followSlice";
+import followReducer from "./reducers/followSlice";
 import searchReducer from "./reducers/searchSlice";
 
 const persistConfig = {

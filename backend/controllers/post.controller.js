@@ -2,7 +2,6 @@ const { User, Post, Comment, PostLike, CommentLike } = require("../models/model"
 const sequelize = require("../config/db.config");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
-const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 
@@ -136,7 +135,6 @@ const getPostById = async (req, res) => {
 
     res.status(200).json(post);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "서버 오류" });
   }
 };
@@ -209,7 +207,6 @@ const createPost = async (req, res) => {
       .status(201)
       .json({ message: "게시물 작성이 완료되었습니다.", post: completePost });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -231,7 +228,6 @@ const updatePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 수정이 완료되었습니다.", post });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -262,7 +258,6 @@ const deletePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Styled from "./index.styles";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,10 +46,6 @@ const PostForm: React.FC = () => {
   const handleToSubmit = () => {
     setIsActiveContent(true);
   };
-
-  useEffect(() => {
-    console.log(croppedImage);
-  }, [croppedImage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

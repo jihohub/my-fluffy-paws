@@ -5,21 +5,16 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
   fetchPostById,
   selectPostById,
-  selectIsLoading,
   selectError,
 } from "../../store/reducers/postSlice";
 import Styled from "./index.styles";
 import PostContainer from "../../Components/Post/PostContainer";
 import { fetchComments } from "../../store/reducers/commentSlice";
-import CommentsContainer from "../../Components/Comment/CommentsContainer";
-import CommentForm from "../../Components/Comment/CommentForm";
-import Loading from "../../Components/Loading";
 
 const Post = () => {
   const { postId } = useParams() as { postId: string };
   const post = useSelector(selectPostById(parseInt(postId)));
 
-  const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
@@ -27,10 +22,6 @@ const Post = () => {
     dispatch(fetchPostById(parseInt(postId)));
     dispatch(fetchComments(parseInt(postId)));
   }, [dispatch, postId]);
-
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
 
   if (error) {
     return <div>Error: {error}</div>;

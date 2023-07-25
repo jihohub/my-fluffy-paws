@@ -7,11 +7,8 @@ import {
   selectSearchUsers,
   selectSearchPosts,
 } from "../../store/reducers/searchSlice";
-import { followUser, unfollowUser } from "../../store/reducers/followSlice";
 import PostsContainer from "../../Components/Post/PostsContainer";
 import UserCard from "../../Components/User/UserCard";
-import { BiUser } from "react-icons/bi";
-import { MdOutlineArticle } from "react-icons/md"
 
 const Search: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");

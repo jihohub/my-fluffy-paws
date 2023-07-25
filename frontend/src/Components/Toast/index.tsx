@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { fetchPostById, deletePost } from "../../store/reducers/postSlice";
@@ -8,9 +8,7 @@ import { fetchComments , deleteComment } from "../../store/reducers/commentSlice
 import { selectAccessToken, removeAccessToken } from "../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 import {
-  MdLogin,
   MdLogout,
-  MdOutlineWatchLater,
   MdEdit,
   MdDelete,
 } from "react-icons/md";
@@ -49,7 +47,6 @@ const Toast: React.FC<ToastProps> = ({ toastProps }) => {
   };
 
   const handleEditPost = async () => {
-    console.log("ef")
     navigate(`/post/${postId}/edit`);
   };
 

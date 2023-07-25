@@ -16,7 +16,6 @@ const getAllComments = async (req, res) => {
     // comments 데이터와 함께 userId, userName, userImage가 포함된 결과를 반환
     res.status(200).json(comments);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -37,7 +36,6 @@ const createComment = async (req, res) => {
 
     res.status(201).json(comment);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -62,7 +60,6 @@ const deleteComment = async (req, res) => {
 
     res.status(200).json({ message: "댓글 삭제가 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
