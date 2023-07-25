@@ -6,11 +6,7 @@
 # 페이지 구현 사항
 - 메인 페이지
   - 전체 게시물 목록을 보여줌
-  <left>
-    <img
-    src="https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/resume/post.png"
-    />
-  </left>
+  
 - 검색 페이지
   - 유저의 닉네임이나 게시물의 내용을 검색할 수 있는 페이지
   - 검색어를 입력하지 않으면 전체 유저 목록과 전체 게시물 목록을 보여줌
