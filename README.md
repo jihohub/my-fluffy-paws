@@ -51,7 +51,7 @@
   - 백엔드에서 유효성 검사를 통과해야 가입 성공
   <left>
     <img
-    src="https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/resume/signup.png"
+    src="https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/resume/register.png"
     />
   </left>
 - 로그인 기능
