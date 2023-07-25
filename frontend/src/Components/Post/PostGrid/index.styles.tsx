@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { BsHeartFill } from "react-icons/bs";
 import { FaComment } from "react-icons/fa";
 
 const PostContainer = styled.div`
@@ -23,6 +24,8 @@ const PostImage = styled.img`
 
 const PostHover = styled.div`
   position: absolute;
+  display: flex;
+  gap: 10px;
   top: 0;
   left: 0;
   width: 100%;
@@ -41,14 +44,9 @@ const PostHover = styled.div`
 `;
 
 const PostCommentCount = styled.p`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   color: white;
   font-size: 14px;
   display: none;
-  margin-left: 10px;
   z-index: 2;
 
   ${HoverContainer}:hover & {
@@ -56,8 +54,22 @@ const PostCommentCount = styled.p`
   }
 `;
 
+const PostLikeCount = styled.p`
+  color: white;
+  font-size: 14px;
+  display: none;
+  z-index: 2;
+
+  ${HoverContainer}:hover & {
+    display: block;
+  }
+`;
+
+const HeartFillIcon = styled(BsHeartFill)`
+  color: white;
+`;
+
 const CommentIcon = styled(FaComment)`
-  margin-right: 20px;
   color: white;
 `;
 
@@ -66,6 +78,8 @@ export default {
   HoverContainer,
   PostImage,
   PostHover,
+  PostLikeCount,
   PostCommentCount,
+  HeartFillIcon,
   CommentIcon,
 };
