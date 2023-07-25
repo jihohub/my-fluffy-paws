@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
@@ -24,10 +23,6 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
-
-  if (!posts || posts.length === 0) {
-    return <div></div>;
-  }
 
   if (isLoading) {
     return <Loading />;

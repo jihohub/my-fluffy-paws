@@ -2,7 +2,6 @@ import React, {
   ReactNode,
   MouseEventHandler,
   RefObject,
-  useEffect,
 } from "react";
 import Styled from "./index.styles";
 

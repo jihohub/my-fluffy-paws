@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
-  User,
   selectUser,
   selectUserOnProfile,
   getUserInfo,
@@ -48,7 +47,6 @@ const UserContainer: React.FC<UserContainerProps> = ({
   }, [userId]);
 
   useEffect(() => {
-    console.log(user?.followers);
     user &&
       setIsFollowing(
         user?.followers.some(

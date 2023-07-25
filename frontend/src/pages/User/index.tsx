@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import {
-  getUserInfo,
-  selectIsLoading,
-} from "../../store/reducers/userSlice";
+import { getUserInfo } from "../../store/reducers/userSlice";
 import Styled from "./index.styles";
 import UserContainer from "../../Components/User/UserContainer";
-import Loading from "../../Components/Loading";
 
 const User = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
