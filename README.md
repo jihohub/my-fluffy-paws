@@ -135,8 +135,6 @@
   - 좋아하는 사료, 간식 등을 기입하고 이를 토대로 해당 제품 판매 페이지 제공
     
 # 스택
-JavaScript, TypeScript, React, redux-toolkit, StyledComponents, Express, MySQL
-
 <table>
   <tr>
     <td rowspan="6">Front-end</td>
