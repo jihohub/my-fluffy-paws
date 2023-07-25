@@ -25,15 +25,6 @@ const Home = () => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  // if (!posts || posts.length === 0) {
-  //   return <div></div>;
-  // }
-
-  console.log(posts);
-  console.log(posts);
-  console.log(posts);
-  console.log(posts);
-
   if (isLoading) {
     return <Loading />;
   }

@@ -48,7 +48,6 @@ const UserContainer: React.FC<UserContainerProps> = ({
   }, [userId]);
 
   useEffect(() => {
-    console.log(user?.followers);
     user &&
       setIsFollowing(
         user?.followers.some(

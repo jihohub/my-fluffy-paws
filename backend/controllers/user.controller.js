@@ -51,6 +51,13 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: "올바른 이메일 형식이 아닙니다." });
     }
 
+    // 닉네임 형식이 올바르지 않은 경우 에러 처리
+    if (!/^[A-Za-z0-9]+$/.test(userName)) {
+      return res
+        .status(400)
+        .json({ error: "닉네임은 영어와 숫자만 포함해야 합니다." });
+    }
+
     // 비밀번호가 8자리 이상인지 확인
     if (password.length < 8) {
       return res
