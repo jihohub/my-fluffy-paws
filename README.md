@@ -136,3 +136,70 @@
     
 # 스택
 JavaScript, TypeScript, React, redux-toolkit, StyledComponents, Express, MySQL
+
+<table>
+  <tr>
+    <td rowspan="6">Front-end</td>
+  </tr>
+  <tr>
+    <td>Language</td>
+    <td>TypeScript</td>
+  </tr>
+  <tr>
+    <td>Library</td>
+    <td>React</td>
+  </tr>
+  <tr>
+    <td>State Container</td>
+    <td>Redux Toolkit</td>
+  </tr>
+  <tr>
+    <td>Component</td>
+    <td>Styled-Components</td>
+  </tr>
+  <tr>
+    <td>Asynchronous</td>
+    <td>Axios</td>
+  </tr>
+  <tr>
+    <td rowspan="6">Back-end</td>
+  </tr>
+  <tr>
+    <td>Language</td>
+    <td>JavaScript</td>
+  </tr>
+  <tr>
+    <td>Framework</td>
+    <td>Express</td>
+  </tr>
+  <tr>
+    <td>ORM</td>
+    <td>Sequelize</td>
+  </tr>
+  <tr>
+    <td>Authorization</td>
+    <td>jsonwebtoken</td>
+  </tr>
+  <tr>
+    <td>Database</td>
+    <td>MySQL</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Tool</td>
+  </tr>
+  <tr>
+    <td>Api Test</td>
+    <td>Postman, REST Client</td>
+  </tr>
+  <tr>
+    <td>Version Control</td>
+    <td>Github</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Tool</td>
+  </tr>
+  <tr>
+    <td>AWS Public Cloud Service</td>
+    <td>S3</td>
+  </tr>
+</table>
