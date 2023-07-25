@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { selectUser } from "../../../store/reducers/userSlice";
-import {
-  Post as PostData,
-  fetchPostById,
-} from "../../../store/reducers/postSlice";
+import { fetchPostById } from "../../../store/reducers/postSlice";
 import { Comment as CommentData } from "../../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import { likePost, unlikePost } from "../../../store/reducers/likeSlice";
@@ -57,10 +54,6 @@ const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
     }
   };
 
-  const handleCommentClick = () => {
-    setIsToastVisible((prevState) => !prevState);
-  };
-
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleOpenModal = () => {
@@ -69,12 +62,6 @@ const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
 
   const handleCloseModal = () => {
     setIsModalVisible((prev) => !prev);
-  };
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      handleCloseModal();
-    }
   };
 
   return (

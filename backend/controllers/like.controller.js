@@ -1,4 +1,4 @@
-const { Post, PostLike, CommentLike } = require("../models/model");
+const { Post, Comment, PostLike, CommentLike } = require("../models/model");
 
 // 게시물 좋아요
 const likePost = async (req, res) => {
@@ -12,7 +12,6 @@ const likePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물을 좋아요했습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "서버 오류" });
   }
 };
@@ -25,11 +24,10 @@ const unlikePost = async (req, res) => {
 
     // 게시물 좋아요 삭제
     await PostLike.destroy({ where: { userId, postId } });
-    await Post.decrement("likeCount", { where: { postId } });
+    await Comment.decrement("likeCount", { where: { postId } });
 
     res.status(200).json({ message: "게시물 좋아요를 취소했습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "서버 오류" });
   }
 };
@@ -42,10 +40,10 @@ const likeComment = async (req, res) => {
 
     // 댓글 좋아요 추가
     await CommentLike.create({ userId, commentId });
+    await Comment.increment("likeCount", { where: { commentId } });
 
     res.status(200).json({ message: "댓글을 좋아요했습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "서버 오류" });
   }
 };
@@ -58,10 +56,10 @@ const unlikeComment = async (req, res) => {
 
     // 댓글 좋아요 삭제
     await CommentLike.destroy({ where: { userId, commentId } });
+    await Comment.decrement("likeCount", { where: { commentId } });
 
     res.status(200).json({ message: "댓글 좋아요를 취소했습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "서버 오류" });
   }
 };

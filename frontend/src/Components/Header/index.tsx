@@ -1,10 +1,9 @@
 // Header/index.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Styled from "./index.styles";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../store/reducers/userSlice";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Toast from "../../Components/Toast";
 
 const Header = () => {
   const user = useSelector(selectUser);
@@ -29,7 +28,6 @@ const Header = () => {
       <Styled.MenuIcon onClick={handleMenuClick}>
         <GiHamburgerMenu />
       </Styled.MenuIcon>
-      {/* {isToastVisible && <Toast />} */}
     </Styled.HeaderContainer>
   );
 };

@@ -40,8 +40,8 @@ const Signup = () => {
     // 비밀번호 확인이 일치하는지 검사
     const isConfirmPasswordValid = password === confirmPassword;
 
-    // 닉네임이 입력되었는지 검사
-    const isUserNameValid = userName.trim() !== "";
+    // 닉네임이 빈 문자열이 아니고 영어와 숫자만 포함되는지 검사
+    const isUserNameValid = /^[A-Za-z0-9]+$/.test(userName.trim());
 
     // 모든 조건이 만족하면 버튼 활성화
     setIsButtonDisabled(
@@ -127,6 +127,7 @@ const Signup = () => {
             <Styled.Input
               type="text"
               value={userName}
+              placeholder="닉네임은 영어와 숫자만 포함해야 합니다."
               onChange={handleUserNameChange}
             />
             {isUserNameDuplicate && (

@@ -1,7 +1,6 @@
 const { User, Post, Comment, Follower } = require("../models/model");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
-const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
@@ -51,6 +50,13 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: "올바른 이메일 형식이 아닙니다." });
     }
 
+    // 닉네임 형식이 올바르지 않은 경우 에러 처리
+    if (!/^[A-Za-z0-9]+$/.test(userName)) {
+      return res
+        .status(400)
+        .json({ error: "닉네임은 영어와 숫자만 포함해야 합니다." });
+    }
+
     // 비밀번호가 8자리 이상인지 확인
     if (password.length < 8) {
       return res
@@ -91,7 +97,6 @@ const signup = async (req, res) => {
 
     res.status(201).json({ message: "가입이 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -120,7 +125,6 @@ const login = async (req, res) => {
 
     res.status(200).json({ user: userInfo });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -130,7 +134,6 @@ const logout = async (req, res) => {
   try {
     res.status(200).json({ message: "로그아웃이 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -184,7 +187,6 @@ const getUser = async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -242,7 +244,6 @@ const getUsersBatch = async (req, res) => {
 
     res.status(200).json(users);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -261,7 +262,6 @@ const checkDuplicateUserName = async (req, res) => {
     // 존재하지 않으면 중복되지 않은 닉네임으로 판단
     res.status(200).json({ message: "사용 가능한 닉네임입니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };

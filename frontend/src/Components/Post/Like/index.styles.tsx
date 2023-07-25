@@ -5,6 +5,7 @@ const CountText = styled.p`
   margin-bottom: 10px;
   text-decoration: none;
   color: #a4907c;
+  cursor: pointer;
 `;
 
 export default {

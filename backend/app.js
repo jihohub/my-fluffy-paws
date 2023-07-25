@@ -4,7 +4,6 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const verifyToken = require("./middlewares/authMiddleware");
 
 const userRouter = require("./routes/api/user");
 const postRouter = require("./routes/api/post");
@@ -12,6 +11,7 @@ const commentRouter = require("./routes/api/comment");
 const tokenRouter = require("./routes/api/token");
 const likeRouter = require("./routes/api/like");
 const followRouter = require("./routes/api/follow");
+const searchRouter = require("./routes/api/search");
 
 const app = express();
 
@@ -40,5 +40,6 @@ app.use("/api/comment", commentRouter);
 app.use("/api/token", tokenRouter);
 app.use("/api/like", likeRouter);
 app.use("/api/follow", followRouter);
+app.use("/api/search", searchRouter);
 
 module.exports = app;

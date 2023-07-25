@@ -50,7 +50,7 @@ const EditForm: React.FC = () => {
         token,
       })
     );
-    navigate(`/post/${postId}`);
+    navigate(-1);
   };
 
   if (isLoading) {

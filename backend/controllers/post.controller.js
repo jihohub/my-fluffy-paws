@@ -2,7 +2,6 @@ const { User, Post, Comment, PostLike, CommentLike } = require("../models/model"
 const sequelize = require("../config/db.config");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
-const session = require("express-session");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const fs = require("fs");
 
@@ -76,7 +75,6 @@ const getAllPosts = async (req, res) => {
           ],
         },
       ],
-      order: [["createdAt", "DESC"]],
     });
 
     res.status(200).json(posts);
@@ -137,7 +135,6 @@ const getPostById = async (req, res) => {
 
     res.status(200).json(post);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "서버 오류" });
   }
 };
@@ -165,11 +162,51 @@ const createPost = async (req, res) => {
       text,
     });
 
+    const completePost = await Post.findByPk(newPost.postId, {
+      include: [
+        {
+          model: Comment,
+          as: "comments",
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+            {
+              model: CommentLike,
+              as: "likedUser",
+              attributes: ["userId"],
+              include: [
+                {
+                  model: User,
+                  attributes: ["userId", "userName", "userImage"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["userId", "userName", "userImage"],
+        },
+        {
+          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          attributes: ["userId"],
+          as: "likedUser",
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+      ],
+    });
+
     res
       .status(201)
-      .json({ message: "게시물 작성이 완료되었습니다.", post: newPost });
+      .json({ message: "게시물 작성이 완료되었습니다.", post: completePost });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -191,7 +228,6 @@ const updatePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 수정이 완료되었습니다.", post });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
@@ -222,7 +258,6 @@ const deletePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
