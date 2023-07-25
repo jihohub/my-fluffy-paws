@@ -115,7 +115,7 @@ const Signup = () => {
             <Styled.Input
               type="password"
               value={confirmPassword}
-              placeholder="8자리 이상 입력해주세요."
+              placeholder="동일한 비밀번호를 입력해주세요."
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setConfirmPassword(e.target.value)
               }

@@ -13,6 +13,10 @@ const PostGrid: React.FC<PostContainerProps> = ({ posts }) => {
         <Styled.HoverContainer to={`/post/${post.postId}`} key={post.postId}>
           <Styled.PostImage src={post.image} alt="Post" />
           <Styled.PostHover>
+            <Styled.HeartFillIcon />
+            <Styled.PostLikeCount>
+              {post?.likeCount || 0}
+            </Styled.PostLikeCount>
             <Styled.CommentIcon />
             <Styled.PostCommentCount>
               {post?.comments?.length || 0}
