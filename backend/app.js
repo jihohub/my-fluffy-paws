@@ -24,17 +24,8 @@ const io = new Server(httpServer, {
 });
 httpServer.listen(5000, () => console.log(`app listening on port 5000!`));
 
-
 io.on("connection", (socket) => {
-  console.log("Client connected");
-
-  // 클라이언트로부터 메시지 받기
-  socket.on("sendMessage", (data) => {
-    console.log("Received message from client:", data.message);
-    // 메시지 처리 로직
-    // ...
-  });
-  socket.emit("greeting", "hey frontend developer");
+  
 });
 
 // Middleware
