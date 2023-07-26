@@ -4,6 +4,8 @@ const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const userRouter = require("./routes/api/user");
 const postRouter = require("./routes/api/post");
@@ -14,6 +16,26 @@ const followRouter = require("./routes/api/follow");
 const searchRouter = require("./routes/api/search");
 
 const app = express();
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+  },
+});
+httpServer.listen(5000, () => console.log(`app listening on port 5000!`));
+
+
+io.on("connection", (socket) => {
+  console.log("Client connected");
+
+  // 클라이언트로부터 메시지 받기
+  socket.on("sendMessage", (data) => {
+    console.log("Received message from client:", data.message);
+    // 메시지 처리 로직
+    // ...
+  });
+  socket.emit("greeting", "hey frontend developer");
+});
 
 // Middleware
 app.use(

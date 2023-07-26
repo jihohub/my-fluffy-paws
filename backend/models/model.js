@@ -116,7 +116,6 @@ Token.init(
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: "User",
         key: "userId",
@@ -124,19 +123,15 @@ Token.init(
     },
     accessToken: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     refreshToken: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     accessTokenExpireAt: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
     refreshTokenExpireAt: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
   },
   {
@@ -235,6 +230,80 @@ Follower.init(
   }
 );
 
+class Room extends Model {}
+
+Room.init(
+  {
+    roomId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    roomName: {
+      type: DataTypes.STRING(255),
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "Room",
+  }
+);
+
+class Message extends Model {}
+
+Message.init(
+  {
+    messageId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    roomId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Room,
+        key: "roomId",
+      },
+    },
+    senderId: {
+      type: DataTypes.INTEGER,
+    },
+    content: {
+      type: DataTypes.TEXT,
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "Message",
+  }
+);
+
+class RoomUser extends Model {}
+
+RoomUser.init(
+  {
+    roomId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Room,
+        key: "roomId",
+      },
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: User,
+        key: "userId",
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "RoomUser",
+    timestamps: false,
+  }
+);
+
 User.hasMany(Post, { as: "posts", foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
@@ -279,4 +348,29 @@ Follower.belongsTo(User, {
   targetKey: "userId",
 });
 
-module.exports = { User, Post, Comment, Token, PostLike, CommentLike, Follower };
+Room.hasMany(Message, {
+  foreignKey: "roomId",
+  as: "messages",
+});
+Message.belongsTo(Room, {
+  foreignKey: "roomId",
+});
+
+Room.belongsToMany(User, { through: RoomUser, as: "participants" });
+User.belongsToMany(Room, { through: RoomUser, as: "participatedRooms" });
+
+Message.belongsTo(User, { foreignKey: "senderId", as: "sender" });
+User.hasMany(Message, { foreignKey: "senderId", as: "sentMessages" });
+
+module.exports = {
+  User,
+  Post,
+  Comment,
+  Token,
+  PostLike,
+  CommentLike,
+  Follower,
+  Room,
+  Message,
+  RoomUser,
+};
