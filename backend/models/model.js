@@ -92,7 +92,7 @@ Comment.init(
       },
     },
     text: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(900),
     },
     likeCount: {
       type: DataTypes.INTEGER,
@@ -116,7 +116,6 @@ Token.init(
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: "User",
         key: "userId",
@@ -124,19 +123,15 @@ Token.init(
     },
     accessToken: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     refreshToken: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     accessTokenExpireAt: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
     refreshTokenExpireAt: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
   },
   {
@@ -235,6 +230,90 @@ Follower.init(
   }
 );
 
+class ChatRoom extends Model {}
+
+ChatRoom.init(
+  {
+    roomId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "ChatRoom",
+    tableName: "chat_room",
+    timestamps: false,
+  }
+);
+
+class ChatMessage extends Model {}
+
+ChatMessage.init(
+  {
+    messageId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    roomId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: ChatRoom,
+        key: "roomId",
+      },
+    },
+    text: {
+      type: DataTypes.STRING(900),
+    },
+    senderId: {
+      type: DataTypes.INTEGER,
+    },
+    receiverId: {
+      type: DataTypes.INTEGER,
+    },
+    sentAt: {
+      type: DataTypes.DATE,
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "ChatMessage",
+    tableName: "chat_message",
+    timestamps: false,
+  }
+);
+
+class ChatUser extends Model {}
+
+ChatUser.init(
+  {
+    roomId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: {
+        model: ChatRoom,
+        key: "roomId",
+      },
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: {
+        model: User,
+        key: "userId",
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "ChatUser",
+    tableName: "chat_user",
+    timestamps: false,
+  }
+);
+
 User.hasMany(Post, { as: "posts", foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
@@ -279,4 +358,41 @@ Follower.belongsTo(User, {
   targetKey: "userId",
 });
 
-module.exports = { User, Post, Comment, Token, PostLike, CommentLike, Follower };
+ChatRoom.hasMany(ChatUser, {
+  foreignKey: 'roomId',
+});
+ChatUser.belongsTo(ChatRoom, {
+  foreignKey: 'roomId',
+});
+
+ChatRoom.hasMany(ChatMessage, {
+  foreignKey: 'roomId',
+});
+ChatMessage.belongsTo(ChatRoom, {
+  foreignKey: 'roomId',
+});
+
+ChatMessage.belongsTo(User, {
+  foreignKey: 'senderId',
+  as: 'sender',
+});
+ChatMessage.belongsTo(User, {
+  foreignKey: 'receiverId',
+  as: 'receiver',
+});
+
+ChatRoom.belongsToMany(User, { through: ChatUser, foreignKey: "roomId" });
+User.belongsToMany(ChatRoom, { through: ChatUser, foreignKey: "userId" });
+
+module.exports = {
+  User,
+  Post,
+  Comment,
+  Token,
+  PostLike,
+  CommentLike,
+  Follower,
+  ChatRoom,
+  ChatMessage,
+  ChatUser,
+};
