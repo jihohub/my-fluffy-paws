@@ -65,7 +65,7 @@ const ChatRoom: React.FC = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = event.target.value;
-    if (newText.length <= 100) {
+    if (newText.length <= 300) {
       setMessageText(newText);
     }
   };
@@ -135,7 +135,7 @@ const ChatRoom: React.FC = () => {
               onChange={handleInputChange}
               maxLength={100}
             />
-            <Styled.CharCount>{messageText.length}/100</Styled.CharCount>
+            <Styled.CharCount>{messageText.length}/300</Styled.CharCount>
           </Styled.MessageContainer>
           <Styled.ButtonContainer>
             <Styled.Button color="#8D7B68" onClick={handleSendMessage}>

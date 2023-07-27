@@ -92,7 +92,7 @@ Comment.init(
       },
     },
     text: {
-      type: DataTypes.STRING(300),
+      type: DataTypes.STRING(900),
     },
     likeCount: {
       type: DataTypes.INTEGER,
@@ -265,7 +265,7 @@ ChatMessage.init(
       },
     },
     text: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING(900),
     },
     senderId: {
       type: DataTypes.INTEGER,
