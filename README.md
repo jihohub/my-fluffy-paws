@@ -199,7 +199,7 @@
     <td>MySQL</td>
   </tr>
   <tr>
-    <td rowspan="3">Tool</td>
+    <td rowspan="4">Tool</td>
   </tr>
   <tr>
     <td>Api Test</td>
@@ -208,9 +208,6 @@
   <tr>
     <td>Version Control</td>
     <td>Github</td>
-  </tr>
-  <tr>
-    <td rowspan="2">Tool</td>
   </tr>
   <tr>
     <td>AWS Public Cloud Service</td>
