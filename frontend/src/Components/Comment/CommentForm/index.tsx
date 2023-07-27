@@ -21,7 +21,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const newContent = event.target.value;
-    if (newContent.length <= 100) {
+    if (newContent.length <= 300) {
       setText(newContent);
     }
   };
@@ -50,9 +50,9 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
             placeholder="댓글을 입력하세요..."
             value={text}
             onChange={handleContentChange}
-            maxLength={100}
+            maxLength={300}
           />
-          <Styled.CharCount>{text.length}/100</Styled.CharCount>
+          <Styled.CharCount>{text.length}/300</Styled.CharCount>
         </Styled.CommentContainer>
         <Styled.ButtonContainer>
           <Styled.Button color="#8D7B68" onClick={handleSubmit}>

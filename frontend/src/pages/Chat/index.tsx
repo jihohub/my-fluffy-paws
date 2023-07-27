@@ -1,16 +1,52 @@
-import React from "react";
-import Styled from "./index.styles";
-import { IoMdHammer } from "react-icons/io";
+import React, { useEffect, useState, useRef, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
+import socketIOClient, { Socket } from "socket.io-client";
+import { selectUser } from "../../store/reducers/userSlice";
+import {
+  fetchChatRooms,
+  selectChatRooms,
+  selectIsLoading
+} from "../../store/reducers/chatSlice";
+import ChatCard from "../../Components/Chat/ChatCard";
+import Loading from "../../Components/Loading";
 
 const Chat: React.FC = () => {
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const user = useSelector(selectUser);
+  const rooms = useSelector(selectChatRooms);
+  const isLoading = useSelector(selectIsLoading);
+  console.log(rooms)
+
+  useEffect(() => {
+    user && dispatch(fetchChatRooms(user?.userId));
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <Styled.MainContainer>
-      <Styled.TextContainer to="/">
-        <IoMdHammer />
-        <Styled.Text>미구현 페이지입니다.</Styled.Text>
-        <Styled.Text>열심히 구현중입니다.</Styled.Text>
-      </Styled.TextContainer>
-    </Styled.MainContainer>
+    <div>
+      {rooms.ids.map((roomId) => {
+        const room = rooms.entities[roomId];
+        const users = room?.Users || [];
+        return (
+          <div key={room?.roomId}>
+            {room &&
+              users &&
+              users
+                .filter((eachUser) => eachUser.userId !== user?.userId)
+                .map((eachUser) => (
+                  <ChatCard
+                    chatCardProps={{ roomId: room?.roomId, user: eachUser }}
+                    key={room?.roomId}
+                  />
+                ))}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
