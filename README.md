@@ -14,6 +14,25 @@
       />
     </left>
   </details>
+- 메시지 페이지
+  - WebSocket을 사용해 메시지 (1:1 채팅) 구현
+  - 채팅 내역을 db에 저장하여 과거 채팅 내역 열람 가능
+  <details>
+    <summary>이미지1 보기</summary>
+    <left>
+      <img
+      src="https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/resume/chat1.png"
+      />
+    </left>
+    </details>
+  <details>
+    <summary>이미지2 보기</summary>
+    <left>
+      <img
+      src="https://jiho-image-storage.s3.ap-northeast-2.amazonaws.com/resume/chat2.png"
+      />
+    </left>
+    </details>
 - 검색 페이지
   - 유저의 닉네임이나 게시물의 내용을 검색할 수 있는 페이지
   - 검색어를 입력하지 않으면 전체 유저 목록과 전체 게시물 목록을 보여줌
