@@ -30,7 +30,7 @@ const BubbleText = styled.p<DivProps>`
   font-size: 16px;
   font-weight: bold;
   padding: 10px;
-  background-color: ${(props) => (props.isOwnMessage ? "skyblue" : "pink")};
+  background-color: ${(props) => (props.isOwnMessage ? "#bfe6ff" : "#ffe5ec")};
   border-radius: 16px;
 `;
 
