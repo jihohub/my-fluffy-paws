@@ -17,9 +17,7 @@ const UserCard = styled.div`
   align-items: center;
   width: 500px;
   max-width: 500px;
-  padding: 8px;
   border-radius: 8px;
-  margin-top: 8px;
   cursor: pointer;
 
   &:hover {
@@ -32,10 +30,18 @@ const UserCard = styled.div`
 `;
 
 const UserDiv = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
   display: flex;
-  width: 250px;
+  width: 500px;
+  max-width: 500px;
+  padding: 8px;
   align-items: center;
+  background-color: #fff;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const UserImage = styled.img`
@@ -49,7 +55,6 @@ const UserName = styled.p`
   font-size: 16px;
   font-weight: bold;
 `;
-
 
 const BubbleContainer = styled.div`
   margin-bottom: 100px;
@@ -73,8 +78,13 @@ const MessageFormContainer = styled.form`
 const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 500px;
+  max-width: 500px;
   align-items: end;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const Textarea = styled.textarea`
