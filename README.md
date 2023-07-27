@@ -15,8 +15,8 @@
     </left>
   </details>
 - 메시지 페이지
-  - WebSocket을 사용해 메시지 (1:1 채팅) 구현
-  - 채팅 내역을 db에 저장하여 과거 채팅 내역 열람 가능
+  - WebSocket을 사용해 메시지 (실시간 1:1 채팅) 구현
+  - 메시지를 db에 저장하여 과거 메시지 열람 가능
   <details>
     <summary>이미지1 보기</summary>
     <left>
