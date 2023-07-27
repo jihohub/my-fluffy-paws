@@ -14,19 +14,9 @@ const tokenRouter = require("./routes/api/token");
 const likeRouter = require("./routes/api/like");
 const followRouter = require("./routes/api/follow");
 const searchRouter = require("./routes/api/search");
+const chatRouter = require("./routes/api/chat");
 
 const app = express();
-const httpServer = http.createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: "*",
-  },
-});
-httpServer.listen(5000, () => console.log(`app listening on port 5000!`));
-
-io.on("connection", (socket) => {
-  
-});
 
 // Middleware
 app.use(
@@ -46,6 +36,12 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.static("./public"));
 
+const httpServer = http.createServer(app);
+const initializeSocketIO = require("./socket");
+const io = initializeSocketIO(httpServer);
+
+httpServer.listen(5000, () => console.log(`app listening on port 5000!`));
+
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
@@ -54,5 +50,6 @@ app.use("/api/token", tokenRouter);
 app.use("/api/like", likeRouter);
 app.use("/api/follow", followRouter);
 app.use("/api/search", searchRouter);
+app.use("/api/chat", chatRouter);
 
 module.exports = app;

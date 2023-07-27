@@ -8,6 +8,7 @@ import tokenReducer from "./reducers/tokenSlice";
 import likeReducer from "./reducers/likeSlice";
 import followReducer from "./reducers/followSlice";
 import searchReducer from "./reducers/searchSlice";
+import chatReducer from "./reducers/chatSlice";
 
 const persistConfig = {
   key: "root",
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   like: likeReducer,
   follow: followReducer,
   search: searchReducer,
+  chat: chatReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

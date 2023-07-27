@@ -230,28 +230,27 @@ Follower.init(
   }
 );
 
-class Room extends Model {}
+class ChatRoom extends Model {}
 
-Room.init(
+ChatRoom.init(
   {
     roomId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    roomName: {
-      type: DataTypes.STRING(255),
-    },
   },
   {
     sequelize: db,
-    modelName: "Room",
+    modelName: "ChatRoom",
+    tableName: "chat_room",
+    timestamps: false,
   }
 );
 
-class Message extends Model {}
+class ChatMessage extends Model {}
 
-Message.init(
+ChatMessage.init(
   {
     messageId: {
       type: DataTypes.INTEGER,
@@ -261,36 +260,46 @@ Message.init(
     roomId: {
       type: DataTypes.INTEGER,
       references: {
-        model: Room,
+        model: ChatRoom,
         key: "roomId",
       },
+    },
+    text: {
+      type: DataTypes.TEXT,
     },
     senderId: {
       type: DataTypes.INTEGER,
     },
-    content: {
-      type: DataTypes.TEXT,
+    receiverId: {
+      type: DataTypes.INTEGER,
+    },
+    sentAt: {
+      type: DataTypes.DATE,
     },
   },
   {
     sequelize: db,
-    modelName: "Message",
+    modelName: "ChatMessage",
+    tableName: "chat_message",
+    timestamps: false,
   }
 );
 
-class RoomUser extends Model {}
+class ChatUser extends Model {}
 
-RoomUser.init(
+ChatUser.init(
   {
     roomId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       references: {
-        model: Room,
+        model: ChatRoom,
         key: "roomId",
       },
     },
     userId: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       references: {
         model: User,
         key: "userId",
@@ -299,7 +308,8 @@ RoomUser.init(
   },
   {
     sequelize: db,
-    modelName: "RoomUser",
+    modelName: "ChatUser",
+    tableName: "chat_user",
     timestamps: false,
   }
 );
@@ -348,19 +358,31 @@ Follower.belongsTo(User, {
   targetKey: "userId",
 });
 
-Room.hasMany(Message, {
-  foreignKey: "roomId",
-  as: "messages",
+ChatRoom.hasMany(ChatUser, {
+  foreignKey: 'roomId',
 });
-Message.belongsTo(Room, {
-  foreignKey: "roomId",
+ChatUser.belongsTo(ChatRoom, {
+  foreignKey: 'roomId',
 });
 
-Room.belongsToMany(User, { through: RoomUser, as: "participants" });
-User.belongsToMany(Room, { through: RoomUser, as: "participatedRooms" });
+ChatRoom.hasMany(ChatMessage, {
+  foreignKey: 'roomId',
+});
+ChatMessage.belongsTo(ChatRoom, {
+  foreignKey: 'roomId',
+});
 
-Message.belongsTo(User, { foreignKey: "senderId", as: "sender" });
-User.hasMany(Message, { foreignKey: "senderId", as: "sentMessages" });
+ChatMessage.belongsTo(User, {
+  foreignKey: 'senderId',
+  as: 'sender',
+});
+ChatMessage.belongsTo(User, {
+  foreignKey: 'receiverId',
+  as: 'receiver',
+});
+
+ChatRoom.belongsToMany(User, { through: ChatUser, foreignKey: "roomId" });
+User.belongsToMany(ChatRoom, { through: ChatUser, foreignKey: "userId" });
 
 module.exports = {
   User,
@@ -370,7 +392,7 @@ module.exports = {
   PostLike,
   CommentLike,
   Follower,
-  Room,
-  Message,
-  RoomUser,
+  ChatRoom,
+  ChatMessage,
+  ChatUser,
 };
