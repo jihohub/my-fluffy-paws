@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, ChangeEvent } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
@@ -12,6 +12,7 @@ import {
 } from "../../store/reducers/chatSlice";
 import Styled from "./index.styles";
 import ChatBubble from "../../Components/Chat/ChatBubble";
+import { BsSendFill } from "react-icons/bs";
 
 const ChatRoom: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -53,11 +54,20 @@ const ChatRoom: React.FC = () => {
     };
   }, []);
 
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   // 메시지 입력과 전송을 처리하는 함수를 작성합니다.
   const [messageText, setMessageText] = useState("");
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setMessageText(e.target.value);
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = event.target.value;
+    if (newText.length <= 100) {
+      setMessageText(newText);
+    }
   };
 
   const handleSendMessage = async () => {
@@ -99,29 +109,43 @@ const ChatRoom: React.FC = () => {
   }, [dispatch, roomIdAsInt]);
 
   return (
-    <>
+    <Styled.ChatContainer>
       <Styled.UserCard key={partnerUser?.userId}>
         <Styled.UserDiv>
           <Styled.UserImage src={partnerUser?.userImage} alt="User Profile" />
           <Styled.UserName>{partnerUser?.userName}</Styled.UserName>
         </Styled.UserDiv>
       </Styled.UserCard>
-      <div>
-        <input type="text" value={messageText} onChange={handleInputChange} />
-        <button onClick={handleSendMessage}>전송</button>
-      </div>
-      <div>
+      <Styled.BubbleContainer>
         {messages?.map((message) => (
           <>
-            {(user && message) && (
+            {user && message && (
               <ChatBubble
                 chatBubbleProps={{ userId: user?.userId, message: message }}
               />
             )}
           </>
         ))}
-      </div>
-    </>
+      </Styled.BubbleContainer>
+      <Styled.InputContainer>
+        <Styled.MessageFormContainer>
+          <Styled.MessageContainer>
+            <Styled.Textarea
+              value={messageText}
+              onChange={handleInputChange}
+              maxLength={100}
+            />
+            <Styled.CharCount>{messageText.length}/100</Styled.CharCount>
+          </Styled.MessageContainer>
+          <Styled.ButtonContainer>
+            <Styled.Button color="#8D7B68" onClick={handleSendMessage}>
+              <BsSendFill />
+            </Styled.Button>
+          </Styled.ButtonContainer>
+        </Styled.MessageFormContainer>
+      </Styled.InputContainer>
+      <div ref={messageEndRef} />
+    </Styled.ChatContainer>
   );
 };
 

@@ -30,12 +30,15 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ chatBubbleProps }) => {
   const { userId, message } = chatBubbleProps;
 
   return (
-    <Styled.BubbleContainer key={message.messageId}>
+    <Styled.BubbleContainer
+      isOwnMessage={userId === message.senderId}
+      key={message.messageId}
+    >
       <Styled.BubbleDiv isOwnMessage={userId === message.senderId}>
-        <Styled.BubbleText>{message.text}</Styled.BubbleText>
-        <Styled.BubbleText>
-          {moment(message.sentAt).format('YYYY년 MMMM Do a h:mm:ss')}
-        </Styled.BubbleText>
+        <Styled.BubbleText isOwnMessage={userId === message.senderId}>{message.text}</Styled.BubbleText>
+        <Styled.BubbleDate>
+          {moment(message.sentAt).format("YYYY년 MMMM Do a h:mm:ss")}
+        </Styled.BubbleDate>
       </Styled.BubbleDiv>
     </Styled.BubbleContainer>
   );

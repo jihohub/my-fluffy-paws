@@ -4,15 +4,13 @@ export interface DivProps {
   isOwnMessage: boolean;
 }
 
-const BubbleContainer = styled.div`
-  position: relative;
+const BubbleContainer = styled.div<DivProps>`
+  display: flex;
+  flex-direction: row;
+  justify-content: ${(props) =>
+    props.isOwnMessage ? "flex-end" : "flex-start"};
   width: 500px;
   max-width: 500px;
-  height: 50px;
-  // padding: 8px;
-  border-radius: 16px;
-  margin-top: 8px;
-  cursor: pointer;
 
   @media (max-width: 768px) {
     width: 100vw;
@@ -20,21 +18,29 @@ const BubbleContainer = styled.div`
 `;
 
 const BubbleDiv = styled.div<DivProps>`
-  position: absolute;
-  right: ${(props) => (props.isOwnMessage ? 0 : "")};
-  left: ${(props) => (props.isOwnMessage ? "" : 0)};
-  background-color: ${(props) => (props.isOwnMessage ? "skyblue" : "pink")};
-  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props) => (props.isOwnMessage ? "flex-end" : "flex-start")};
   width: 250px;
+  height: 100%;
+  margin-bottom: 20px;
 `;
 
-const BubbleText = styled.p`
+const BubbleText = styled.p<DivProps>`
   font-size: 16px;
   font-weight: bold;
+  padding: 10px;
+  background-color: ${(props) => (props.isOwnMessage ? "skyblue" : "pink")};
+  border-radius: 16px;
+`;
+
+const BubbleDate = styled.p`
+  font-size: 12px;
 `;
 
 export default {
   BubbleContainer,
   BubbleDiv,
   BubbleText,
+  BubbleDate,
 };
