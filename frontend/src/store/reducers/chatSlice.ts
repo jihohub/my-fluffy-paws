@@ -60,6 +60,7 @@ export const chatRoomAdapter: EntityAdapter<ChatRoom> =
 export const chatMessageAdapter: EntityAdapter<ChatMessage> =
   createEntityAdapter<ChatMessage>({
     selectId: (chatMessage) => chatMessage.messageId,
+    sortComparer: (a, b) => a.messageId - b.messageId,
   });
 
 const initialState: ChatState = {

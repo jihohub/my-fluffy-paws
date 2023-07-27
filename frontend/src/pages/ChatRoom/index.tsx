@@ -11,6 +11,7 @@ import {
   selectChatMessagesByRoomId,
 } from "../../store/reducers/chatSlice";
 import Styled from "./index.styles";
+import ChatBubble from "../../Components/Chat/ChatBubble";
 
 const ChatRoom: React.FC = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -111,11 +112,13 @@ const ChatRoom: React.FC = () => {
       </div>
       <div>
         {messages?.map((message) => (
-          <div key={message?.messageId}>
-            <span>{message?.messageId}</span>
-            <span>{message?.sender?.userName}</span>
-            <span>{message?.text}</span>
-          </div>
+          <>
+            {(user && message) && (
+              <ChatBubble
+                chatBubbleProps={{ userId: user?.userId, message: message }}
+              />
+            )}
+          </>
         ))}
       </div>
     </>
