@@ -18,7 +18,7 @@ const verifyToken = async (req, res, next) => {
     }
 
     // 액세스 토큰이 만료되었는지 확인
-    if (new Date().getTime() > tokenData.accessTokenExpireAt) {
+    if (new Date().getTime() > tokenData.accessTokenExpireAt.getTime()) {
       // 리프레시 토큰을 확인하여 액세스 토큰 갱신
       const refreshToken = req.headers.refresh_token;
 
@@ -41,7 +41,7 @@ const verifyToken = async (req, res, next) => {
 
       // 리프레시 토큰이 만료되었는지 확인
       if (
-        new Date().getTime() > refreshTokenData.refreshTokenExpireAt
+        new Date().getTime() > refreshTokenData.refreshTokenExpireAt.getTime()
       ) {
         return res
           .status(401)

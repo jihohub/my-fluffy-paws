@@ -81,12 +81,20 @@ const refreshAccessToken = async (req, res) => {
 // 토큰 제거
 const removeAccessToken = async (req, res) => {
   try {
-    const { userId } = req.user; // 미들웨어에서 저장한 인증된 사용자의 userId 정보를 가져옴
+    const userId = req.session.userId;
 
     // 해당 사용자의 토큰 정보를 데이터베이스에서 삭제
-    await Token.destroy({ where: { userId } });
+    console.log("efefeefeefeef");
+    console.log("efefeefeefeef");
+    console.log("efefeefeefeef");
+    console.log("efefeefeefeef");
+    const deletedTokenCount = await Token.destroy({ where: { userId } });
 
-    res.status(200).json({ message: "토큰이 성공적으로 제거되었습니다." });
+    if (deletedTokenCount > 0) {
+      return res.status(200).json({ message: "로그아웃이 완료되었습니다." });
+    } else {
+      return res.status(404).json({ error: "토큰을 찾을 수 없습니다." });
+    }
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }

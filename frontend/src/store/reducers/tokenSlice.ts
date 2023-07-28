@@ -43,7 +43,14 @@ export const refreshAccessToken = createAsyncThunk(
 );
 
 // 액세스 토큰 제거를 위한 createAction
-export const removeAccessToken = createAction("token/remove");
+export const removeAccessToken = createAsyncThunk("token/remove", async () => {
+  try {
+    const response = await axios.delete("/api/token/remove");
+    return response.data;
+  } catch (error) {
+    throw Error("액세스 토큰을 갱신하는데 실패하였습니다.");
+  }
+});
 
 const tokenSlice = createSlice({
   name: "token",
@@ -77,9 +84,18 @@ const tokenSlice = createSlice({
         state.loading = false;
         state.error = action.error?.message || "";
       })
-      .addCase(removeAccessToken, (state) => {
+      .addCase(removeAccessToken.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(removeAccessToken.fulfilled, (state) => {
+        state.loading = false;
         state.accessToken = null;
         state.refreshToken = null;
+      })
+      .addCase(removeAccessToken.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
       });
   },
 });
