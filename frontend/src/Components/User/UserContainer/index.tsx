@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 import {
   selectUser,
   selectUserOnProfile,
@@ -13,6 +13,7 @@ import {
   unfollowUser,
 } from "../../../store/reducers/followSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
+import { createNewChatRoom } from "../../../store/reducers/chatSlice";
 import Styled from "./index.styles";
 import { GiHamburgerMenu } from "react-icons/gi";
 import PostGrid from "../../Post/PostGrid";
@@ -31,6 +32,7 @@ const UserContainer: React.FC<UserContainerProps> = ({
   userContainerProps
 }) => {
   const { handleMenuClick, isToastVisible } = userContainerProps;
+  const navigate = useNavigate();
   const { userId } = useParams<{ userId: string }>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const user = useSelector(selectUserOnProfile);
@@ -74,6 +76,20 @@ const UserContainer: React.FC<UserContainerProps> = ({
     }
   };
 
+  const handleChatMessage = async () => {
+    const response = (await dispatch(
+      (loggedinUser && user) &&
+        createNewChatRoom({
+          userId: loggedinUser.userId,
+          partnerId: user.userId,
+        })
+    )) as unknown;
+    if (response && (response as AnyAction).payload) {
+      const roomId = (response as AnyAction).payload.roomId;
+      navigate(`/chat/${roomId}`);
+    }
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -112,7 +128,9 @@ const UserContainer: React.FC<UserContainerProps> = ({
                   언팔로우
                 </Styled.FollowButton>
               )}
-              <Styled.MessageButton>메시지</Styled.MessageButton>
+              <Styled.MessageButton onClick={handleChatMessage}>
+                메시지
+              </Styled.MessageButton>
             </Styled.ButtonsContainer>
           )}
           <Styled.PostsContainer>

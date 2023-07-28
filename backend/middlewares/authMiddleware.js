@@ -13,7 +13,6 @@ const verifyToken = async (req, res, next) => {
   try {
     // 토큰을 데이터베이스에서 조회
     const tokenData = await Token.findOne({ where: { accessToken: token } });
-
     if (!tokenData) {
       return res.status(401).json({ error: "유효하지 않은 토큰입니다." });
     }
@@ -79,6 +78,10 @@ const verifyToken = async (req, res, next) => {
     req.userId = tokenData.userId;
     next();
   } catch (error) {
+    console.log(error);
+    console.log(error);
+    console.error(error);
+    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };

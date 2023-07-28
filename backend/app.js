@@ -40,7 +40,7 @@ const httpServer = http.createServer(app);
 const initializeSocketIO = require("./socket");
 const io = initializeSocketIO(httpServer);
 
-httpServer.listen(5000, () => console.log(`app listening on port 5000!`));
+httpServer.listen(5000, () => console.log(`App listening on port 5000!`));
 
 // Routes
 app.use("/api/user", userRouter);

@@ -64,8 +64,8 @@ const Toast: React.FC<ToastProps> = ({ toastProps }) => {
   };
 
   const handleLogoutClick = async () => {
-    await dispatch(logout());
     await dispatch(removeAccessToken());
+    await dispatch(logout());
     navigate("/");
   };
 

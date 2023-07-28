@@ -5,6 +5,7 @@ const ChatContainer = styled.div`
   width: 500px;
   max-width: 500px;
   padding-bottom: 60px;
+  min-height: 100vh;
 
   @media (max-width: 768px) {
     width: 100vw;
@@ -57,6 +58,7 @@ const UserName = styled.p`
 `;
 
 const BubbleContainer = styled.div`
+  margin-top: 50px;
   margin-bottom: 100px;
 `;
 
@@ -73,6 +75,10 @@ const MessageFormContainer = styled.form`
   margin-top: 500px;
   width: 500px;
   max-width: 500px;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const MessageContainer = styled.div`

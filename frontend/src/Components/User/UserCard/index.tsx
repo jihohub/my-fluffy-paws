@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import {
   User,
@@ -10,6 +10,7 @@ import {
 } from "../../../store/reducers/userSlice";
 import { followUser, unfollowUser } from "../../../store/reducers/followSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
+import { createNewChatRoom } from "../../../store/reducers/chatSlice";
 
 export interface UserCardProps {
   user: User;
@@ -56,6 +57,20 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     }
   };
 
+  const handleChatMessage = async () => {
+    const response = (await dispatch(
+      loggedinUser &&
+        createNewChatRoom({
+          userId: loggedinUser.userId,
+          partnerId: user.userId,
+        })
+    )) as unknown;
+    if (response && (response as AnyAction).payload) {
+      const roomId = (response as AnyAction).payload.roomId;
+      navigate(`/chat/${roomId}`);
+    }
+  };
+
   return (
     <Styled.UserCard key={user.userId}>
       <Styled.UserDiv onClick={() => handleUserClick(userId)}>
@@ -73,7 +88,9 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
               언팔로우
             </Styled.FollowButton>
           )}
-          <Styled.MessageButton>메시지</Styled.MessageButton>
+          <Styled.MessageButton onClick={handleChatMessage}>
+            메시지
+          </Styled.MessageButton>
         </Styled.ButtonsContainer>
       )}
     </Styled.UserCard>
