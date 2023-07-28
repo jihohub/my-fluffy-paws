@@ -74,6 +74,10 @@ const MessageFormContainer = styled.form`
   margin-top: 500px;
   width: 500px;
   max-width: 500px;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const MessageContainer = styled.div`

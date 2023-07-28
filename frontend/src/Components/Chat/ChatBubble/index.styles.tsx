@@ -23,6 +23,7 @@ const BubbleDiv = styled.div<DivProps>`
   align-items: ${(props) => (props.isOwnMessage ? "flex-end" : "flex-start")};
   width: 250px;
   height: 100%;
+  margin: 10px;
   margin-bottom: 20px;
 `;
 

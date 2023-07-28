@@ -57,7 +57,8 @@ const ChatRoom: React.FC = () => {
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    // messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messageEndRef.current?.scrollIntoView();
   }, [messages]);
 
   // 메시지 입력과 전송을 처리하는 함수를 작성합니다.
