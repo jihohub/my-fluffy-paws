@@ -5,6 +5,7 @@ const ChatContainer = styled.div`
   width: 500px;
   max-width: 500px;
   padding-bottom: 60px;
+  min-height: 100vh;
 
   @media (max-width: 768px) {
     width: 100vw;
