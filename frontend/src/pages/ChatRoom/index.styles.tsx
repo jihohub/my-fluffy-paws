@@ -58,6 +58,7 @@ const UserName = styled.p`
 `;
 
 const BubbleContainer = styled.div`
+  margin-top: 50px;
   margin-bottom: 100px;
 `;
 
