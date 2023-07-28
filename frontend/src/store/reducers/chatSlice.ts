@@ -12,7 +12,11 @@ import { User } from "./userSlice";
 
 interface ChatRoom {
   roomId: number;
-  Users: User[];
+  Users: {
+    userId: number;
+    userName: string;
+    userImage: string;
+  }[];
 }
 
 interface ChatMessage {
@@ -111,10 +115,7 @@ export const createNewChatRoom = createAsyncThunk(
         partnerId: partnerId,
       });
 
-      const roomId = response.data as number;
-      const chatRoomResponse = await axios.get(`/api/chat/room/${roomId}`);
-
-      return chatRoomResponse.data as ChatRoom;
+      return response.data as ChatRoom;
     } catch (error) {
       throw Error("새로운 채팅방 생성에 실패하였습니다.");
     }

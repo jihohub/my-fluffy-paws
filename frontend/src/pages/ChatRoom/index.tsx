@@ -105,7 +105,6 @@ const ChatRoom: React.FC = () => {
       ));
       await dispatch(fetchChatMessages(roomIdAsInt));
     });
-    console.log(messages);
   }, [dispatch, roomIdAsInt]);
 
   return (
@@ -133,7 +132,7 @@ const ChatRoom: React.FC = () => {
             <Styled.Textarea
               value={messageText}
               onChange={handleInputChange}
-              maxLength={100}
+              maxLength={300}
             />
             <Styled.CharCount>{messageText.length}/300</Styled.CharCount>
           </Styled.MessageContainer>
