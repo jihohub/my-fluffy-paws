@@ -9,6 +9,6 @@ router.post("/issue", tokenController.issueAccessToken);
 router.post("/refresh", tokenController.refreshAccessToken);
 
 // 토큰 제거
-router.post("/remove", tokenController.removeAccessToken);
+router.delete("/remove", tokenController.removeAccessToken);
 
 module.exports = router;

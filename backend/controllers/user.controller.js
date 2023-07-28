@@ -132,6 +132,7 @@ const login = async (req, res) => {
 // 로그아웃
 const logout = async (req, res) => {
   try {
+    delete req.session.userId;
     res.status(200).json({ message: "로그아웃이 완료되었습니다." });
   } catch (error) {
     res.status(500).json({ error: "Server error" });

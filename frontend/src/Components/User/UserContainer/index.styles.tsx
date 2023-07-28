@@ -59,6 +59,7 @@ const ButtonsContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 16px;
+  padding: 10px;
 `;
 
 const FollowButton = styled.button`
