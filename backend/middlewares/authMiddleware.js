@@ -13,13 +13,12 @@ const verifyToken = async (req, res, next) => {
   try {
     // 토큰을 데이터베이스에서 조회
     const tokenData = await Token.findOne({ where: { accessToken: token } });
-
     if (!tokenData) {
       return res.status(401).json({ error: "유효하지 않은 토큰입니다." });
     }
 
     // 액세스 토큰이 만료되었는지 확인
-    if (new Date().getTime() > tokenData.accessTokenExpireAt.getTime()) {
+    if (new Date().getTime() > tokenData.accessTokenExpireAt) {
       // 리프레시 토큰을 확인하여 액세스 토큰 갱신
       const refreshToken = req.headers.refresh_token;
 
@@ -42,7 +41,7 @@ const verifyToken = async (req, res, next) => {
 
       // 리프레시 토큰이 만료되었는지 확인
       if (
-        new Date().getTime() > refreshTokenData.refreshTokenExpireAt.getTime()
+        new Date().getTime() > refreshTokenData.refreshTokenExpireAt
       ) {
         return res
           .status(401)
@@ -79,6 +78,10 @@ const verifyToken = async (req, res, next) => {
     req.userId = tokenData.userId;
     next();
   } catch (error) {
+    console.log(error);
+    console.log(error);
+    console.error(error);
+    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 };
