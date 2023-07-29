@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { selectUser } from "../../../store/reducers/userSlice";
-import { fetchPostById } from "../../../store/reducers/postSlice";
+import { fetchCommentsByPostId } from "../../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import { likeComment, unlikeComment } from "../../../store/reducers/likeSlice";
 import moment from "moment";
@@ -39,12 +39,12 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
 
   const handleLikeComment = async () => {
     await dispatch(likeComment({ commentId, token }));
-    await dispatch(fetchPostById(postId));
+    await dispatch(fetchCommentsByPostId(postId));
   };
 
   const handleUnlikeComment = async () => {
     await dispatch(unlikeComment({ commentId, token }));
-    await dispatch(fetchPostById(postId));
+    await dispatch(fetchCommentsByPostId(postId));
   };
 
   return (

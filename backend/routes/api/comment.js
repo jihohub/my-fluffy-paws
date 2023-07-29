@@ -6,6 +6,9 @@ const commentController = require("../../controllers/comment.controller");
 // 전체 댓글 조회
 router.get("/", commentController.getAllComments);
 
+// 특정 게시물의 댓글 조회
+router.get("/:postId", commentController.getCommentsByPostId);
+
 // 댓글 작성
 router.post("/", verifyToken, commentController.createComment);
 

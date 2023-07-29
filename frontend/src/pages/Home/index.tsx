@@ -3,15 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import {
-  Post as PostData,
   fetchPosts,
   selectPosts,
   selectIsLoading,
-  selectError,
 } from "../../store/reducers/postSlice";
 import PostsContainer from "../../Components/Post/PostsContainer";
-import CommentsContainer from "../../Components/Comment/CommentsContainer";
-import Modal from "../../Components/Modal";
 import Loading from "../../Components/Loading";
 
 const Home = () => {
@@ -30,7 +26,7 @@ const Home = () => {
 
   return (
     <Styled.MainContainer>
-      <PostsContainer posts={posts}></PostsContainer>
+      <PostsContainer posts={posts} />
     </Styled.MainContainer>
   );
 };

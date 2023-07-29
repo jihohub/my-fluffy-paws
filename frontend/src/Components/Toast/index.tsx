@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { fetchPostById, deletePost } from "../../store/reducers/postSlice";
+import { deletePost } from "../../store/reducers/postSlice";
 import { logout } from "../../store/reducers/userSlice";
-import { fetchComments , deleteComment } from "../../store/reducers/commentSlice";
+import { fetchCommentsByPostId , deleteComment } from "../../store/reducers/commentSlice";
 import { selectAccessToken, removeAccessToken } from "../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 import {
@@ -59,8 +59,7 @@ const Toast: React.FC<ToastProps> = ({ toastProps }) => {
       (await dispatch(
         deleteComment({ commentId, token: accessToken })
       ));
-    postId && (await dispatch(fetchPostById(postId)));
-    postId && (await dispatch(fetchComments(postId)));
+    postId && (await dispatch(fetchCommentsByPostId(postId)));
   };
 
   const handleLogoutClick = async () => {
