@@ -9,7 +9,7 @@ import {
 } from "../../store/reducers/postSlice";
 import Styled from "./index.styles";
 import PostContainer from "../../Components/Post/PostContainer";
-import { fetchComments } from "../../store/reducers/commentSlice";
+import { fetchCommentsByPostId } from "../../store/reducers/commentSlice";
 
 const Post = () => {
   const { postId } = useParams() as { postId: string };
@@ -20,7 +20,7 @@ const Post = () => {
 
   useEffect(() => {
     dispatch(fetchPostById(parseInt(postId)));
-    dispatch(fetchComments(parseInt(postId)));
+    dispatch(fetchCommentsByPostId(parseInt(postId)));
   }, [dispatch, postId]);
 
   if (error) {

@@ -4,8 +4,8 @@ const CommentFormContainer = styled.form`
   display: flex;
   flex-direction: row;
   align-items: start;
-  margin-top: 20px;
   padding: 10px;
+  border-top: 1px #dddddd solid;
 `;
 
 const CommentContainer = styled.div`

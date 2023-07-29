@@ -39,27 +39,6 @@ const getAllPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: [
         {
-          model: Comment,
-          as: "comments",
-          include: [
-            {
-              model: User,
-              attributes: ["userId", "userName", "userImage"],
-            },
-            {
-              model: CommentLike,
-              as: "likedUser",
-              attributes: ["userId"],
-              include: [
-                {
-                  model: User,
-                  attributes: ["userId", "userName", "userImage"],
-                },
-              ],
-            },
-          ],
-        },
-        {
           model: User,
           attributes: ["userId", "userName", "userImage"],
         },
@@ -90,27 +69,6 @@ const getPostById = async (req, res) => {
 
     const post = await Post.findByPk(postId, {
       include: [
-        {
-          model: Comment,
-          as: "comments",
-          include: [
-            {
-              model: User,
-              attributes: ["userId", "userName", "userImage"],
-            },
-            {
-              model: CommentLike,
-              as: "likedUser",
-              attributes: ["userId"],
-              include: [
-                {
-                  model: User,
-                  attributes: ["userId", "userName", "userImage"],
-                },
-              ],
-            },
-          ],
-        },
         {
           model: User,
           attributes: ["userId", "userName", "userImage"],
@@ -164,27 +122,6 @@ const createPost = async (req, res) => {
 
     const completePost = await Post.findByPk(newPost.postId, {
       include: [
-        {
-          model: Comment,
-          as: "comments",
-          include: [
-            {
-              model: User,
-              attributes: ["userId", "userName", "userImage"],
-            },
-            {
-              model: CommentLike,
-              as: "likedUser",
-              attributes: ["userId"],
-              include: [
-                {
-                  model: User,
-                  attributes: ["userId", "userName", "userImage"],
-                },
-              ],
-            },
-          ],
-        },
         {
           model: User,
           attributes: ["userId", "userName", "userImage"],

@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
 import { selectUser } from "../../../store/reducers/userSlice";
 import { fetchPostById } from "../../../store/reducers/postSlice";
-import { Comment as CommentData } from "../../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import { likePost, unlikePost } from "../../../store/reducers/likeSlice";
 import Toast from "../../Toast";
@@ -23,12 +22,11 @@ export interface IconContainerProps {
         userImage: string;
       };
     }[];
-    comments: CommentData[];
   };
 }
 
 const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
-  const { postId, likedUser, comments } = iconsProps;
+  const { postId, likedUser } = iconsProps;
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const user = useSelector(selectUser);
   const token = useSelector(selectAccessToken);
@@ -75,7 +73,7 @@ const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
       {isToastVisible && <Toast toastProps={{ path: "user" }} />}
       {isModalVisible && (
         <Modal onClose={handleCloseModal} modalRef={modalRef}>
-          <CommentsContainer comments={comments} />
+          <CommentsContainer postId={postId} />
           {user && <CommentForm postId={postId} />}
         </Modal>
       )}
