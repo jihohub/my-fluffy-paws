@@ -20,6 +20,36 @@ const getAllComments = async (req, res) => {
   }
 };
 
+// 특정 게시물의 댓글 조회
+const getCommentsByPostId = async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const comments = await Comment.findAll({
+      where: { postId },
+      include: [
+        {
+          model: User,
+          attributes: ["userId", "userName", "userImage"],
+        },
+        {
+          model: CommentLike,
+          as: "likedUser",
+          attributes: ["userId"],
+          include: [
+            {
+              model: User,
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+      ],
+    });
+
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json({ error: "서버 오류" });
+  }
+};
 
 // 댓글 작성
 const createComment = async (req, res) => {
@@ -66,6 +96,7 @@ const deleteComment = async (req, res) => {
 
 module.exports = {
   getAllComments,
+  getCommentsByPostId,
   createComment,
   deleteComment,
 };

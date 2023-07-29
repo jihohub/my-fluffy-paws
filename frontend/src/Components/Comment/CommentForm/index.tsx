@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { fetchPostById } from "../../../store/reducers/postSlice";
-import { createComment } from "../../../store/reducers/commentSlice";
+import { createComment, fetchCommentsByPostId } from "../../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 import { BsSendFill } from "react-icons/bs";
@@ -36,7 +35,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
 
     // 댓글 생성 액션 디스패치
     await dispatch(createComment({ postId, text, token }));
-    await dispatch(fetchPostById(postId));
+    await dispatch(fetchCommentsByPostId(postId));
 
     // 댓글 내용 초기화
     setText("");

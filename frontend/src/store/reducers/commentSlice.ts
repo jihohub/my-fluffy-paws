@@ -48,11 +48,11 @@ export interface DeleteCommentPayload {
   token: string | null;
 }
 
-export const fetchComments = createAsyncThunk(
+export const fetchCommentsByPostId = createAsyncThunk(
   "comment/fetchComments",
   async (postId: number) => {
     try {
-      const response = await axios.get(`/api/comment?postId=${postId}`);
+      const response = await axios.get(`/api/comment/${postId}`);
       return response.data as Comment[];
     } catch (error) {
       throw Error("Failed to fetch comments");
@@ -105,15 +105,15 @@ const commentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchComments.pending, (state) => {
+      .addCase(fetchCommentsByPostId.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchComments.fulfilled, (state, action) => {
+      .addCase(fetchCommentsByPostId.fulfilled, (state, action) => {
         state.loading = false;
         state.comments = action.payload;
       })
-      .addCase(fetchComments.rejected, (state, action) => {
+      .addCase(fetchCommentsByPostId.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })
@@ -121,9 +121,8 @@ const commentSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(createComment.fulfilled, (state, action) => {
+      .addCase(createComment.fulfilled, (state) => {
         state.loading = false;
-        state.comments.push(action.payload);
       })
       .addCase(createComment.rejected, (state, action) => {
         state.loading = false;

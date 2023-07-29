@@ -10,7 +10,7 @@ import {
   selectError,
   updatePost,
 } from "../../store/reducers/postSlice";
-import { fetchComments } from "../../store/reducers/commentSlice";
+import { fetchCommentsByPostId } from "../../store/reducers/commentSlice";
 import { selectAccessToken } from "../../store/reducers/tokenSlice";
 import Loading from "../../Components/Loading";
 
@@ -26,7 +26,7 @@ const EditForm: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchPostById(parseInt(postId)));
-    dispatch(fetchComments(parseInt(postId)));
+    dispatch(fetchCommentsByPostId(parseInt(postId)));
   }, [dispatch, postId]);
 
   const [text, setText] = useState<string>(post?.text || "");

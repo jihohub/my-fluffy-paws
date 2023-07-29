@@ -19,7 +19,7 @@ const PostGrid: React.FC<PostContainerProps> = ({ posts }) => {
             </Styled.PostLikeCount>
             <Styled.CommentIcon />
             <Styled.PostCommentCount>
-              {post?.comments?.length || 0}
+              {post?.commentCount || 0}
             </Styled.PostCommentCount>
           </Styled.PostHover>
         </Styled.HoverContainer>

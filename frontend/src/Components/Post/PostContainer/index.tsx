@@ -16,7 +16,6 @@ export interface PostContainerProps {
 const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
   const {
     commentCount,
-    comments,
     createdAt,
     updatedAt,
     image,
@@ -31,10 +30,10 @@ const PostContainer: React.FC<PostContainerProps> = ({ post }) => {
     <Styled.PostContainer>
       <Author authorProps={{ postId, author: User }} />
       <Image image={image} />
-      <Icons iconsProps={{ postId, likedUser, comments }} />
+      <Icons iconsProps={{ postId, likedUser }} />
       <Like likeProps={{ likeCount, likedUser }} />
       <Text text={text} />
-      <Comments commentsProps={{ postId, commentCount, comments }} />
+      <Comments commentsProps={{ postId, commentCount }} />
       <PostDate createdAt={createdAt} />
     </Styled.PostContainer>
   );

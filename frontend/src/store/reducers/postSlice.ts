@@ -8,7 +8,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
-import { Comment } from "./commentSlice";
 
 export interface Post {
   postId: number;
@@ -22,7 +21,6 @@ export interface Post {
   createdAt: Date;
   updatedAt: Date;
   commentCount: number;
-  comments: Comment[];
   likeCount: number;
   likedUser: {
     userId: number;

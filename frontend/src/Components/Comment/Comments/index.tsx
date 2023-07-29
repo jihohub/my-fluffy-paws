@@ -7,18 +7,15 @@ import Modal from "../../Modal";
 import CommentsContainer from "../CommentsContainer";
 import CommentForm from "../CommentForm";
 
-import { Comment as CommentData } from "../../../store/reducers/commentSlice";
-
 export interface CommentsContainerProps {
   commentsProps: {
     postId: number;
     commentCount: number;
-    comments: CommentData[];
   };
 }
 
 const Comments: React.FC<CommentsContainerProps> = ({ commentsProps }) => {
-  const { postId, commentCount, comments } = commentsProps;
+  const { postId, commentCount } = commentsProps;
   const countText = commentCount > 0 && `댓글 ${commentCount}개 보기`;
 
   const user = useSelector(selectUser);
@@ -55,7 +52,7 @@ const Comments: React.FC<CommentsContainerProps> = ({ commentsProps }) => {
       {isToastVisible && <Toast toastProps={{ path: "user" }} />}
       {isModalVisible && (
         <Modal onClose={handleCloseModal} modalRef={modalRef}>
-          <CommentsContainer comments={comments} />
+          <CommentsContainer postId={postId} />
           {user && <CommentForm postId={postId} />}
         </Modal>
       )}
