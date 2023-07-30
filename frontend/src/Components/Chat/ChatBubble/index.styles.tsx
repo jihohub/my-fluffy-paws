@@ -4,7 +4,7 @@ export interface DivProps {
   isOwnMessage: boolean;
 }
 
-const BubbleContainer = styled.div<DivProps>`
+const Wrapper = styled.div<DivProps>`
   display: flex;
   flex-direction: row;
   justify-content: ${(props) =>
@@ -40,7 +40,7 @@ const BubbleDate = styled.p`
 `;
 
 export default {
-  BubbleContainer,
+  Wrapper,
   BubbleDiv,
   BubbleText,
   BubbleDate,
