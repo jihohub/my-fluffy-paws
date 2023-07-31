@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 
-const CommentContainer = styled.div`
+const Wrapper = styled.div`
   height: 30vh;
   overflow: auto;
 `;
@@ -94,7 +94,7 @@ const HeartFillIcon = styled(BsHeartFill)`
 `;
 
 export default {
-  CommentContainer,
+  Wrapper,
   CommentItem,
   LinkContainer,
   CommentUserImage,
