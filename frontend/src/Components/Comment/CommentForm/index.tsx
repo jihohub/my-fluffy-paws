@@ -43,7 +43,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
 
   return (
     <>
-      <Styled.CommentFormContainer onSubmit={handleSubmit}>
+      <Styled.Wrapper onSubmit={handleSubmit}>
         <Styled.CommentContainer>
           <Styled.Textarea
             placeholder="댓글을 입력하세요..."
@@ -58,7 +58,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
             <BsSendFill />
           </Styled.Button>
         </Styled.ButtonContainer>
-      </Styled.CommentFormContainer>
+      </Styled.Wrapper>
     </>
   );
 };
