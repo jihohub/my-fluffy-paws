@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 import { BsThreeDotsVertical, BsHeart, BsHeartFill } from "react-icons/bs";
 
 const Wrapper = styled.div`
-  height: 30vh;
-  overflow: auto;
-`;
-
-const CommentItem = styled.div`
   position: relative;
   display: flex;
   width: 100%;
@@ -95,7 +90,6 @@ const HeartFillIcon = styled(BsHeartFill)`
 
 export default {
   Wrapper,
-  CommentItem,
   LinkContainer,
   CommentUserImage,
   TextContainer,
