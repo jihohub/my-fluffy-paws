@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
 import Styled from "./index.styles";
 import { login, userActions, selectUser, selectError } from "../../store/reducers/userSlice";
 import { issueAccessToken } from "../../store/reducers/tokenSlice";
