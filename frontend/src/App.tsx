@@ -45,6 +45,9 @@ const App: React.FC = () => {
         // 리프레시 토큰이 있을 경우 액세스 토큰 재발급
         dispatch(refreshAccessToken(refreshToken));
       }
+    } else {
+      // 액세스 토큰이 없는 경우 로그아웃
+      dispatch(logout());
     }
   }, [accessToken, refreshToken, dispatch]);
 

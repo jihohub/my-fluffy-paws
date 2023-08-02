@@ -30,12 +30,12 @@ const ChatCard: React.FC<ChatCardProps> = ({ chatCardProps }) => {
   };
 
   return (
-    <Styled.UserCard key={user.userId}>
+    <Styled.Wrapper key={user.userId}>
       <Styled.UserDiv onClick={() => handleChatClick(roomId)}>
         <Styled.UserImage src={user.userImage} alt="User Profile" />
         <Styled.UserName>{user.userName}</Styled.UserName>
       </Styled.UserDiv>
-    </Styled.UserCard>
+    </Styled.Wrapper>
   );
 };
 
