@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { RootState } from "../store";
 import { Post } from "./postSlice";
 
@@ -56,7 +56,14 @@ export const signup = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      throw Error("Failed to sign up");
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<any, any>;
+        const errorMessage =
+          axiosError?.response?.data?.error ||
+          "알 수 없는 에러가 발생했습니다.";
+        throw new Error(errorMessage);
+      }
+      throw error;
     }
   }
 );
@@ -69,7 +76,14 @@ export const login = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      throw Error("Failed to log in");
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<UserState, any>;
+        const errorMessage =
+          axiosError?.response?.data?.error ||
+          "알 수 없는 에러가 발생했습니다.";
+        throw new Error(errorMessage);
+      }
+      throw error;
     }
   }
 );
@@ -123,7 +137,11 @@ export const checkDuplicateUserName = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = null; // 에러를 초기화하는 액션
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signup.pending, (state) => {

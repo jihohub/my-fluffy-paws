@@ -49,7 +49,7 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
 
   return (
     <>
-      <Styled.CommentItem key={commentId}>
+      <Styled.Wrapper key={commentId}>
         <Styled.LinkContainer to={`/user/${userId}`}>
           <Styled.CommentUserImage
             src={User.userImage}
@@ -86,7 +86,7 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
           </Styled.HeartConatainer>
           <Styled.LikeCount>{likeCount}</Styled.LikeCount>
         </Styled.LikeConatainer>
-      </Styled.CommentItem>
+      </Styled.Wrapper>
       {isToastVisible && (
         <Toast toastProps={{ path: "comment", postId, commentId }} />
       )}

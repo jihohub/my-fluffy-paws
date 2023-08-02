@@ -30,7 +30,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ chatBubbleProps }) => {
   const { userId, message } = chatBubbleProps;
 
   return (
-    <Styled.BubbleContainer
+    <Styled.Wrapper
       isOwnMessage={userId === message.senderId}
       key={message.messageId}
     >
@@ -40,7 +40,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ chatBubbleProps }) => {
           {moment(message.sentAt).format("YYYY년 MMMM Do a h:mm:ss")}
         </Styled.BubbleDate>
       </Styled.BubbleDiv>
-    </Styled.BubbleContainer>
+    </Styled.Wrapper>
   );
 };
 

@@ -1,18 +1,25 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
   signup,
   checkDuplicateUserName,
+  userActions,
   selectIsUserNameDuplicate,
+  selectUser,
+  selectError,
 } from "../../store/reducers/userSlice";
 import Styled from "./index.styles";
 import SignupImage from "../../Components/Signup/SignupImage";
 import SignupComplete from "../../Components/Signup/SignupComplete";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const isUserNameDuplicate = useSelector(selectIsUserNameDuplicate);
+  const user = useSelector(selectUser);
+  const error = useSelector(selectError);
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [email, setEmail] = useState<string>("");
@@ -29,6 +36,25 @@ const Signup = () => {
     // 닉네임 중복 검사 요청
     dispatch(checkDuplicateUserName(newUserName));
   };
+
+  useEffect(() => {
+    user && navigate("/");
+  }, []);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
+
+  // 컴포넌트가 마운트되었을 때 에러 메시지 초기화
+  useEffect(() => {
+    dispatch(userActions.clearError());
+    // 언마운트될 때 clearError 실행
+    return () => {
+      dispatch(userActions.clearError());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     // 아이디가 이메일 형식인지 검사 (간단한 형식 체크 예시)

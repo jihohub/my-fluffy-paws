@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
-import { login } from "../../store/reducers/userSlice";
+import { login, userActions, selectUser, selectError } from "../../store/reducers/userSlice";
 import { issueAccessToken } from "../../store/reducers/tokenSlice";
 
 const Login = () => {
@@ -12,6 +12,12 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const user = useSelector(selectUser);
+  const error = useSelector(selectError);
+
+  useEffect(() => {
+    user && navigate("/");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,8 +25,22 @@ const Login = () => {
     // 이메일과 비밀번호를 이용하여 로그인 요청을 보냄
     await dispatch(login({ email, password }));
     await dispatch(issueAccessToken({ email, password }));
-    navigate("/");
   };
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
+
+  // 컴포넌트가 마운트되었을 때 에러 메시지 초기화
+  useEffect(() => {
+    dispatch(userActions.clearError());
+    // 언마운트될 때 clearError 실행
+    return () => {
+      dispatch(userActions.clearError());
+    };
+  }, [dispatch]);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const CommentFormContainer = styled.form`
+const Wrapper = styled.form`
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -56,7 +56,7 @@ const Button = styled.button`
 `;
 
 export default {
-  CommentFormContainer,
+  Wrapper,
   CommentContainer,
   Textarea,
   CharCount,
