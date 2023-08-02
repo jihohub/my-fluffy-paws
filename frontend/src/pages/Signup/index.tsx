@@ -5,6 +5,7 @@ import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
   signup,
   checkDuplicateUserName,
+  userActions,
   selectIsUserNameDuplicate,
   selectUser,
   selectError,
@@ -41,8 +42,19 @@ const Signup = () => {
   }, []);
 
   useEffect(() => {
-    error && alert(error);
+    if (error) {
+      alert(error);
+    }
   }, [error]);
+
+  // 컴포넌트가 마운트되었을 때 에러 메시지 초기화
+  useEffect(() => {
+    dispatch(userActions.clearError());
+    // 언마운트될 때 clearError 실행
+    return () => {
+      dispatch(userActions.clearError());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     // 아이디가 이메일 형식인지 검사 (간단한 형식 체크 예시)

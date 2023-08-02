@@ -28,7 +28,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    error && alert(error);
+    if (error) {
+      alert(error);
+    }
   }, [error]);
 
   // 컴포넌트가 마운트되었을 때 에러 메시지 초기화
