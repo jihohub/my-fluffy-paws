@@ -40,6 +40,13 @@ const UserContainer: React.FC<UserContainerProps> = ({
   const isLoading = useSelector(selectIsLoading);
   const token = useSelector(selectAccessToken);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<
+    "posts" | "followings" | "followers"
+    >("posts");
+  
+  const handleTabChange = (tab: "posts" | "followings" | "followers") => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
     // 사용자 정보와 사용자가 작성한 포스트 정보를 가져오는 액션 호출
@@ -104,15 +111,19 @@ const UserContainer: React.FC<UserContainerProps> = ({
           </Styled.MenuContainer>
           <Styled.UserProfileContainer>
             <Styled.UserImage src={user.userImage} alt="Profile" />
-            <Styled.UserStatContainer>
+            <Styled.UserStatContainer onClick={() => handleTabChange("posts")}>
               <Styled.UserStat>{"게시물"}</Styled.UserStat>
               <Styled.UserStat>{user.posts.length}</Styled.UserStat>
             </Styled.UserStatContainer>
-            <Styled.UserStatContainer>
+            <Styled.UserStatContainer
+              onClick={() => handleTabChange("followings")}
+            >
               <Styled.UserStat>{"팔로잉"}</Styled.UserStat>
               <Styled.UserStat>{user.followings?.length || 0}</Styled.UserStat>
             </Styled.UserStatContainer>
-            <Styled.UserStatContainer>
+            <Styled.UserStatContainer
+              onClick={() => handleTabChange("followers")}
+            >
               <Styled.UserStat>{"팔로워"}</Styled.UserStat>
               <Styled.UserStat>{user.followers?.length || 0}</Styled.UserStat>
             </Styled.UserStatContainer>
