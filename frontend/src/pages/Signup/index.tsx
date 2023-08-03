@@ -39,7 +39,7 @@ const Signup = () => {
 
   useEffect(() => {
     user && navigate("/");
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (error) {
