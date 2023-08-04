@@ -5,6 +5,7 @@ import { ThunkDispatch, AnyAction } from "@reduxjs/toolkit";
 import {
   selectUser,
   selectUserOnProfile,
+  getLoggedinUserInfo,
   getUserInfo,
   selectIsLoading,
 } from "../../../store/reducers/userSlice";
@@ -57,7 +58,7 @@ const UserContainer: React.FC<UserContainerProps> = ({
   }, [userId]);
 
   useEffect(() => {
-    loggedinUser &&
+    loggedinUser?.followings &&
       userId &&
       setIsFollowing(
         loggedinUser?.followings.some(
@@ -67,17 +68,19 @@ const UserContainer: React.FC<UserContainerProps> = ({
   }, [user, loggedinUser]);
 
   const handleFollow = async () => {
-    if (user && userId) {
+    if (user && loggedinUser && userId) {
       // 현재 사용자가 이미 해당 사용자를 팔로우하고 있는지 확인합니다.
       if (isFollowing) {
         // 이미 팔로우 중인 경우 언팔로우를 실행합니다.
         await dispatch(unfollowUser({ followerId: user.userId, token }));
+        await dispatch(getLoggedinUserInfo(loggedinUser.userId));
         await dispatch(getUserInfo(parseInt(userId)));
         // 팔로우 또는 언팔로우 후 isFollowing 상태 업데이트
         setIsFollowing(false);
       } else {
         // 팔로우하지 않은 경우 팔로우를 실행합니다.
         await dispatch(followUser({ followerId: user.userId, token }));
+        await dispatch(getLoggedinUserInfo(loggedinUser.userId));
         await dispatch(getUserInfo(parseInt(userId)));
         // 팔로우 또는 언팔로우 후 isFollowing 상태 업데이트
         setIsFollowing(true);

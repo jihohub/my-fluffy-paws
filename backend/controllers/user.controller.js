@@ -136,7 +136,7 @@ const login = async (req, res) => {
         {
           model: Follower,
           as: "followers",
-          attributes: ["followingId"],
+          attributes: ["followerId"],
           include: [
             {
               model: User,
@@ -148,7 +148,7 @@ const login = async (req, res) => {
         {
           model: Follower,
           as: "followings",
-          attributes: ["followerId"],
+          attributes: ["followingId"],
           include: [
             {
               model: User,
@@ -197,7 +197,7 @@ const getUser = async (req, res) => {
         {
           model: Follower,
           as: "followers",
-          attributes: ["followingId"],
+          attributes: ["followerId"],
           include: [
             {
               model: User,
@@ -209,7 +209,7 @@ const getUser = async (req, res) => {
         {
           model: Follower,
           as: "followings",
-          attributes: ["followerId"],
+          attributes: ["followingId"],
           include: [
             {
               model: User,
@@ -256,7 +256,7 @@ const getUsersBatch = async (req, res) => {
         {
           model: Follower,
           as: "followers",
-          attributes: ["followingId"],
+          attributes: ["followerId"],
           include: [
             {
               model: User,
@@ -268,7 +268,7 @@ const getUsersBatch = async (req, res) => {
         {
           model: Follower,
           as: "followings",
-          attributes: ["followerId"],
+          attributes: ["followingId"],
           include: [
             {
               model: User,
