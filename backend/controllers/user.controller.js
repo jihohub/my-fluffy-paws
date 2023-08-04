@@ -120,10 +120,47 @@ const login = async (req, res) => {
 
     req.session.userId = user.userId;
 
-    const { userId, email: userEmail, userName, userImage } = user;
-    const userInfo = { userId, email: userEmail, userName, userImage };
+    const userFullInfo = await User.findByPk(user.userId, {
+      attributes: ["userId", "userName", "userImage"],
+      include: [
+        {
+          model: Post,
+          as: "posts",
+          include: [
+            {
+              model: Comment,
+              as: "comments",
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followers",
+          attributes: ["followingId"],
+          include: [
+            {
+              model: User,
+              as: "follower",
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+        {
+          model: Follower,
+          as: "followings",
+          attributes: ["followerId"],
+          include: [
+            {
+              model: User,
+              as: "following",
+              attributes: ["userId", "userName", "userImage"],
+            },
+          ],
+        },
+      ],
+    });
 
-    res.status(200).json({ user: userInfo });
+    res.status(200).json({ user: userFullInfo });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
@@ -160,10 +197,11 @@ const getUser = async (req, res) => {
         {
           model: Follower,
           as: "followers",
-          attributes: ["followerId"],
+          attributes: ["followingId"],
           include: [
             {
               model: User,
+              as: "follower",
               attributes: ["userId", "userName", "userImage"],
             },
           ],
@@ -171,10 +209,11 @@ const getUser = async (req, res) => {
         {
           model: Follower,
           as: "followings",
-          attributes: ["followingId"],
+          attributes: ["followerId"],
           include: [
             {
               model: User,
+              as: "following",
               attributes: ["userId", "userName", "userImage"],
             },
           ],
@@ -217,10 +256,11 @@ const getUsersBatch = async (req, res) => {
         {
           model: Follower,
           as: "followers",
-          attributes: ["followerId"],
+          attributes: ["followingId"],
           include: [
             {
               model: User,
+              as: "follower",
               attributes: ["userId", "userName", "userImage"],
             },
           ],
@@ -228,10 +268,11 @@ const getUsersBatch = async (req, res) => {
         {
           model: Follower,
           as: "followings",
-          attributes: ["followingId"],
+          attributes: ["followerId"],
           include: [
             {
               model: User,
+              as: "following",
               attributes: ["userId", "userName", "userImage"],
             },
           ],

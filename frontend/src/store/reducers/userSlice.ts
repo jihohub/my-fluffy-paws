@@ -10,16 +10,16 @@ export interface User {
   userImage: string;
   posts: Post[];
   followings: {
-    followingId: number;
-    User: {
+    followerId: number;
+    following: {
       userId: number;
       userName: string;
       userImage: string;
     };
   }[];
   followers: {
-    followerId: number;
-    User: {
+    followingId: number;
+    follower: {
       userId: number;
       userName: string;
       userImage: string;

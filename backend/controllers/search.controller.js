@@ -34,10 +34,11 @@ const searchUsersAndPosts = async (req, res) => {
         {
           model: Follower,
           as: "followers",
-          attributes: ["followerId"],
+          attributes: ["followingId"],
           include: [
             {
               model: User,
+              as: "follower",
               attributes: ["userId", "userName", "userImage"],
             },
           ],
@@ -45,10 +46,11 @@ const searchUsersAndPosts = async (req, res) => {
         {
           model: Follower,
           as: "followings",
-          attributes: ["followingId"],
+          attributes: ["followerId"],
           include: [
             {
               model: User,
+              as: "following",
               attributes: ["userId", "userName", "userImage"],
             },
           ],

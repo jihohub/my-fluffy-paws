@@ -19,6 +19,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import PostGrid from "../../Post/PostGrid";
 import Toast from "../../Toast";
 import Loading from "../../Loading";
+import UserCard from "../UserCard";
 
 export interface UserContainerProps {
   userContainerProps: {
@@ -56,10 +57,11 @@ const UserContainer: React.FC<UserContainerProps> = ({
   }, [userId]);
 
   useEffect(() => {
-    user &&
+    loggedinUser &&
+      userId &&
       setIsFollowing(
-        user?.followers.some(
-          (follower) => follower.User.userId === loggedinUser?.userId
+        loggedinUser?.followings.some(
+          (following) => following.following.userId === parseInt(userId)
         )
       );
   }, [user, loggedinUser]);
@@ -144,9 +146,25 @@ const UserContainer: React.FC<UserContainerProps> = ({
               </Styled.MessageButton>
             </Styled.ButtonsContainer>
           )}
-          <Styled.PostsContainer>
-            <PostGrid posts={user?.posts} />
-          </Styled.PostsContainer>
+          {activeTab === "posts" && (
+            <Styled.PostsContainer>
+              <PostGrid posts={user?.posts} />
+            </Styled.PostsContainer>
+          )}
+          {activeTab === "followings" && (
+            <Styled.PostsContainer>
+              {user?.followings?.map((user) => (
+                <UserCard user={user.following} key={user.following.userId} />
+              ))}
+            </Styled.PostsContainer>
+          )}
+          {activeTab === "followers" && (
+            <Styled.PostsContainer>
+              {user?.followers?.map((user) => (
+                <UserCard user={user.follower} key={user.follower.userId} />
+              ))}
+            </Styled.PostsContainer>
+          )}
           {isToastVisible && <Toast toastProps={{ path: "user" }} />}
         </>
       ) : (
