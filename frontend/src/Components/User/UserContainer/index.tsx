@@ -55,6 +55,7 @@ const UserContainer: React.FC<UserContainerProps> = ({
     if (userId !== undefined) {
       dispatch(getUserInfo(parseInt(userId)));
     }
+    setActiveTab("posts");
   }, [userId]);
 
   useEffect(() => {

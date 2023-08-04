@@ -84,19 +84,6 @@ const SearchResults = styled.div`
 
 `;
 
-const UserCard = styled.div`
-  display: flex;
-  align-items: center;
-  width: 500px;
-  padding: 8px;
-  border-radius: 8px;
-  margin-top: 8px;
-  cursor: pointer;
-  &:hover {
-    background-color: #f0f0f0;
-  }
-`;
-
 const UserImage = styled.img`
   width: 40px;
   height: 40px;
@@ -131,7 +118,6 @@ export default {
   PostsTab,
   TabButton,
   SearchResults,
-  UserCard,
   UserImage,
   UserName,
   TextContainer,
