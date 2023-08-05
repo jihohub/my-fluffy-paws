@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import {
   refreshAccessToken,
+  removeAccessToken,
   selectAccessToken,
   selectRefreshToken,
 } from "./store/reducers/tokenSlice";
@@ -38,6 +39,7 @@ const App: React.FC = () => {
       if (accessTokenExp && accessTokenExp < Date.now() / 1000) {
         // 리프레시 토큰이 없을 경우 로그아웃
         if (!refreshToken) {
+          dispatch(removeAccessToken());
           dispatch(logout());
           return;
         }

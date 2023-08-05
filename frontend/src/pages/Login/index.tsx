@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import Styled from "./index.styles";
-import { login, userActions, selectUser, selectError } from "../../store/reducers/userSlice";
+import { login, userActions, selectUser, selectIsLoading, selectError } from "../../store/reducers/userSlice";
 import { issueAccessToken } from "../../store/reducers/tokenSlice";
 
 const Login = () => {
@@ -13,11 +13,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const user = useSelector(selectUser);
+  const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
   useEffect(() => {
     user && navigate("/");
-  }, []);
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

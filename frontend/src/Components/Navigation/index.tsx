@@ -16,7 +16,7 @@ const Navigation = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLoggedIn(accessToken !== null);
+    setIsLoggedIn(!!accessToken);
   }, [accessToken]);
 
   const handleToProfile = () => {

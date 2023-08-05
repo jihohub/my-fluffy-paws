@@ -343,10 +343,17 @@ User.hasMany(Follower, {
   sourceKey: "userId",
   as: "followers",
 });
+// Follower.belongsTo(User, {
+//   foreignKey: "followerId",
+//   targetKey: "userId",
+//   as: "follower",
+// });
 Follower.belongsTo(User, {
-  foreignKey: "followerId",
+  foreignKey: "followingId",
   targetKey: "userId",
+  as: "follower",
 });
+
 
 User.hasMany(Follower, {
   foreignKey: "followingId",
@@ -354,9 +361,15 @@ User.hasMany(Follower, {
   as: "followings",
 });
 Follower.belongsTo(User, {
-  foreignKey: "followingId",
+  foreignKey: "followerId",
   targetKey: "userId",
+  as: "following",
 });
+// Follower.belongsTo(User, {
+//   foreignKey: "followingId",
+//   targetKey: "userId",
+//   as: "following",
+// });
 
 ChatRoom.hasMany(ChatUser, {
   foreignKey: 'roomId',
