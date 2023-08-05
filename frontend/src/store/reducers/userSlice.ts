@@ -11,7 +11,7 @@ export interface User {
   posts: Post[];
   followings: {
     followingId: number;
-    User: {
+    following: {
       userId: number;
       userName: string;
       userImage: string;
@@ -19,7 +19,7 @@ export interface User {
   }[];
   followers: {
     followerId: number;
-    User: {
+    follower: {
       userId: number;
       userName: string;
       userImage: string;
@@ -91,6 +91,19 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("user/logout", async () => {
   return;
 });
+
+export const getLoggedinUserInfo = createAsyncThunk(
+  "user/getLoggedinUserInfo",
+  async (userId: number) => {
+    try {
+      const response = await axios.get(`/api/user/${userId}`);
+
+      return response.data;
+    } catch (error) {
+      throw Error("Failed to get user info");
+    }
+  }
+);
 
 export const getUserInfo = createAsyncThunk(
   "user/getUserInfo",
@@ -176,6 +189,18 @@ const userSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || "";
+      })
+      .addCase(getLoggedinUserInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getLoggedinUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(getLoggedinUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error?.message || "";
       })

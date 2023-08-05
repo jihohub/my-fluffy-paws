@@ -61,6 +61,7 @@ const refreshAccessToken = async (req, res) => {
 
     // 리프레시 토큰이 만료되었는지 검사
     if (new Date().getTime() > token.refreshTokenExpireAt.getTime()) {
+      await Token.destroy({ where: { refreshToken } });
       return res.status(401).json({ error: "만료된 리프레시 토큰입니다." });
     }
 
@@ -84,10 +85,6 @@ const removeAccessToken = async (req, res) => {
     const userId = req.session.userId;
 
     // 해당 사용자의 토큰 정보를 데이터베이스에서 삭제
-    console.log("efefeefeefeef");
-    console.log("efefeefeefeef");
-    console.log("efefeefeefeef");
-    console.log("efefeefeefeef");
     const deletedTokenCount = await Token.destroy({ where: { userId } });
 
     if (deletedTokenCount > 0) {
