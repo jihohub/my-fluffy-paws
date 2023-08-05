@@ -49,7 +49,6 @@ const App: React.FC = () => {
       }
     } else {
       // 액세스 토큰이 없는 경우 로그아웃
-      dispatch(removeAccessToken());
       dispatch(logout());
     }
   }, [accessToken, refreshToken, dispatch]);
