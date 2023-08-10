@@ -85,7 +85,7 @@ const Toast: React.FC<ToastProps> = ({ toastProps }) => {
   return (
     <>
       {isToastVisible && (
-        <Styled.ToastContainer ref={toastContainerRef}>
+        <Styled.Wrapper ref={toastContainerRef}>
           <Styled.ToastUpperSlot>
             <Styled.ToastUpperText>-</Styled.ToastUpperText>
           </Styled.ToastUpperSlot>
@@ -121,7 +121,7 @@ const Toast: React.FC<ToastProps> = ({ toastProps }) => {
               </Styled.ToastSlot>
             </>
           )}
-        </Styled.ToastContainer>
+        </Styled.Wrapper>
       )}
     </>
   );
