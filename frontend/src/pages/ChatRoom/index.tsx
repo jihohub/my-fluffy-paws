@@ -109,7 +109,7 @@ const ChatRoom: React.FC = () => {
   }, [dispatch, roomIdAsInt]);
 
   return (
-    <Styled.ChatContainer>
+    <Styled.Wrapper>
       <Styled.UserCard key={partnerUser?.userId}>
         <Styled.UserDiv>
           <Styled.UserImage src={partnerUser?.userImage} alt="User Profile" />
@@ -145,7 +145,7 @@ const ChatRoom: React.FC = () => {
         </Styled.MessageFormContainer>
       </Styled.InputContainer>
       <div ref={messageEndRef} />
-    </Styled.ChatContainer>
+    </Styled.Wrapper>
   );
 };
 

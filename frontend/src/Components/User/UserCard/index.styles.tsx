@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const UserCard = styled.div`
+const Wrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -81,7 +81,7 @@ const MessageButton = styled.button`
 `;
 
 export default {
-  UserCard,
+  Wrapper,
   UserDiv,
   UserImage,
   UserName,

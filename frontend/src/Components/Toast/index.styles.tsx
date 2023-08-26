@@ -20,7 +20,7 @@ const ToastButton = styled.button`
   cursor: pointer;
 `;
 
-const ToastContainer = styled.div`
+const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
   width: 500px;
@@ -86,7 +86,7 @@ const ToastText = styled.p`
 
 export default {
   ToastButton,
-  ToastContainer,
+  Wrapper,
   ToastUpperSlot,
   ToastUpperText,
   ToastLink,
