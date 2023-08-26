@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ChatContainer = styled.div`
+const Wrapper = styled.div`
   position: relative;
   width: 500px;
   max-width: 500px;
@@ -133,7 +133,7 @@ const Button = styled.button`
 `;
 
 export default {
-  ChatContainer,
+  Wrapper,
   UserCard,
   UserDiv,
   UserImage,

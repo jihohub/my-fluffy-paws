@@ -102,7 +102,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   };
 
   return (
-    <Styled.UserCard key={userId}>
+    <Styled.Wrapper key={userId}>
       <Styled.UserDiv onClick={() => handleUserClick(userId)}>
         <Styled.UserImage src={userImage} alt="User Profile" />
         <Styled.UserName>{userName}</Styled.UserName>
@@ -123,7 +123,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           </Styled.MessageButton>
         </Styled.ButtonsContainer>
       )}
-    </Styled.UserCard>
+    </Styled.Wrapper>
   );
 };
 
