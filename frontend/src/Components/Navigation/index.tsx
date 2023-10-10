@@ -41,10 +41,16 @@ const Navigation = () => {
         <Styled.NavItem to="/post/new">
           <CgAddR />
         </Styled.NavItem>
+      )}      
+      {!isLoggedIn ? (
+        <Styled.NavItem to="/login">
+          <BiChat />
+        </Styled.NavItem>
+      ) : (
+        <Styled.NavItem to="/chat">
+          <BiChat />
+        </Styled.NavItem>
       )}
-      <Styled.NavItem to="/chat">
-        <BiChat />
-      </Styled.NavItem>
       {!isLoggedIn ? (
         <Styled.NavItem to="/login">
           <FaUser />

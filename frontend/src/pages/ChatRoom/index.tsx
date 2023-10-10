@@ -33,7 +33,7 @@ const ChatRoom: React.FC = () => {
   }, []);
 
   const connectToServer = () => {
-    const socket = socketIOClient("http://localhost:5000");
+    const socket = socketIOClient("http://ec2-13-125-3-209.ap-northeast-2.compute.amazonaws.com");
     setSocket(socket);
     socketRef.current = socket;
 
