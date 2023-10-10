@@ -16,7 +16,6 @@ const Chat: React.FC = () => {
   const user = useSelector(selectUser);
   const rooms = useSelector(selectChatRooms);
   const isLoading = useSelector(selectIsLoading);
-  console.log(rooms)
 
   useEffect(() => {
     user && dispatch(fetchChatRooms(user?.userId));
