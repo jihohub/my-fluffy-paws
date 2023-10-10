@@ -167,7 +167,7 @@ PostLike.init(
   {
     sequelize: db,
     modelName: "PostLike",
-    tableName: "post_likes",
+    tableName: "PostLikes",
   }
 );
 
@@ -198,7 +198,7 @@ CommentLike.init(
   {
     sequelize: db,
     modelName: "CommentLike",
-    tableName: "comment_likes",
+    tableName: "CommentLikes",
   }
 );
 
@@ -243,7 +243,7 @@ ChatRoom.init(
   {
     sequelize: db,
     modelName: "ChatRoom",
-    tableName: "chat_room",
+    tableName: "ChatRooms",
     timestamps: false,
   }
 );
@@ -280,7 +280,7 @@ ChatMessage.init(
   {
     sequelize: db,
     modelName: "ChatMessage",
-    tableName: "chat_message",
+    tableName: "ChatMessages",
     timestamps: false,
   }
 );
@@ -309,7 +309,7 @@ ChatUser.init(
   {
     sequelize: db,
     modelName: "ChatUser",
-    tableName: "chat_user",
+    tableName: "ChatUsers",
     timestamps: false,
   }
 );
