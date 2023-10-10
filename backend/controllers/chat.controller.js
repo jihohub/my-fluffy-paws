@@ -20,7 +20,6 @@ const getChatRoomsByUserId = async (req, res) => {
 
     res.status(200).json(chatRooms);
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error: "채팅방 목록을 가져오는 중 에러 발생" });
   };
 };

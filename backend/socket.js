@@ -5,7 +5,7 @@ const connectedClients = [];
 const initializeSocketIO = (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "*",
+      origin: "http://ec2-13-125-3-209.ap-northeast-2.compute.amazonaws.com",
     },
   });
 
