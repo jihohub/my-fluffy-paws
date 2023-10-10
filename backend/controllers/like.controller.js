@@ -24,7 +24,7 @@ const unlikePost = async (req, res) => {
 
     // 게시물 좋아요 삭제
     await PostLike.destroy({ where: { userId, postId } });
-    await Comment.decrement("likeCount", { where: { postId } });
+    await Post.decrement("likeCount", { where: { postId } });
 
     res.status(200).json({ message: "게시물 좋아요를 취소했습니다." });
   } catch (error) {
