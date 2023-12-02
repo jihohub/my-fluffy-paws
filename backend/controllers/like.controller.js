@@ -12,7 +12,7 @@ const likePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물을 좋아요했습니다." });
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "게시물 좋아요 중 오류 발생" });
   }
 };
 
@@ -28,7 +28,7 @@ const unlikePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 좋아요를 취소했습니다." });
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "게시물 좋아요 취소 중 오류 발생" });
   }
 };
 
@@ -44,7 +44,7 @@ const likeComment = async (req, res) => {
 
     res.status(200).json({ message: "댓글을 좋아요했습니다." });
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "댓글 좋아요 중 오류 발생" });
   }
 };
 
@@ -60,7 +60,7 @@ const unlikeComment = async (req, res) => {
 
     res.status(200).json({ message: "댓글 좋아요를 취소했습니다." });
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "댓글 좋아요 취소 중 오류 발생" });
   }
 };
 

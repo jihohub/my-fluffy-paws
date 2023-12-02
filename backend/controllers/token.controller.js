@@ -42,7 +42,7 @@ const issueAccessToken = async (req, res) => {
 
     res.status(200).json({ accessToken, refreshToken });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "토큰 발급 중 오류 발생" });
   }
 };
 
@@ -75,7 +75,7 @@ const refreshAccessToken = async (req, res) => {
 
     res.status(200).json({ accessToken: newAccessToken });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "토큰 갱신 중 오류 발생" });
   }
 };
 
@@ -93,7 +93,7 @@ const removeAccessToken = async (req, res) => {
       return res.status(404).json({ error: "토큰을 찾을 수 없습니다." });
     }
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "토큰 제거 중 오류 발생" });
   }
 };
 

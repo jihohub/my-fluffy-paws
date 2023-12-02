@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://ec2-13-125-3-209.ap-northeast-2.compute.amazonaws.com"
+  origin: "http://myfluffypaws.uk"
 }));
 app.use(express.static("./public"));
 
