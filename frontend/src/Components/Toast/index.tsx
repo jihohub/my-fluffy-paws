@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "@reduxjs/toolkit";
 import { deletePost } from "../../store/reducers/postSlice";
 import { logout } from "../../store/reducers/userSlice";
-import { fetchCommentsByPostId , deleteComment } from "../../store/reducers/commentSlice";
+import { fetchCommentsByPostId, deleteComment } from "../../store/reducers/commentSlice";
 import { selectAccessToken, removeAccessToken } from "../../store/reducers/tokenSlice";
 import Styled from "./index.styles";
 import {

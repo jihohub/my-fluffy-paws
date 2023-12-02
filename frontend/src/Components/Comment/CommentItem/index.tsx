@@ -74,8 +74,8 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
             <Styled.DotIcon onClick={handleMenuClick} />
           </Styled.IconContainer>
         )}
-        <Styled.LikeConatainer>
-          <Styled.HeartConatainer>
+        <Styled.LikeContainer>
+          <Styled.HeartContainer>
             {likedUser?.some(
               (eachUser) => eachUser.userId === user?.userId
             ) ? (
@@ -83,9 +83,9 @@ const CommentItem: React.FC<CommentsContainerProps> = ({ comment }) => {
             ) : (
               <Styled.HeartIcon onClick={handleLikeComment} />
             )}
-          </Styled.HeartConatainer>
+          </Styled.HeartContainer>
           <Styled.LikeCount>{likeCount}</Styled.LikeCount>
-        </Styled.LikeConatainer>
+        </Styled.LikeContainer>
       </Styled.Wrapper>
       {isToastVisible && (
         <Toast toastProps={{ path: "comment", postId, commentId }} />

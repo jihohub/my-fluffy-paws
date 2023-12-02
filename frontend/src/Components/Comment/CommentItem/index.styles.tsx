@@ -58,7 +58,7 @@ const IconContainer = styled.div`
   right: 35px;
 `;
 
-const LikeConatainer = styled.div`
+const LikeContainer = styled.div`
   position: absolute;
   top: 15px;
   right: 15px;
@@ -72,7 +72,7 @@ const LikeCount = styled.p`
   margin-left: 4px;
 `;
 
-const HeartConatainer = styled.div`
+const HeartContainer = styled.div`
   // padding-left: 10px;
 `;
 
@@ -99,9 +99,9 @@ export default {
   LowerContainer,
   CommentText,
   IconContainer,
-  LikeConatainer,
+  LikeContainer,
   LikeCount,
-  HeartConatainer,
+  HeartContainer,
   DotIcon,
   HeartIcon,
   HeartFillIcon,

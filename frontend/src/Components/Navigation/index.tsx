@@ -17,7 +17,7 @@ const Navigation = () => {
 
   useEffect(() => {
     setIsLoggedIn(!!accessToken);
-  }, [accessToken]);
+  }, [accessToken, user]);
 
   const handleToProfile = () => {
     if (user) {

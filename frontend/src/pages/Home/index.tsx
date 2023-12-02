@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <Styled.MainContainer>
-      <PostsContainer posts={posts} />
+      {posts && <PostsContainer posts={posts} />}
     </Styled.MainContainer>
   );
 };
