@@ -97,7 +97,7 @@ const signup = async (req, res) => {
 
     res.status(201).json({ message: "가입이 완료되었습니다." });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "회원가입 중 오류 발생" });
   }
 };
 
@@ -162,7 +162,7 @@ const login = async (req, res) => {
 
     res.status(200).json({ user: userFullInfo });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "로그인 중 오류 발생" });
   }
 };
 
@@ -172,7 +172,7 @@ const logout = async (req, res) => {
     delete req.session.userId;
     res.status(200).json({ message: "로그아웃이 완료되었습니다." });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "로그아웃 중 오류 발생" });
   }
 };
 
@@ -222,12 +222,12 @@ const getUser = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "유저정보를 찾을 수 없습니다." });
     }
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "유저정보 조회 중 오류 발생" });
   }
 };
 
@@ -281,12 +281,12 @@ const getUsersBatch = async (req, res) => {
     });
 
     if (!users) {
-      return res.status(404).json({ error: "Users not found" });
+      return res.status(404).json({ error: "유저정보를 찾을 수 없습니다." });
     }
 
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "유저정보 조회 중 오류 발생" });
   }
 };
 
@@ -304,7 +304,7 @@ const checkDuplicateUserName = async (req, res) => {
     // 존재하지 않으면 중복되지 않은 닉네임으로 판단
     res.status(200).json({ message: "사용 가능한 닉네임입니다." });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "중복 닉네임 체크 중 오류 발생" });
   }
 };
 

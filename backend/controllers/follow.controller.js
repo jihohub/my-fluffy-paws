@@ -20,7 +20,7 @@ const followUser = async (req, res) => {
       followings: updatedFollowings,
     });
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "유저 팔로우 중 오류 발생" });
   }
 };
 
@@ -46,7 +46,7 @@ const unfollowUser = async (req, res) => {
       followings: updatedFollowings,
     });
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "유저 언팔로우 중 오류 발생" });
   }
 };
 
@@ -70,7 +70,7 @@ const getFollowers = async (req, res) => {
 
     res.status(200).json(followers);
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "팔로워 조회중 오류 발생" });
   }
 };
 
@@ -94,7 +94,7 @@ const getFollowings = async (req, res) => {
 
     res.status(200).json(followings);
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "팔로잉 조회중 오류 발생" });
   }
 };
 

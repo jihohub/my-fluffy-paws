@@ -43,7 +43,7 @@ const getAllPosts = async (req, res) => {
           attributes: ["userId", "userName", "userImage"],
         },
         {
-          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          model: PostLike,
           attributes: ["userId"],
           as: "likedUser",
           include: [
@@ -74,7 +74,7 @@ const getPostById = async (req, res) => {
           attributes: ["userId", "userName", "userImage"],
         },
         {
-          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          model: PostLike,
           attributes: ["userId"],
           as: "likedUser",
           include: [
@@ -93,7 +93,7 @@ const getPostById = async (req, res) => {
 
     res.status(200).json(post);
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "게시물 조회 중 오류 발생" });
   }
 };
 
@@ -127,7 +127,7 @@ const createPost = async (req, res) => {
           attributes: ["userId", "userName", "userImage"],
         },
         {
-          model: PostLike, // 좋아요 정보를 얻기 위해 Like 모델 포함
+          model: PostLike,
           attributes: ["userId"],
           as: "likedUser",
           include: [
@@ -144,7 +144,7 @@ const createPost = async (req, res) => {
       .status(201)
       .json({ message: "게시물 작성이 완료되었습니다.", post: completePost });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "게시물 작성 중 오류 발셍" });
   }
 };
 
@@ -165,7 +165,7 @@ const updatePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 수정이 완료되었습니다.", post });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "게시물 수정 중 오류 발생" });
   }
 };
 
@@ -198,7 +198,7 @@ const deletePost = async (req, res) => {
 
     res.status(200).json({ message: "게시물 삭제가 완료되었습니다." });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "게시물 삭제 중 오류 발생" });
   }
 };
 

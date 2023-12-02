@@ -16,7 +16,7 @@ const getAllComments = async (req, res) => {
     // comments 데이터와 함께 userId, userName, userImage가 포함된 결과를 반환
     res.status(200).json(comments);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "댓글을 조회하는 중 에러 발생" });
   }
 };
 
@@ -47,7 +47,7 @@ const getCommentsByPostId = async (req, res) => {
 
     res.status(200).json(comments);
   } catch (error) {
-    res.status(500).json({ error: "서버 오류" });
+    res.status(500).json({ error: "댓글을 조회하는 중 에러 발생" });
   }
 };
 
@@ -66,7 +66,7 @@ const createComment = async (req, res) => {
 
     res.status(201).json(comment);
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "댓글을 작성하는 중 에러 발생" });
   }
 };
 
@@ -90,7 +90,7 @@ const deleteComment = async (req, res) => {
 
     res.status(200).json({ message: "댓글 삭제가 완료되었습니다." });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "댓글을 삭제하는 중 에러 발생" });
   }
 };
 
