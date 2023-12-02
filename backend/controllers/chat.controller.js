@@ -55,7 +55,7 @@ const getChatMessagesByRoomId = async (req, res) => {
 // 새로운 채팅방을 생성하고 참가자를 추가하는 기능
 const createChatRoom = async (req, res) => {
   try {
-    // 이미 두 사용자 간에 채팅방이 있는지 확인합니다
+    // 이미 두 사용자 간에 채팅방이 있는지 확인
     const { userId, partnerId } = req.body;
     const existingRoom = await ChatUser.findAll({
       attributes: ["roomId"],
@@ -82,11 +82,11 @@ const createChatRoom = async (req, res) => {
       });
       res.status(200).json(chatRoom);
     } else {
-      // 새로운 채팅방을 생성합니다
+      // 새로운 채팅방 생성
       const newRoom = await ChatRoom.create({});
       const roomId = newRoom.roomId;
 
-      // 채팅방에 참가자를 추가합니다
+      // 채팅방에 참가자 추가
       await ChatUser.bulkCreate([
         { roomId: roomId, userId: userId },
         { roomId: roomId, userId: partnerId },
@@ -115,7 +115,7 @@ const createChatRoom = async (req, res) => {
 // 특정 채팅방에 채팅 메시지를 보내는 기능
 const sendChatMessageToServer = async (req, res) => {
   try {
-    // 채팅 메시지를 데이터베이스에 저장합니다
+    // 채팅 메시지를 데이터베이스에 저장
     const { roomId } = req.params;
     const { userId, senderId, receiverId, text } = req.body;
     let newMessage = req.body;

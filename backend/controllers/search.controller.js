@@ -106,7 +106,7 @@ const searchUsersAndPosts = async (req, res) => {
 
     res.status(200).json({ users, posts });
   } catch (error) {
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "검색 중 오류 발생" });
   }
 };
 
