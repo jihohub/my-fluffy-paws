@@ -33,7 +33,7 @@ const ChatRoom: React.FC = () => {
   }, []);
 
   const connectToServer = () => {
-    const socket = socketIOClient("http://ec2-13-125-3-209.ap-northeast-2.compute.amazonaws.com");
+    const socket = socketIOClient("https://myfluffypaws.uk");
     setSocket(socket);
     socketRef.current = socket;
 
@@ -42,11 +42,11 @@ const ChatRoom: React.FC = () => {
     }
   };
 
-  // 컴포넌트가 처음 렌더링될 때 서버에 연결합니다.
+  // 컴포넌트가 처음 렌더링될 때 서버에 연결
   useEffect(() => {
     connectToServer();
 
-    // 컴포넌트가 언마운트될 때 소켓 연결을 끊습니다.
+    // 컴포넌트가 언마운트될 때 소켓 연결 해제
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
@@ -61,7 +61,7 @@ const ChatRoom: React.FC = () => {
     messageEndRef.current?.scrollIntoView();
   }, [messages]);
 
-  // 메시지 입력과 전송을 처리하는 함수를 작성합니다.
+  // 메시지 입력과 전송을 처리하는 함수
   const [messageText, setMessageText] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,7 +73,7 @@ const ChatRoom: React.FC = () => {
 
   const handleSendMessage = async () => {
     if (messageText.trim() !== "" && user && partnerUser) {
-      // 입력한 메시지를 서버로 보냅니다. (socketRef가 null인 경우에 대비하여 옵셔널 체이닝 사용)
+      // 입력한 메시지를 서버로 전송 (socketRef가 null인 경우에 대비하여 옵셔널 체이닝 사용)
       socketRef.current?.emit("sendMessage", dispatch(
         sendChatMessage({
           userId: user?.userId,
@@ -85,7 +85,7 @@ const ChatRoom: React.FC = () => {
       ));
 
       await dispatch(fetchChatMessages(roomIdAsInt));
-      // 입력한 메시지를 리셋합니다.
+      // 입력한 메시지 리셋
       setMessageText("");
     }
   };
@@ -93,7 +93,7 @@ const ChatRoom: React.FC = () => {
   useEffect(() => {
     if (!socketRef.current) return;
 
-    // 클라이언트가 메시지를 받으면, 해당 메시지를 상태로 업데이트합니다.
+    // 클라이언트가 메시지를 받으면, 해당 메시지를 상태로 업데이트
     socketRef.current.on("receivedMessage", async (message) => {
       user && await dispatch(
         sendChatMessage({

@@ -55,11 +55,11 @@ const Icons: React.FC<IconContainerProps> = ({ iconsProps }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleOpenModal = () => {
-    setIsModalVisible((prev) => !prev);
+    setIsModalVisible(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalVisible((prev) => !prev);
+    setIsModalVisible(false);
   };
 
   return (

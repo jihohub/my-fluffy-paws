@@ -55,7 +55,7 @@ export const fetchCommentsByPostId = createAsyncThunk(
       const response = await axios.get(`/api/comment/${postId}`);
       return response.data as Comment[];
     } catch (error) {
-      throw Error("Failed to fetch comments");
+      throw Error("댓글 불러오기에 실패하였습니다");
     }
   }
 );
@@ -77,7 +77,7 @@ export const createComment = createAsyncThunk(
 
       return response.data as Comment;
     } catch (error) {
-      throw Error("Failed to create comment");
+      throw Error("댓글 작성에 실패하였습니다.");
     }
   }
 );
@@ -94,7 +94,7 @@ export const deleteComment = createAsyncThunk(
       });
       return commentId;
     } catch (error) {
-      throw Error("Failed to delete comment");
+      throw Error("댓글 작성에 실패하였습니다.");
     }
   }
 );

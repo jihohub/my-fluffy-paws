@@ -14,7 +14,7 @@ export const CropImage: React.FC<CropImageProps> = ({
   croppedImage,
   onChangeImageUrl,
 }) => {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState<string>("");
   const cropperRef = createRef<ReactCropperElement>();
 
   useEffect(() => {

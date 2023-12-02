@@ -33,7 +33,7 @@ export const likePost = createAsyncThunk(
         },
       });
     } catch (error) {
-      throw Error("Failed to like the post");
+      throw Error("게시물 좋아요에 실패하였습니다.");
     }
   }
 );
@@ -49,7 +49,7 @@ export const unlikePost = createAsyncThunk(
         },
       });
     } catch (error) {
-      throw Error("Failed to unlike the post");
+      throw Error("게시물 좋아요 취소에 실패하였습니다.");
     }
   }
 );
@@ -69,7 +69,7 @@ export const likeComment = createAsyncThunk(
         }
       );
     } catch (error) {
-      throw Error("Failed to like the comment");
+      throw Error("댓글 좋아요에 실패하였습니다.");
     }
   }
 );
@@ -85,7 +85,7 @@ export const unlikeComment = createAsyncThunk(
         },
       });
     } catch (error) {
-      throw Error("Failed to unlike the comment");
+      throw Error("댓글 좋아요 취소에 실패하였습니다.");
     }
   }
 );

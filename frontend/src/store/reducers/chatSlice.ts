@@ -83,7 +83,7 @@ export const fetchChatRooms = createAsyncThunk(
       const response = await axios.get(`/api/chat/user/${userId}`);
       return response.data as ChatRoom[];
     } catch (error) {
-      throw Error("Failed to fetch chat rooms");
+      throw Error("DM 목록 조회에 실패하였습니다.");
     }
   }
 );
@@ -99,7 +99,7 @@ export const fetchChatMessages = createAsyncThunk(
         messages: ChatMessage[];
       };
     } catch (error) {
-      throw Error("Failed to fetch chat messages");
+      throw Error("DM 메시지 조회에 실패하였습니다.");
     }
   }
 );
@@ -117,7 +117,7 @@ export const createNewChatRoom = createAsyncThunk(
 
       return response.data as ChatRoom;
     } catch (error) {
-      throw Error("새로운 채팅방 생성에 실패하였습니다.");
+      throw Error("DM 보내기에 실패하였습니다.");
     }
   }
 );
@@ -137,7 +137,7 @@ export const sendChatMessage = createAsyncThunk(
       });
       return response.data as SendChatMessageResponse;
     } catch (error) {
-      throw Error("Failed to send chat message");
+      throw Error("DM 보내기에 실패하였습니다.");
     }
   }
 );
@@ -179,7 +179,7 @@ const chatSlice = createSlice({
           messages
         );
 
-        // 'ids'를 중복 없이 유지하도록 합니다.
+        // 'ids'를 중복 없이 유지.
         state.chatMessages[roomId].ids = Array.from(
           new Set([...existingIds, ...updatedEntities.ids])
         );

@@ -73,7 +73,7 @@ const LikesCount = styled.span`
   margin-top: 4px;
 `;
 
-const HeartConatainer = styled.div`
+const HeartContainer = styled.div`
   padding-left: 50px;
 `;
 
@@ -91,5 +91,5 @@ export default {
   IconContainer,
   LikesContainer,
   LikesCount,
-  HeartConatainer,
+  HeartContainer,
 };
