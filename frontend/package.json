@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "GENERATE_SOURCEMAP=false NODE_OPTIONS=--max-old-space-size=4096 react-scripts build"
   },
   "browserslist": {
     "production": [

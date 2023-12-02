@@ -37,7 +37,7 @@ export const fetchFollowers = createAsyncThunk(
       const response = await axios.get(`/api/follow/${userId}/followers`);
       return response.data as Follower[];
     } catch (error) {
-      throw Error("Failed to fetch followers");
+      throw Error("팔로워 조회에 실패하였습니다.");
     }
   }
 );
@@ -49,7 +49,7 @@ export const fetchFollowings = createAsyncThunk(
       const response = await axios.get(`/api/follow/${userId}/followings`);
       return response.data as Follower[];
     } catch (error) {
-      throw Error("Failed to fetch followings");
+      throw Error("팔로잉 조회에 실패하였습니다.");
     }
   }
 );
@@ -70,7 +70,7 @@ export const followUser = createAsyncThunk(
       );
       return response.data
     } catch (error) {
-      throw new Error("Failed to follow user");
+      throw new Error("팔로우에 실패하였습니다.");
     }
   }
 );
@@ -87,7 +87,7 @@ export const unfollowUser = createAsyncThunk(
       });
       return response.data
     } catch (error) {
-      throw new Error("Failed to unfollow user");
+      throw new Error("언팔로우에 실패하였습니다.");
     }
   }
 );

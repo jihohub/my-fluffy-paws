@@ -23,18 +23,10 @@ const Post = () => {
     dispatch(fetchCommentsByPostId(parseInt(postId)));
   }, [dispatch, postId]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!post) {
-    return <div>Post not found</div>;
-  }
-
   return (
     <Styled.MainContainer>
       <Styled.PostContainer>
-        <PostContainer post={post}></PostContainer>
+        {post && <PostContainer post={post}></PostContainer>}
       </Styled.PostContainer>
     </Styled.MainContainer>
   );

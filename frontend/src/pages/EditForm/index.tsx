@@ -57,14 +57,6 @@ const EditForm: React.FC = () => {
     return <Loading />;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!post) {
-    return <div>Post not found</div>;
-  }
-
   return (
     <Styled.EditFormContainer>
       <Styled.InputContainer>

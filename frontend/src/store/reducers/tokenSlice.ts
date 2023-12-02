@@ -24,7 +24,7 @@ export const issueAccessToken = createAsyncThunk(
       const response = await axios.post("/api/token/issue", userData);
       return response.data;
     } catch (error) {
-      throw Error("액세스 토큰을 발급하는데 실패하였습니다.");
+      throw Error("액세스 토큰 발급에 실패하였습니다.");
     }
   }
 );
@@ -37,7 +37,7 @@ export const refreshAccessToken = createAsyncThunk(
       const response = await axios.post("/api/token/refresh", { refreshToken });
       return response.data.accessToken;
     } catch (error) {
-      throw Error("액세스 토큰을 갱신하는데 실패하였습니다.");
+      throw Error("액세스 토큰 갱신에 실패하였습니다.");
     }
   }
 );
@@ -48,7 +48,7 @@ export const removeAccessToken = createAsyncThunk("token/remove", async () => {
     const response = await axios.delete("/api/token/remove");
     return response.data;
   } catch (error) {
-    throw Error("액세스 토큰을 갱신하는데 실패하였습니다.");
+    throw Error("액세스 토큰 제거에 실패하였습니다.");
   }
 });
 

@@ -1,4 +1,3 @@
-// Header/index.tsx
 import React, { useState } from "react";
 import Styled from "./index.styles";
 import { useSelector } from "react-redux";

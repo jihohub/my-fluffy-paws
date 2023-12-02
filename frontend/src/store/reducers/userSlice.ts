@@ -60,7 +60,7 @@ export const signup = createAsyncThunk(
         const axiosError = error as AxiosError<any, any>;
         const errorMessage =
           axiosError?.response?.data?.error ||
-          "알 수 없는 에러가 발생했습니다.";
+          "회원가입에 실패하였습니다.";
         throw new Error(errorMessage);
       }
       throw error;
@@ -80,7 +80,7 @@ export const login = createAsyncThunk(
         const axiosError = error as AxiosError<UserState, any>;
         const errorMessage =
           axiosError?.response?.data?.error ||
-          "알 수 없는 에러가 발생했습니다.";
+          "로그인에 실패하였습니다.";
         throw new Error(errorMessage);
       }
       throw error;
@@ -100,7 +100,7 @@ export const getLoggedinUserInfo = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      throw Error("Failed to get user info");
+      throw Error("유저정보 조회에 실패하였습니다.");
     }
   }
 );
@@ -113,7 +113,7 @@ export const getUserInfo = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      throw Error("Failed to get user info");
+      throw Error("유저정보 조회에 실패하였습니다.");
     }
   }
 );
@@ -126,7 +126,7 @@ export const getUsersInfoBatch = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      throw new Error("Failed to get users info");
+      throw new Error("유저정보 조회에 실패하였습니다.");
     }
   }
 );
@@ -142,7 +142,7 @@ export const checkDuplicateUserName = createAsyncThunk(
       // 서버로부터 받은 응답에 따라 중복 여부를 판단하여 상태값 반환
       return response.data;
     } catch (error) {
-      throw new Error("Failed to check duplicate username");
+      throw new Error("닉네임 중복 체크에 실패하였습니다.");
     }
   }
 );

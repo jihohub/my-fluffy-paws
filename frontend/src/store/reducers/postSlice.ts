@@ -74,7 +74,7 @@ export const fetchPosts = createAsyncThunk("post/fetchPosts", async () => {
     const response = await axios.get("/api/post");
     return response.data as Post[];
   } catch (error) {
-    throw Error("Failed to fetch posts");
+    throw Error("게시물 조회에 실패하였습니다.");
   }
 });
 
@@ -85,7 +85,7 @@ export const fetchPostById = createAsyncThunk(
       const response = await axios.get(`/api/post/${postId}`);
       return response.data as Post;
     } catch (error) {
-      throw Error("Failed to fetch post");
+      throw Error("게시물 조회에 실패하였습니다.");
     }
   }
 );
@@ -108,7 +108,7 @@ export const createNewPost: AsyncThunk<
 
       return response.data as CreateNewPostResponse;
     } catch (error) {
-      throw Error("Failed to create new post");
+      throw Error("게시물 작성에 실패하였습니다.");
     }
   }
 );
@@ -130,7 +130,7 @@ export const updatePost = createAsyncThunk(
 
       return response.data as Post;
     } catch (error) {
-      throw Error("Failed to update post");
+      throw Error("게시물 수정에 실패하였습니다.");
     }
   }
 );
@@ -147,7 +147,7 @@ export const deletePost = createAsyncThunk(
       });
       return postId;
     } catch (error) {
-      throw Error("Failed to delete post");
+      throw Error("게시물 삭제에 실패하였습니다.");
     }
   }
 );
