@@ -21,9 +21,7 @@ const ChatRoom: React.FC = () => {
   const user = useSelector(selectUser);
   const room = useSelector(selectChatRoomById(roomIdAsInt));
   const messages = useSelector(selectChatMessagesByRoomId(roomIdAsInt));
-  const partnerUser = room?.Users.filter(
-    (eachUser) => eachUser.userId !== user?.userId
-  )[0];
+  const partnerUser = room?.partnerUser
   
   const [socket, setSocket] = useState<Socket | null>(null);
   const socketRef = useRef<Socket | null>(null);

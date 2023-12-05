@@ -26,26 +26,17 @@ const Chat: React.FC = () => {
   }
 
   return (
-    <div>
-      {rooms.ids.map((roomId) => {
-        const room = rooms.entities[roomId];
-        const users = room?.Users || [];
-        return (
-          <div key={room?.roomId}>
-            {room &&
-              users &&
-              users
-                .filter((eachUser) => eachUser.userId !== user?.userId)
-                .map((eachUser) => (
-                  <ChatCard
-                    chatCardProps={{ roomId: room?.roomId, user: eachUser }}
-                    key={room?.roomId}
-                  />
-                ))}
-          </div>
+    <>
+      {rooms?.ids.map((roomId) => {
+        const room = rooms?.entities[roomId];
+        return room && (
+          <ChatCard
+            chatCardProps={{ roomId: room.roomId, user: room.partnerUser }}
+            key={room.roomId}
+          />
         );
       })}
-    </div>
+    </>
   );
 };
 
