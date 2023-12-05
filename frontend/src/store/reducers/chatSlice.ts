@@ -12,11 +12,11 @@ import { User } from "./userSlice";
 
 interface ChatRoom {
   roomId: number;
-  Users: {
+  partnerUser: {
     userId: number;
     userName: string;
     userImage: string;
-  }[];
+  };
 }
 
 interface ChatMessage {

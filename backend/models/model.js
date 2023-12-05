@@ -397,6 +397,9 @@ ChatMessage.belongsTo(User, {
 ChatRoom.belongsToMany(User, { through: ChatUser, foreignKey: "roomId" });
 User.belongsToMany(ChatRoom, { through: ChatUser, foreignKey: "userId" });
 
+ChatUser.belongsTo(User, { foreignKey: 'userId' });
+ChatUser.belongsTo(ChatRoom, { foreignKey: 'roomId' });
+
 module.exports = {
   User,
   Post,

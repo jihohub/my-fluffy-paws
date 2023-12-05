@@ -6,19 +6,25 @@ const { User, Post, Comment, Follower, ChatRoom, ChatMessage, ChatUser } = requi
 const getChatRoomsByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
-    const chatRooms = await ChatRoom.findAll({
-      include: [
-        {
-          model: User,
-          through: { where: { userId: userId } },
-          as: "Users",
-          attributes: ["userId", "userName", "userImage"],
-          through: { attributes: [] },
-        },
-      ],
+    const userChatRooms = await ChatUser.findAll({
+      where: { userId: userId },
+      include: [{ model: ChatRoom }],
     });
 
-    res.status(200).json(chatRooms);
+    const ChatRooms = [];
+
+    for (const userChatRoom of userChatRooms) {
+      const roomId = userChatRoom.ChatRoom.roomId;
+
+      const ChatRoom = await ChatUser.findOne({
+        where: { roomId: roomId, userId: { [Op.ne]: userId } },
+        include: [{ model: User, attributes: ["userId", "userName", "userImage"] }],
+      });
+
+      ChatRooms.push({ roomId, partnerUser: ChatRoom.User });
+    }
+
+    res.status(200).json(ChatRooms);
   } catch (error) {
     res.status(500).json({ error: "채팅방 목록을 가져오는 중 에러 발생" });
   };
